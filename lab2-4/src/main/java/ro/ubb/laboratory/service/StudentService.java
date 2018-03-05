@@ -24,44 +24,38 @@
  *
  */
 
-package ro.ubb.laboratory.repository;
+package ro.ubb.laboratory.service;
 
-import ro.ubb.laboratory.domain.BaseEntity;
+import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.repository.Repository;
 
-import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-class InMemoryRepository<ID, T extends BaseEntity<ID>> implements Repository<ID, T>{
+/**
+ * @author Alexandru Buhai
+ * @version 1.0.0
+ */
 
-    private Map<ID, T> entities;
+public class StudentService {
+    private Repository<Long, Student> repository;
 
-    private InMemoryRepository()
-    {}
+    public StudentService(Repository<Long, Student> repository) {
+        this.repository = repository;
+    }
 
-    @Override
-    public Optional findOne(ID id)
+    public void addStudent(Student student) throws Exception
     {
-        if(id == null)
-        {
-            throw new IllegalArgumentException("Id cannot be null");
-        }
-        return Optional.ofNullable(entities.get(id));
+        repository.save(student);
     }
 
-    @Override
-    public Iterable findAll() {
-        Set<T> allEntities = entities.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toSet()));
-        return allEntities;
+    public Set<Student> getAllStudents()
+    {
+        Iterable<Student> students = repository.findAll();
+
+        return StreamSupport.stream(students.spliterator(), false).collect(Collectors.toSet());
     }
 
-    @Override
-    public Optional save(T entity) throws Exception {
-        if (entity == null) {
-            throw new IllegalArgumentException("Id cannot be null");
-        }
-        //validator.validate(entity);
-        return Optional.ofNullable(entities.putIfAbsent(entity.getId(), entity));
-    }
+
 }

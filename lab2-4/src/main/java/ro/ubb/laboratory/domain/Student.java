@@ -1,11 +1,13 @@
 package ro.ubb.laboratory.domain;
 
 /**
+ * <h2> Student class </h2>
+ * <p> Student </p>
  * @version 1.0.0
  * @autor Alexandru Buhai
  */
 
-public class Student {
+public class Student extends BaseEntity<Long> {
     private String serialNumber;
     private String name;
 
@@ -22,6 +24,10 @@ public class Student {
         return serialNumber;
     }
 
+    /**
+     * Sets a new serial number for this student
+     * @param serialNumber - Serial number of the student
+     */
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
     }
@@ -30,10 +36,19 @@ public class Student {
         return name;
     }
 
+    /**
+     * Set the name of the student
+     * @param name - Name of the student
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Override the equals method of an Object
+     * @param o - object to be compared to
+     * @return True - if equals | False - otherwise
+     */
     @Override
     public boolean equals(Object o) {
         //can we use ifs here?

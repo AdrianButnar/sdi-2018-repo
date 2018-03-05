@@ -12,6 +12,7 @@ public class BaseEntity<ID> {
      * Get's the Id of the new Entity
      * @return id - an id of the Entity of type ID
      */
+
     public ID getId()
     {
         return id;
