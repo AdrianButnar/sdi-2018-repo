@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.util.Set;
 
 /**
- * @author Adrian Butnar
+ * @author AdrianButnar
  * @version 1.0.0
  */
 

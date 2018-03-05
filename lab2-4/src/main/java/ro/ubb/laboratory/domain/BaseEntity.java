@@ -1,8 +1,8 @@
 package ro.ubb.laboratory.domain;
 
 /**
- * @author Alexandru Buhai
- * @param <ID>
+ * @author abuhai
+ * @param <ID> - type of id
  */
 
 public class BaseEntity<ID> {

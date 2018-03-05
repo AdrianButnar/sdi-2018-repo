@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 /**
- * @author Alexandru Buhai
+ * @author  abuhai
  * @version 1.0.0
  */
 
