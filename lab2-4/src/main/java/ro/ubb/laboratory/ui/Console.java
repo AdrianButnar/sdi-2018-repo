@@ -1,6 +1,7 @@
 package ro.ubb.laboratory.ui;
 
 import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.service.StudentService;
 
 import java.io.BufferedReader;
 import java.io.IOException;

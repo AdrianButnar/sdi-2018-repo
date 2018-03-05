@@ -26,6 +26,12 @@
 
 package ro.ubb.laboratory;
 
+import ro.ubb.laboratory.domain.BaseEntity;
+import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.repository.*;
+import ro.ubb.laboratory.service.StudentService;
+import ro.ubb.laboratory.ui.Console;
+
 /**
  * <h1>
  *     Laboratory grades management application.
@@ -37,11 +43,11 @@ public class Main {
     public static void main(String[] args)
     {
 
-        //in-memory repo
-//        Repository<Long, Student> studentRepository = new InMemoryRepository<>(studentValidator);
-//        StudentService studentService = new StudentService(studentRepository);
-//        Console console = new Console(studentService);
-//        console.runConsole();
+
+        Repository<Long, Student> studentRepository = new InMemoryRepository<>();
+        StudentService studentService = new StudentService(studentRepository);
+        Console console = new Console(studentService);
+        console.runConsole();
 
         System.out.println("Hello world!");
 

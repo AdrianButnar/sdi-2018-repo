@@ -28,21 +28,26 @@ package ro.ubb.laboratory.repository;
 
 import ro.ubb.laboratory.domain.BaseEntity;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-class InMemoryRepository<ID, T extends BaseEntity<ID>> implements Repository<ID, T>{
+public class InMemoryRepository<ID, T extends BaseEntity<ID>> implements Repository<ID, T> {
 
     private Map<ID, T> entities;
 
-    private InMemoryRepository()
-    {}
+    public InMemoryRepository()
+    {
+        entities = new HashMap<>();
+    }
+
 
     @Override
-    public Optional findOne(ID id)
+    public Optional<T> findOne(ID id)
     {
+
         if(id == null)
         {
             throw new IllegalArgumentException("Id cannot be null");
@@ -51,13 +56,12 @@ class InMemoryRepository<ID, T extends BaseEntity<ID>> implements Repository<ID,
     }
 
     @Override
-    public Iterable findAll() {
-        Set<T> allEntities = entities.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toSet()));
-        return allEntities;
+    public Iterable<T> findAll() {
+        return entities.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toSet());
     }
 
     @Override
-    public Optional save(T entity) throws Exception {
+    public Optional<T> save(T entity) throws Exception {
         if (entity == null) {
             throw new IllegalArgumentException("Id cannot be null");
         }
