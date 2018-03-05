@@ -24,15 +24,28 @@
  *
  */
 
-package ro.ubb.laboratory;
+package ro.ubb.laboratory.repository;
 
+import ro.ubb.laboratory.domain.BaseEntity;
 
-public class Main {
+import java.util.Optional;
 
-    public static void main(String[] args)
-    {
-        System.out.println("Hello world!");
-    }
+/**
+ *
+ * @author Alexandru Buhai
+ * @version 1.0.0
+ * @since 05/03/2018
+ */
+public interface Repository<ID, T extends BaseEntity<ID>> {
 
+    Optional<T> findOne(ID id);
+
+    Iterable<T> findAll();
+
+    Optional<T> save(T entity) throws Exception;
+
+//    Optional<T> delete(ID id);
+//
+//    Optional<T> update(T entity) throws Exception;
 
 }

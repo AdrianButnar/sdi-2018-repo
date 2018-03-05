@@ -24,15 +24,8 @@
  *
  */
 
-package ro.ubb.laboratory;
+package ro.ubb.laboratory.repository;
 
-
-public class Main {
-
-    public static void main(String[] args)
-    {
-        System.out.println("Hello world!");
-    }
-
+public class InMemoryRepository {
 
 }
