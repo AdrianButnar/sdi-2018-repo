@@ -26,12 +26,25 @@
 
 package ro.ubb.laboratory;
 
+/**
+ * <h1>
+ *     Laboratory grades management application.
+ * </h1>
+ */
 
 public class Main {
 
     public static void main(String[] args)
     {
+
+        //in-memory repo
+//        Repository<Long, Student> studentRepository = new InMemoryRepository<>(studentValidator);
+//        StudentService studentService = new StudentService(studentRepository);
+//        Console console = new Console(studentService);
+//        console.runConsole();
+
         System.out.println("Hello world!");
+
     }
 
 
