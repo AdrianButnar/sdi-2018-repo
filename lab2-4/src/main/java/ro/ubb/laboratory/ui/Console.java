@@ -6,6 +6,7 @@ import ro.ubb.laboratory.service.StudentService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -20,12 +21,37 @@ public class Console {
         this.studentService = studentService;
     }
 
+    public void printMenu(){
+        System.out.println(
+                "\n\n----------------------Menu----------------------\n\n"+
+                "1.Add a new student to the repository\n"+
+                "2.Show all students\n"+
+                "0.Exit\n\n"+
+                "Choose one of the commands above:\n "+
+                "----------------------------------------------------");
+
+    }
+
     /**
      * Shows the user interface
      */
     public void runConsole() {
-        addStudents();
-        printAllStudents();
+        while (true) {
+            printMenu();
+            Scanner sc = new Scanner(System.in);
+            String command = sc.nextLine();
+            switch (command) {
+                case "1":
+                    addStudents();
+                    continue;
+                case "2":
+                    printAllStudents();
+                    continue;
+                case "0":
+                    System.exit(0);
+            }
+        }
+
     }
 
     /**
@@ -40,17 +66,18 @@ public class Console {
      * Adds a new student to the repository
      */
     private void addStudents() {
-        while (true) {
+//        Student student = readStudent();
+//        while (student.getName().equals("") || student.getId() < 0) {
+//            student = readStudent();
+
+        try {
             Student student = readStudent();
-            if (student == null || student.getId() < 0) {
-                break;
-            }
-            try {
-                studentService.addStudent(student);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            studentService.addStudent(student);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
         }
+
     }
 
     /**
@@ -58,21 +85,17 @@ public class Console {
      * @return The read student if the data was filled correctly or null otherwise
      */
     private Student readStudent() {
-        System.out.println("Read student {id,serialNumber,name}");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter student id: ");
+        Long id = Long.valueOf(sc.nextLine());
+        System.out.print("Enter serial number: ");
+        String serialNumber = sc.nextLine();
+        System.out.print("Enter name: ");
+        String name = sc.nextLine();
 
-        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            Long id = Long.valueOf(bufferRead.readLine());
-            String serialNumber = bufferRead.readLine();
-            String name = bufferRead.readLine();
+        Student student = new Student(serialNumber, name);
+        student.setId(id);
 
-            Student student = new Student(serialNumber, name);
-            student.setId(id);
-
-            return student;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return null;
+        return student;
     }
 }

@@ -17,7 +17,7 @@ public class Student extends BaseEntity<Long> {
 
     public Student(String serialNumber, String Name) {
         this.serialNumber = serialNumber;
-        this.name = name;
+        this.name = Name;
     }
 
     public String getSerialNumber() {
