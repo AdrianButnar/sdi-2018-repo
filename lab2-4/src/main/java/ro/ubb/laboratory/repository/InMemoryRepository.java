@@ -34,15 +34,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * <h2>InMemoryRepo</h2>
- * In memory repository for our application...
- * @author abuhai
- * @version 1.0.0
- * @param <ID> - type of ID
- * @param <T> - type of Repo
- *
- */
 public class InMemoryRepository<ID, T extends BaseEntity<ID>> implements Repository<ID, T> {
 
     private Map<ID, T> entities;

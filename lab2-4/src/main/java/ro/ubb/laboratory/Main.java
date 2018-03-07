@@ -36,37 +36,22 @@ import ro.ubb.laboratory.ui.Console;
  * <h1>
  *     Laboratory grades management application.
  * </h1>
- * <p> Problem 2 for the SDI course. </p>
- * <p> Problem text:
- * A teacher manages information about students and lab problems.
- * Create an application which allows to:
- * perform CRUD operations on students and lab problems
- * assign problems to students; assign grades
- * filter entities based on various criteria
- * reports: e.g. find the problem that was assigned most times
- * </p>
- * <p>
- *     use Java 8 features (lambda expressions, streams etc); the program should be written <br>
- *     without if statements and loops <br>
- *
- *     persistence: ‘in memory’, text files, xml, db (jdbc); you may use almost any RDBMS, <br>
- *         but we only offer support for PostgreSQL; MS SQL Server is forbidden <br>
- * </p>
- * @author Gandaceii
- * @version 1.0.0
- * @since 5/3/2018
  */
 
 public class Main {
 
     public static void main(String[] args)
     {
+
+
         Repository<Long, Student> studentRepository = new InMemoryRepository<>();
         StudentService studentService = new StudentService(studentRepository);
         Console console = new Console(studentService);
         console.runConsole();
 
         System.out.println("Hello world!");
+
     }
+
 
 }

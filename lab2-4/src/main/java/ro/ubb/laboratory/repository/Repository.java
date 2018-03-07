@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  *
- * @author abuhai
+ * @author Alexandru Buhai
  * @version 1.0.0
  * @since 05/03/2018
  */
