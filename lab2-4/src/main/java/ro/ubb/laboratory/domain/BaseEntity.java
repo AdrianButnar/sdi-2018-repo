@@ -2,7 +2,7 @@ package ro.ubb.laboratory.domain;
 
 /**
  * @author Alexandru Buhai
- * @param <ID>
+ * @param <ID> Base entity
  */
 
 public class BaseEntity<ID> {

@@ -4,7 +4,6 @@ package ro.ubb.laboratory.domain;
  * <h2> Student class </h2>
  * <p> Student </p>
  * @version 1.0.0
- * @autor Alexandru Buhai
  */
 
 public class Student extends BaseEntity<Long> {
