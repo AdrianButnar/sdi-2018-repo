@@ -27,6 +27,7 @@
 package ro.ubb.laboratory.repository;
 
 import ro.ubb.laboratory.domain.BaseEntity;
+import ro.ubb.laboratory.domain.validators.StudentCannotBeSavedException;
 
 import java.util.Optional;
 
@@ -42,7 +43,7 @@ public interface Repository<ID, T extends BaseEntity<ID>> {
 
     Iterable<T> findAll();
 
-    Optional<T> save(T entity) throws Exception;
+    Optional<T> save(T entity) throws StudentCannotBeSavedException;
 
 //    Optional<T> delete(ID id);
 //
