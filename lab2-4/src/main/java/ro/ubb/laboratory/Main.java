@@ -36,6 +36,16 @@ import ro.ubb.laboratory.ui.Console;
  * <h1>
  *     Laboratory grades management application.
  * </h1>
+ *
+ * <p>
+ *
+ * </p>
+ *
+ *
+ *
+ *
+ *
+ *
  */
 
 public class Main {
