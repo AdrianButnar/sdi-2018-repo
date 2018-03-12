@@ -7,9 +7,6 @@ import ro.ubb.laboratory.domain.validators.StudentValidator;
 import ro.ubb.laboratory.domain.validators.ValidatorException;
 import ro.ubb.laboratory.service.StudentService;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -89,7 +86,7 @@ public class Console {
      * @return The read student if the data was filled correctly or null otherwise
      */
 
-    static boolean isLong(String id){
+    private static boolean isLong(String id){
         try{
             Long id1 = Long.parseLong(id);
             return true;
@@ -116,6 +113,7 @@ public class Console {
                 student.setId(Long.parseLong(id));
             else
                 throw new IllegalIdException("Invalid id\n");
+
             StudentValidator sv = new StudentValidator();
             sv.validate(student);
 
@@ -123,13 +121,11 @@ public class Console {
 
 
         }
-        catch (ValidatorException ve) {
-            ve.printStackTrace();
+        catch (IllegalIdException|ValidatorException ex) {
+            ex.printStackTrace();
 
         }
-        catch (IllegalIdException iid){
-            iid.printStackTrace();
-        }
+
 
     return null;
     }

@@ -94,8 +94,11 @@ public class InMemoryRepositoryTest {
     public void findAll() throws Exception
     {
         Iterable<Student> students = Arrays.asList(student1, student2, student3);
-        //Still left this to do 
-        //assertThat(studentRepository.findAll(),Matcher<Student>);
+        int count = 0;
+        assertEquals(studentRepository.findAll().spliterator().getExactSizeIfKnown(), 3);
+        assertTrue("Something went wrong in the Repo Student finder", studentRepository.findOne(21L).isPresent() && student1.equals(studentRepository.findOne(21L).get()));
+
+        //assertThat(Iterables .studentRepository.findAll(),Matcher<Student>);
     }
 
     @Test
