@@ -1,6 +1,10 @@
 package ro.ubb.laboratory.ui;
 
 import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.domain.validators.IllegalIdException;
+import ro.ubb.laboratory.domain.validators.StudentCannotBeSavedException;
+import ro.ubb.laboratory.domain.validators.StudentValidator;
+import ro.ubb.laboratory.domain.validators.ValidatorException;
 import ro.ubb.laboratory.service.StudentService;
 
 import java.io.BufferedReader;
@@ -24,7 +28,7 @@ public class Console {
     public void printMenu(){
         System.out.println(
                 "\n\n----------------------Menu----------------------\n\n"+
-                "1.Add a new student to the repository\n"+
+                "1.Add a new student to the laboratory.domain.repository\n"+
                 "2.Show all students\n"+
                 "0.Exit\n\n"+
                 "Choose one of the commands above:\n "+
@@ -55,7 +59,7 @@ public class Console {
     }
 
     /**
-     * Displays all the students from the repository
+     * Displays all the students from the laboratory.domain.repository
      */
     private void printAllStudents() {
         Set<Student> students = studentService.getAllStudents();
@@ -63,20 +67,20 @@ public class Console {
     }
 
     /**
-     * Adds a new student to the repository
+     * Adds a new student to the laboratory.domain.repository
      */
     private void addStudents() {
-//        Student student = readStudent();
-//        while (student.getName().equals("") || student.getId() < 0) {
-//            student = readStudent();
-
         try {
             Student student = readStudent();
+            if(student==null)
+                return;
             studentService.addStudent(student);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(1);
         }
+        catch (StudentCannotBeSavedException se){
+            se.printStackTrace();
+        }
+
+
 
     }
 
@@ -84,18 +88,49 @@ public class Console {
      * Reads a new student from the standard input
      * @return The read student if the data was filled correctly or null otherwise
      */
+
+    static boolean isLong(String id){
+        try{
+            Long id1 = Long.parseLong(id);
+            return true;
+        }
+        catch (Exception ex){
+            return false;
+        }
+    }
+
     private Student readStudent() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter student id: ");
-        Long id = Long.valueOf(sc.nextLine());
-        System.out.print("Enter serial number: ");
-        String serialNumber = sc.nextLine();
-        System.out.print("Enter name: ");
-        String name = sc.nextLine();
 
-        Student student = new Student(serialNumber, name);
-        student.setId(id);
+        try {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Enter student id: ");
+            String id = sc.nextLine();
+            System.out.print("Enter serial number: ");
+            String serialNumber = sc.nextLine();
+            System.out.print("Enter name: ");
+            String name = sc.nextLine();
 
-        return student;
+            Student student = new Student(serialNumber, name);
+
+            if (isLong(id))
+                student.setId(Long.parseLong(id));
+            else
+                throw new IllegalIdException("Invalid id\n");
+            StudentValidator sv = new StudentValidator();
+            sv.validate(student);
+
+            return student;
+
+
+        }
+        catch (ValidatorException ve) {
+            ve.printStackTrace();
+
+        }
+        catch (IllegalIdException iid){
+            iid.printStackTrace();
+        }
+
+    return null;
     }
 }

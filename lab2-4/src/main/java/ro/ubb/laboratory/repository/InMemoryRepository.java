@@ -27,6 +27,7 @@
 package ro.ubb.laboratory.repository;
 
 import ro.ubb.laboratory.domain.BaseEntity;
+import ro.ubb.laboratory.domain.validators.StudentCannotBeSavedException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,11 +62,13 @@ public class InMemoryRepository<ID, T extends BaseEntity<ID>> implements Reposit
     }
 
     @Override
-    public Optional<T> save(T entity) throws Exception {
-        if (entity == null) {
-            throw new IllegalArgumentException("Id cannot be null");
-        }
+    public Optional<T> save(T entity) throws StudentCannotBeSavedException {
+//        if (entity == null) {
+//            throw new IllegalArgumentException("Id cannot be null");
+//        }
         //validator.validate(entity);
+        if (findOne(entity.getId()).isPresent()==true)
+            throw new StudentCannotBeSavedException("Student already in list!\n");
         return Optional.ofNullable(entities.putIfAbsent(entity.getId(), entity));
     }
 }

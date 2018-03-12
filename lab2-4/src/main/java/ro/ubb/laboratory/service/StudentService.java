@@ -27,6 +27,7 @@
 package ro.ubb.laboratory.service;
 
 import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.domain.validators.StudentCannotBeSavedException;
 import ro.ubb.laboratory.repository.Repository;
 
 import java.util.Set;
@@ -45,7 +46,7 @@ public class StudentService {
         this.repository = repository;
     }
 
-    public void addStudent(Student student) throws Exception
+    public void addStudent(Student student) throws StudentCannotBeSavedException
     {
         repository.save(student);
     }
