@@ -1,14 +1,12 @@
 package ro.ubb.laboratory.ui;
 
 import ro.ubb.laboratory.domain.Student;
-import ro.ubb.laboratory.domain.validators.IllegalIdException;
-import ro.ubb.laboratory.domain.validators.StudentCannotBeSavedException;
-import ro.ubb.laboratory.domain.validators.StudentValidator;
-import ro.ubb.laboratory.domain.validators.ValidatorException;
+import ro.ubb.laboratory.domain.validators.*;
 import ro.ubb.laboratory.service.StudentService;
 
 import java.util.Scanner;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Adrian Butnar
@@ -24,12 +22,13 @@ public class Console {
 
     public void printMenu(){
         System.out.println(
-                "\n\n----------------------Menu----------------------\n\n"+
-                "1.Add a new student to the laboratory.domain.repository\n"+
-                "2.Show all students\n"+
-                "0.Exit\n\n"+
-                "Choose one of the commands above:\n "+
-                "----------------------------------------------------");
+                    "\n\n----------------------Menu----------------------\n\n"+
+                        "1.Add a new student to the laboratory.domain.repository\n"+
+                        "2.Show all students\n"+
+                        "3.Remove a student\n"+
+                        "0.Exit\n\n"+
+                        "Choose one of the commands above:\n "+
+                        "----------------------------------------------------");
 
     }
 
@@ -48,6 +47,9 @@ public class Console {
                 case "2":
                     printAllStudents();
                     continue;
+                case "3":
+                    removeStudent();
+                    continue;
                 case "0":
                     System.exit(0);
             }
@@ -58,6 +60,16 @@ public class Console {
     /**
      * Displays all the students from the laboratory.domain.repository
      */
+    private void myWait(long f){
+        try {
+            TimeUnit.SECONDS.sleep(f);
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+
     private void printAllStudents() {
         Set<Student> students = studentService.getAllStudents();
         students.stream().forEach(System.out::println);
@@ -66,6 +78,23 @@ public class Console {
     /**
      * Adds a new student to the laboratory.domain.repository
      */
+    private void removeStudent(){
+        try {
+            System.out.print("Enter id: ");
+            Scanner sc = new Scanner(System.in);
+            String id = sc.nextLine();
+            if (!isLong(id)){
+                throw new InexistentStudentException("Invalid id!\n");
+            }
+            studentService.removeStudent(Long.parseLong(id));
+        }
+        catch (InexistentStudentException se){
+            se.printStackTrace();
+            myWait(1);
+        }
+    }
+
+
     private void addStudents() {
         try {
             Student student = readStudent();
@@ -75,6 +104,8 @@ public class Console {
         }
         catch (StudentCannotBeSavedException se){
             se.printStackTrace();
+            myWait(1);
+
         }
 
 
@@ -121,11 +152,25 @@ public class Console {
 
 
         }
+<<<<<<< HEAD
+        catch (ValidatorException ve) {
+            ve.printStackTrace();
+            myWait(1);
+
+
+        }
+        catch (IllegalIdException iid){
+            iid.printStackTrace();
+            myWait(1);
+
+        }
+=======
         catch (IllegalIdException|ValidatorException ex) {
             ex.printStackTrace();
 
         }
 
+>>>>>>> 9c245da0838aacee07993c9f651f647e91c5a531
 
     return null;
     }

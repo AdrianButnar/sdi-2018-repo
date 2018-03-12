@@ -27,6 +27,7 @@
 package ro.ubb.laboratory.repository;
 
 import ro.ubb.laboratory.domain.BaseEntity;
+import ro.ubb.laboratory.domain.validators.InexistentStudentException;
 import ro.ubb.laboratory.domain.validators.StudentCannotBeSavedException;
 
 import java.util.Optional;
@@ -45,8 +46,8 @@ public interface Repository<ID, T extends BaseEntity<ID>> {
 
     Optional<T> save(T entity) throws StudentCannotBeSavedException;
 
-//    Optional<T> delete(ID id);
-//
+    Optional<T> remove(ID id) throws InexistentStudentException; //here has to be a custom exception
+
 //    Optional<T> update(T entity) throws Exception;
 
 }
