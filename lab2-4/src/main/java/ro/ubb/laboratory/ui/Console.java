@@ -1,5 +1,6 @@
 package ro.ubb.laboratory.ui;
 
+import ro.ubb.laboratory.domain.Problems;
 import ro.ubb.laboratory.domain.Student;
 import ro.ubb.laboratory.domain.validators.*;
 import ro.ubb.laboratory.service.StudentService;
@@ -20,12 +21,15 @@ public class Console {
         this.studentService = studentService;
     }
 
-    public void printMenu(){
+    private void printMenu(){
         System.out.println(
-                    "\n\n----------------------Menu----------------------\n\n"+
-                        "1.Add a new student to the laboratory.domain.repository\n"+
+                "\n\n----------------------Menu----------------------\n\n"+
+                        "1.Add a new student to the repository\n"+
                         "2.Show all students\n"+
                         "3.Remove a student\n"+
+ //                       "4.Add a new problem to the repository of problems\n"+
+ //                       "5.Show all problems\n"+
+ //                       "6.Remove a problem \n"+
                         "0.Exit\n\n"+
                         "Choose one of the commands above:\n "+
                         "----------------------------------------------------");
@@ -50,6 +54,15 @@ public class Console {
                 case "3":
                     removeStudent();
                     continue;
+//                case "4":
+//                    addProblem();
+//                    continue;
+//                case "5":
+//
+//                    continue;
+//                case "6":
+//
+//                    continue;
                 case "0":
                     System.exit(0);
             }
@@ -112,6 +125,23 @@ public class Console {
 
     }
 
+//    private void addProblem() {
+//        try {
+//            Problems problem = readProblem();
+//            if(problem==null)
+//                return;
+//            .addStudent(problem);
+//        }
+//        catch (StudentCannotBeSavedException se){
+//            se.printStackTrace();
+//            myWait(1);
+//
+//        }
+//
+//
+//
+//    }
+
     /**
      * Reads a new student from the standard input
      * @return The read student if the data was filled correctly or null otherwise
@@ -152,26 +182,43 @@ public class Console {
 
 
         }
-<<<<<<< HEAD
-        catch (ValidatorException ve) {
-            ve.printStackTrace();
-            myWait(1);
-
-
-        }
-        catch (IllegalIdException iid){
-            iid.printStackTrace();
-            myWait(1);
-
-        }
-=======
         catch (IllegalIdException|ValidatorException ex) {
             ex.printStackTrace();
+            myWait(1);
 
         }
 
->>>>>>> 9c245da0838aacee07993c9f651f647e91c5a531
 
     return null;
+    }
+
+    private Problems readProblem() {
+
+        try {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Enter problem id: ");
+            String id = sc.nextLine();
+            System.out.print("Enter problem number: ");
+            String number = sc.nextLine();
+            System.out.print("Enter text: ");
+            String text = sc.nextLine();
+
+            Problems problem = new Problems(Integer.parseInt(number), text);
+
+            if (isLong(id))
+                problem.setId(Long.parseLong(id));
+            else
+                throw new IllegalIdException("Invalid id\n");
+
+            return problem;
+
+
+        }
+        catch (IllegalIdException ex) {
+            ex.printStackTrace();
+            myWait(1);
+
+        }
+        return null;
     }
 }

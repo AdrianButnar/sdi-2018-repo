@@ -14,12 +14,6 @@ public class Student extends BaseEntity<Long> {
 
     }
 
-//    public Student(String serialNumber,String Name, String id){
-//        this.serialNumber = serialNumber;
-//        this.name = name;
-//        this.setId(id);
-//    }
-
     public Student(String serialNumber, String Name) {
         this.serialNumber = serialNumber;
         this.name = Name;
@@ -86,8 +80,9 @@ public class Student extends BaseEntity<Long> {
     @Override
     public String toString() {
         return "Student {" +
-                "SerialNumber ='" + serialNumber + '\'' +
-                ", Name='" + name + '\'' +
+                "ID = " + this.getId() +
+                ", 1SerialNumber = '" + serialNumber + '\'' +
+                ", Name = '" + name + '\'' +
                 '}';
     }
 }
