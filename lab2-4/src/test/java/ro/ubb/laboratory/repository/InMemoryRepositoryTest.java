@@ -26,21 +26,55 @@
 
 package ro.ubb.laboratory.repository;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import ro.ubb.laboratory.domain.Student;
 
 import static org.junit.Assert.*;
 
 public class InMemoryRepositoryTest {
+
+
+    private Repository<Long, Student> studentRepository = new InMemoryRepository<>();
+
+    @Before
+    public void setUp() throws Exception {
+
+        Student student1 = new Student("123456", "Ana");
+        student1.setId(21L);
+        Student student2 = new Student("789101", "Maria");
+        student2.setId(34L);
+        Student student3 = new Student("121314", "Ioana");
+        student3.setId(55L);
+
+        studentRepository.save(student1);
+        studentRepository.save(student2);
+        studentRepository.save(student3);
+
+    }
+
+    @After
+    public void tearDown() throws Exception {
+
+    }
+
+    @Ignore
     @Test
     public void findOne() throws Exception {
+      //  studentRepository.findOne()
     }
-
+    @Ignore
     @Test
-    public void findAll() throws Exception {
+    public void findAll() throws Exception
+    {
+        fail("Not yet tested");
     }
-
+    @Ignore
     @Test
     public void save() throws Exception {
+        fail("Not yet tested");
     }
 
 }

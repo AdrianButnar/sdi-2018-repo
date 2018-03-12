@@ -7,10 +7,9 @@ import java.util.Objects;
  * <p> Problem </p>
  * @version 1.0.0
  */
-public class Problems {
+public class Problems extends BaseEntity<Long>  {
     private int number;
     private String text;
-    private int grade;
 
     public Problems(int number, String text) {
         this.number = number;

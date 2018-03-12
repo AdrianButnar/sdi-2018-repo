@@ -42,8 +42,8 @@ import ro.ubb.laboratory.ui.Console;
  * </p>
  *
  *
- *
- *
+ * Should we choose the ID?
+ * Can the user see the ID?
  *
  *
  */

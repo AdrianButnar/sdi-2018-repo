@@ -26,25 +26,73 @@
 
 package ro.ubb.laboratory.domain;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class StudentTest {
+    private static final Long ID = 1L;
+    private static final Long NEW_ID = 2L;
+    private static final String SERIAL_NUMBER = "baie2079";
+    private static final String NEW_SERIAL_NUMBER = "baie2081";
+    private static final String NAME = "Bob";
+    private static final String NEW_NAME = "Alice";
+
+    private Student student;
+
+    @Before
+    public void setUp() throws Exception {
+        student = new Student(SERIAL_NUMBER, NAME);
+        student.setId(ID);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        student=null;
+    }
+
     @Test
     public void getSerialNumber() throws Exception {
+        assertEquals("Something went wrong in the Student SERIAL getter",
+                SERIAL_NUMBER, student.getSerialNumber());
     }
 
     @Test
     public void setSerialNumber() throws Exception {
+        student.setSerialNumber(NEW_SERIAL_NUMBER);
+        assertEquals("Something went wrong in the Student SERIAL setter",
+                NEW_SERIAL_NUMBER, student.getSerialNumber());
     }
 
     @Test
     public void getName() throws Exception {
+        assertEquals("Something went wrong in the Student NAME getter",
+                NAME, student.getName());
     }
 
     @Test
     public void setName() throws Exception {
+        student.setName(NEW_NAME);
+        assertEquals("Something went wrong in the Student NAME setter",
+                NEW_NAME, student.getName());
     }
+
+    @Test
+    public void getID() throws Exception {
+        assertEquals("Something went wrong in the Student ID getter",
+                ID, student.getId());
+    }
+
+    @Test
+    public void setID() throws Exception {
+        student.setId(NEW_ID);
+        assertEquals("Something went wrong in the Student ID setter",
+                NEW_ID, student.getId());
+    }
+
+
+
 
 }

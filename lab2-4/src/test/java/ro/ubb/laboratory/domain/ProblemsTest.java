@@ -26,25 +26,72 @@
 
 package ro.ubb.laboratory.domain;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.awt.*;
 
 import static org.junit.Assert.*;
 
 public class ProblemsTest {
+    private static final Long ID = 1L;
+    private static final Long NEW_ID = 2L;
+    private  static final String TEXT = "Add 2 and 2. What is the result?";
+    private static final String NEW_TEXT = "Substract 2 from 3. What is the result?";
+    private static final int NUMBER = 7;
+    private static final int NEW_NUMBER = 8;
+
+
+    private Problems problem;
+
+    @Before
+    public void setUp() throws Exception {
+        problem = new Problems(NUMBER, TEXT);
+        problem.setId(ID);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        problem=null;
+    }
+
     @Test
     public void getNumber() throws Exception {
+        assertEquals("Something went wrong in the Problem NUMBER getter",
+                TEXT, problem.getText());
     }
 
     @Test
     public void setNumber() throws Exception {
+        problem.setNumber(NEW_NUMBER);
+        assertEquals("Something went wrong in the Problem NUMBER setter",
+                TEXT, problem.getText());
     }
 
     @Test
     public void getText() throws Exception {
+        assertEquals("Something went wrong in the Problem TEXT getter",
+                TEXT, problem.getText());
     }
 
     @Test
     public void setText() throws Exception {
+        problem.setText(NEW_TEXT);
+        assertEquals("Something went wrong in the Problem TEXT setter",
+                NEW_TEXT, problem.getText());
+    }
+    @Test
+    public void getID() throws Exception {
+        assertEquals("Something went wrong in the Problem ID getter",
+                TEXT, problem.getText());
+    }
+
+    @Test
+    public void setId() throws Exception {
+        problem.setId(NEW_ID);
+        assertEquals("Something went wrong in the Problem ID setter",
+                TEXT, problem.getText());
     }
 
 }
