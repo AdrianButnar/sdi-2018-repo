@@ -27,6 +27,7 @@
 package ro.ubb.laboratory.service;
 
 import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.domain.validators.InexistentStudentException;
 import ro.ubb.laboratory.domain.validators.StudentCannotBeSavedException;
 import ro.ubb.laboratory.repository.Repository;
 
@@ -49,6 +50,10 @@ public class StudentService {
     public void addStudent(Student student) throws StudentCannotBeSavedException
     {
         repository.save(student);
+    }
+
+    public void removeStudent(Long id) throws InexistentStudentException {
+        repository.remove(id);
     }
 
     public Set<Student> getAllStudents()
