@@ -72,11 +72,12 @@ public class Console {
     private void addStudents() {
         try {
             Student student = readStudent();
+            if(student==null)
+                return;
             studentService.addStudent(student);
         }
         catch (StudentCannotBeSavedException se){
             se.printStackTrace();
-            System.exit(1);
         }
 
 
@@ -118,21 +119,16 @@ public class Console {
             StudentValidator sv = new StudentValidator();
             sv.validate(student);
 
-
-
             return student;
-
 
 
         }
         catch (ValidatorException ve) {
             ve.printStackTrace();
-            System.exit(1);
 
         }
         catch (IllegalIdException iid){
             iid.printStackTrace();
-            System.exit(1);
         }
 
     return null;
