@@ -38,13 +38,28 @@ import ro.ubb.laboratory.ui.Console;
  * </h1>
  *
  * <p>
- *
+ * A teacher manages information about students and lab problems.
+ * Create an application which allows to:
+ * - perform CRUD operations on students and lab problems
+ * - assign problems to students; assign grades
+ * - filter entities based on various criteria
+ * - reports: e.g. find the problem that was assigned most times
+ * </p>
+ * <br>
+ * <p>
+ * I1 (deadline week 2):
+    - two features (e.g: addStudent and printAllStudents)<br>
+    - java doc in html format (see the example from the group - project_root/doc/index.html - repository interface) <br>
+    - only inmemory repository is enough <br>
+ * I2 (deadline week 3):
+    - three features <br>
+ * I3 (deadline week 4):
+    - all features <br>
  * </p>
  *
- *
- * Should we choose the ID?
+ * Should we choose the ID? - we choose it
  * Can the user see the ID?
- *
+ * How to assign grades? Student has an array of grades and problems?
  *
  */
 
