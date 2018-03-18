@@ -5,6 +5,7 @@ import java.util.Objects;
 /**
  * <h2> Problem class </h2>
  * <p> Problem </p>
+ * @author Alexandru Buhai
  * @version 1.0.1
  */
 public class Problem extends BaseEntity<Long>  {

@@ -3,6 +3,7 @@ package ro.ubb.laboratory.ui;
 import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
 import ro.ubb.laboratory.domain.validators.*;
+import ro.ubb.laboratory.service.ProblemService;
 import ro.ubb.laboratory.service.StudentService;
 
 import java.util.Scanner;
@@ -24,13 +25,14 @@ public class Console {
     private void printMenu(){
         System.out.println(
                 "\n\n----------------------Menu----------------------\n\n"+
-                        "1.Add a new student to the repository\n"+
-                        "2.Show all students\n"+
-                        "3.Remove a student\n"+
- //                       "4.Add a new problem to the repository of problems\n"+
- //                       "5.Show all problems\n"+
- //                       "6.Remove a problem \n"+
-                        "0.Exit\n\n"+
+                        "1. Add a new student to the repository\n"+
+                        "2. Show all students\n"+
+                        "3. Remove a student\n"+
+                        "4. Add a new problem to the repository of problems\n"+
+                        "5. Show all problems\n"+
+                        "6. Remove a problem \n"+
+                        "7. Assign problem form repository to a student\n"+
+                        "0. Exit\n\n"+
                         "Choose one of the commands above:\n "+
                         "----------------------------------------------------");
 
@@ -54,15 +56,15 @@ public class Console {
                 case "3":
                     removeStudent();
                     continue;
-//                case "4":
-//                    addProblem();
-//                    continue;
-//                case "5":
-//
-//                    continue;
-//                case "6":
-//
-//                    continue;
+                case "4":
+
+                    continue;
+                case "5":
+
+                    continue;
+                case "6":
+
+                    continue;
                 case "0":
                     System.exit(0);
             }
@@ -120,32 +122,24 @@ public class Console {
             myWait(1);
 
         }
-
-
-
     }
 
-//    private void addProblem() {
-//        try {
-//            Problem problem = readProblem();
-//            if(problem==null)
-//                return;
-//            .addStudent(problem);
-//        }
-//        catch (StudentCannotBeSavedException se){
-//            se.printStackTrace();
-//            myWait(1);
-//
-//        }
-//
-//
-//
-//    }
+    private void addProblems() {
+        try {
+            Problem problem = readProblem();
+            if(problem==null)
+                return;
+            studentService.addStudent(problem);
+        }
+        catch (StudentCannotBeSavedException se){
+            se.printStackTrace();
+            myWait(1);
 
-    /**
-     * Reads a new student from the standard input
-     * @return The read student if the data was filled correctly or null otherwise
-     */
+        }
+    }
+
+
+
 
     private static boolean isLong(String id){
         try{
@@ -157,6 +151,10 @@ public class Console {
         }
     }
 
+    /**
+     * Reads a new student from the standard input
+     * @return The read student if the data was filled correctly or null otherwise
+     */
     private Student readStudent() {
 
         try {
@@ -192,6 +190,10 @@ public class Console {
     return null;
     }
 
+    /**
+     * Reads a new problem from the standard input
+     * @return The read student if the data was filled correctly or null otherwise
+     */
     private Problem readProblem() {
 
         try {

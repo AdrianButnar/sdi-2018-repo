@@ -28,9 +28,14 @@ package ro.ubb.laboratory;
 
 import ro.ubb.laboratory.domain.BaseEntity;
 import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.domain.validators.StudentValidator;
+import ro.ubb.laboratory.domain.validators.Validator;
 import ro.ubb.laboratory.repository.*;
 import ro.ubb.laboratory.service.StudentService;
 import ro.ubb.laboratory.ui.Console;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * <h1>
@@ -68,13 +73,26 @@ public class Main {
     public static void main(String[] args)
     {
 
+//        In memory repository
+//        Repository<Long, Student> studentRepository = new InMemoryRepository<>();
+//        StudentService studentService = new StudentService(studentRepository);
+//        Console console = new Console(studentService);
+//        console.runConsole();
+//
+//        System.out.println("Hello world!");
 
-        Repository<Long, Student> studentRepository = new InMemoryRepository<>();
+//       File Repository
+        try {
+            System.out.println(new File(".").getCanonicalPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //in file repo
+        Validator<Student> studentValidator = new StudentValidator();
+        Repository<Long, Student> studentRepository = new FileRepository(studentValidator, ".\\data\\studentFile");
         StudentService studentService = new StudentService(studentRepository);
         Console console = new Console(studentService);
         console.runConsole();
-
-        System.out.println("Hello world!");
 
     }
 

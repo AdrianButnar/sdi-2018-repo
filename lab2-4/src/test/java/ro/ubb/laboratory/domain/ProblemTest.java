@@ -59,14 +59,14 @@ public class ProblemTest {
     @Test
     public void getNumber() throws Exception {
         assertEquals("Something went wrong in the Problem NUMBER getter",
-                TEXT, problem.getText());
+                NUMBER, problem.getNumber());
     }
 
     @Test
     public void setNumber() throws Exception {
         problem.setNumber(NEW_NUMBER);
         assertEquals("Something went wrong in the Problem NUMBER setter",
-                TEXT, problem.getText());
+                NEW_NUMBER, problem.getNumber());
     }
 
     @Test
