@@ -3,17 +3,26 @@ package ro.ubb.laboratory.domain;
 import java.util.Objects;
 
 /**
- * <h2> Problems class </h2>
+ * <h2> Problem class </h2>
  * <p> Problem </p>
- * @version 1.0.0
+ * @version 1.0.1
  */
-public class Problems extends BaseEntity<Long>  {
+public class Problem extends BaseEntity<Long>  {
     private int number;
     private String text;
+    private int grade;
 
-    public Problems(int number, String text) {
+    public Problem(int number, String text) {
         this.number = number;
         this.text = text;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 
     public int getNumber() {
@@ -36,9 +45,9 @@ public class Problems extends BaseEntity<Long>  {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Problems problems = (Problems) o;
-        return number == problems.number &&
-                Objects.equals(text, problems.text);
+        Problem problem = (Problem) o;
+        return number == problem.number &&
+                Objects.equals(text, problem.text);
     }
 
     @Override
@@ -49,7 +58,7 @@ public class Problems extends BaseEntity<Long>  {
 
     @Override
     public String toString() {
-        return "Problems{" +
+        return "Problem{" +
                 "number=" + number +
                 ", text='" + text + '\'' +
                 '}';

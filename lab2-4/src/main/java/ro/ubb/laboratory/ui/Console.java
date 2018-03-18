@@ -1,6 +1,6 @@
 package ro.ubb.laboratory.ui;
 
-import ro.ubb.laboratory.domain.Problems;
+import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
 import ro.ubb.laboratory.domain.validators.*;
 import ro.ubb.laboratory.service.StudentService;
@@ -127,7 +127,7 @@ public class Console {
 
 //    private void addProblem() {
 //        try {
-//            Problems problem = readProblem();
+//            Problem problem = readProblem();
 //            if(problem==null)
 //                return;
 //            .addStudent(problem);
@@ -192,7 +192,7 @@ public class Console {
     return null;
     }
 
-    private Problems readProblem() {
+    private Problem readProblem() {
 
         try {
             Scanner sc = new Scanner(System.in);
@@ -203,7 +203,7 @@ public class Console {
             System.out.print("Enter text: ");
             String text = sc.nextLine();
 
-            Problems problem = new Problems(Integer.parseInt(number), text);
+            Problem problem = new Problem(Integer.parseInt(number), text);
 
             if (isLong(id))
                 problem.setId(Long.parseLong(id));
