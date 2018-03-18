@@ -149,28 +149,14 @@ public class Console {
             sv.validate(student);
 
             return student;
-
-
         }
-<<<<<<< HEAD
-        catch (ValidatorException ve) {
-            ve.printStackTrace();
-            myWait(1);
 
-
-        }
-        catch (IllegalIdException iid){
-            iid.printStackTrace();
-            myWait(1);
-
-        }
-=======
         catch (IllegalIdException|ValidatorException ex) {
             ex.printStackTrace();
+            myWait(1);
 
         }
 
->>>>>>> 9c245da0838aacee07993c9f651f647e91c5a531
 
     return null;
     }

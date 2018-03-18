@@ -34,6 +34,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import ro.ubb.laboratory.domain.Problems;
 import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.domain.validators.InexistentStudentException;
 
 import java.util.Arrays;
 
@@ -82,6 +83,10 @@ public class InMemoryRepositoryTest {
 
     }
 
+    @Test(expected = InexistentStudentException.class)
+    public void testInexistentStudent(){
+        studentRepository.remove(93L);
+    }
 
     @Test
     public void findOne() throws Exception {
