@@ -111,12 +111,12 @@ public class Console {
             Scanner sc = new Scanner(System.in);
             String id = sc.nextLine();
             if (!isLong(id)){
-                throw new InexistentStudentException("Invalid id!\n");
+                throw new EntityNonExistentException("Invalid id!\n");
             }
             studentService.removeStudent(Long.parseLong(id));
             System.out.println("Student successfully removed!");
         }
-        catch (InexistentStudentException se){
+        catch (EntityNonExistentException se){
             se.printStackTrace();
             myWait(1);
         }
@@ -202,8 +202,8 @@ public class Console {
             else
                 throw new IllegalIdException("Invalid id\n");
 
-            StudentValidator sv = new StudentValidator();
-            sv.validate(student);
+//            StudentValidator sv = new StudentValidator();
+//            sv.validate(student);
             return student;
         }
         catch (IllegalIdException|ValidatorException ex) {
