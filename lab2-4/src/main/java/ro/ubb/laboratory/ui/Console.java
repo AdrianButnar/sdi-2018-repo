@@ -34,6 +34,7 @@ public class Console {
                         "5. Show all problems\n"+
                         "6. Remove a problem \n"+
                         "7. Assign problem form repository to a student\n"+
+                        "8. Show problems assigned to a student\n"+
                         "0. Exit\n\n"+
                         "Choose one of the commands above:\n "+
                         "----------------------------------------------------");
@@ -67,11 +68,38 @@ public class Console {
                 case "6":
                     removeProblem();
                     continue;
+                case "7":
+                    assignProblemToStudent();
+                    continue;
+                case "8":
+                    showAllProblemsOfAStudent();
+                    continue;
                 case "0":
                     System.exit(0);
             }
         }
 
+    }
+
+    private void showAllProblemsOfAStudent() {
+        try {
+            System.out.println("Enter a student id: ");
+            Scanner sc = new Scanner(System.in);
+            String studentId = sc.nextLine();
+            if (!isLong(studentId)) {
+                throw new EntityNonExistentException("Invalid id!\n");
+            }
+            Set<Student> students = this.studentService.getAllStudents();
+            for (Student s : students) {
+                if (s.getId() == Integer.parseInt(studentId)) {
+                    System.out.println(s.toString());
+                }
+            }
+
+        } catch (EntityNonExistentException ex) {
+            ex.printStackTrace();
+            myWait(1);
+        }
     }
 
     /**
@@ -100,6 +128,45 @@ public class Console {
     private void printAllProblems() {
         Set<Problem> problems = problemService.getAllProblems();
         problems.stream().forEach(System.out::println);
+    }
+
+    private void assignProblemToStudent()
+    {
+        try {
+            System.out.println("Enter a student id: ");
+            Scanner sc = new Scanner(System.in);
+            String studentId = sc.nextLine();
+
+            System.out.println("Enter a problem id: ");
+            String problemId = sc.nextLine();
+            if (!isLong(studentId) && !isLong(problemId)) {
+                throw new EntityNonExistentException("Invalid id!\n");
+            }
+            Set<Student> students = this.studentService.getAllStudents();
+            Set<Problem> problems = this.problemService.getAllProblems();
+            boolean problemExists = false;
+            for (Problem pb : problems) {
+                if (pb.getId() == Integer.parseInt(problemId)) {
+                    problemExists = true;
+                }
+            }
+            if (problemExists)
+            {
+                for (Student s : students) {
+                    if (s.getId() == Integer.parseInt(studentId)) {
+                        s.addProblem(Integer.parseInt(problemId));
+                    }
+                }
+                System.out.println("Problem " + problemId + " added to student " + studentId + ".");
+            }
+            else
+                System.out.println("Problem doesn't exist!");
+        }
+        catch (EntityNonExistentException ex)
+        {
+            ex.printStackTrace();
+            myWait(1);
+        }
     }
 
     /**
@@ -150,7 +217,6 @@ public class Console {
         catch (StudentCannotBeSavedException se){
             se.printStackTrace();
             myWait(1);
-
         }
     }
 
