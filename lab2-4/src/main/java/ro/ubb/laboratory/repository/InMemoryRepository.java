@@ -68,7 +68,7 @@ public class InMemoryRepository<ID, T extends BaseEntity<ID>> implements Reposit
 //        }
         //validator.validate(entity);
         if (findOne(entity.getId()).isPresent())
-            throw new EntityPresentException("Student already in list!\n");
+            throw new EntityPresentException("Entity already in list!\n");
         return Optional.ofNullable(entities.putIfAbsent(entity.getId(), entity));
     }
 
