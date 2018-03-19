@@ -1,5 +1,9 @@
 package ro.ubb.laboratory.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 /**
  * <h2> Student class </h2>
  * <p> Student </p>
@@ -9,16 +13,11 @@ package ro.ubb.laboratory.domain;
 public class Student extends BaseEntity<Long> {
     private String serialNumber;
     private String name;
+    private List<Problem> problemList = new ArrayList<>();
 
     public Student() {
 
     }
-
-//    public Student(String serialNumber,String Name, String id){
-//        this.serialNumber = serialNumber;
-//        this.name = name;
-//        this.setId(id);
-//    }
 
     public Student(String serialNumber, String Name) {
         this.serialNumber = serialNumber;
@@ -47,6 +46,22 @@ public class Student extends BaseEntity<Long> {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Assigns a problem to this student.
+     * @param pb - pproblem to be added to the list
+     */
+    public void addProblem(Problem pb) {
+        problemList.add(pb);
+    }
+
+    /**
+     * Gets the number of assigned problem this student has.
+     * @return - the number of problems
+     */
+    public int getNumberOfProblems() {
+        return problemList.size();
     }
 
     /**
@@ -86,8 +101,9 @@ public class Student extends BaseEntity<Long> {
     @Override
     public String toString() {
         return "Student {" +
-                "SerialNumber ='" + serialNumber + '\'' +
-                ", Name='" + name + '\'' +
+                "ID = " + this.getId() +
+                ", 1SerialNumber = '" + serialNumber + '\'' +
+                ", Name = '" + name + '\'' +
                 '}';
     }
 }

@@ -27,13 +27,18 @@
 package ro.ubb.laboratory;
 
 import ro.ubb.laboratory.domain.BaseEntity;
+import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.domain.validators.StudentValidator;
+import ro.ubb.laboratory.domain.validators.Validator;
 import ro.ubb.laboratory.repository.*;
+import ro.ubb.laboratory.service.ProblemService;
 import ro.ubb.laboratory.service.StudentService;
 import ro.ubb.laboratory.ui.Console;
 
 import java.io.File;
 import java.util.Scanner;
+import java.io.IOException;
 
 /**
  * <h1>
@@ -77,13 +82,35 @@ public class Main {
 //        console.runConsole();
 
         //xml-repo
-        Repository<Long, Student> studentRepository =
-                new StudentXmlRepository("./data/students.xml");
-        StudentService studentService = new StudentService(studentRepository);
-        Console console = new Console(studentService);
-        console.runConsole();
+//         Repository<Long, Student> studentRepository =
+//                 new StudentXmlRepository("./data/students.xml");
+//         StudentService studentService = new StudentService(studentRepository);
+//         Console console = new Console(studentService);
+//         console.runConsole();
+      
+      
+//        In memory repository
+//        Repository<Long, Student> studentRepository = new InMemoryRepository<>();
+//        StudentService studentService = new StudentService(studentRepository);
+//        Console console = new Console(studentService);
+//        console.runConsole();
+//
+//        System.out.println("Hello world!");
 
-        System.out.println("Hello world!");
+//       File Repository
+        try {
+            System.out.println(new File(".").getCanonicalPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //in file repo
+        Validator<Student> studentValidator = new StudentValidator();
+        Repository<Long, Student> studentRepository = new FileRepository(studentValidator, ".\\data\\studentFile");
+        Repository<Long, Student> problemRepository = new FileRepository(studentValidator, ".\\data\\problemFile");
+        StudentService studentService = new StudentService(studentRepository);
+       // ProblemService problemService = new ProblemService(studentRepository);
+        Console console = new Console(studentService, problemService);
+        console.runConsole();
 
     }
 

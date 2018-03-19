@@ -30,24 +30,24 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
-
 import static org.junit.Assert.*;
 
-public class ProblemsTest {
+public class ProblemTest {
     private static final Long ID = 1L;
     private static final Long NEW_ID = 2L;
     private  static final String TEXT = "Add 2 and 2. What is the result?";
     private static final String NEW_TEXT = "Substract 2 from 3. What is the result?";
     private static final int NUMBER = 7;
     private static final int NEW_NUMBER = 8;
+    private static final int GRADE = 4;
+    private static final int NEW_GRADE = 9;
 
-
-    private Problems problem;
+    private Problem problem;
 
     @Before
     public void setUp() throws Exception {
-        problem = new Problems(NUMBER, TEXT);
+        problem = new Problem(NUMBER, TEXT);
+        problem.setGrade(GRADE);
         problem.setId(ID);
     }
 
@@ -59,14 +59,14 @@ public class ProblemsTest {
     @Test
     public void getNumber() throws Exception {
         assertEquals("Something went wrong in the Problem NUMBER getter",
-                TEXT, problem.getText());
+                NUMBER, problem.getNumber());
     }
 
     @Test
     public void setNumber() throws Exception {
         problem.setNumber(NEW_NUMBER);
         assertEquals("Something went wrong in the Problem NUMBER setter",
-                TEXT, problem.getText());
+                NEW_NUMBER, problem.getNumber());
     }
 
     @Test
@@ -80,6 +80,20 @@ public class ProblemsTest {
         problem.setText(NEW_TEXT);
         assertEquals("Something went wrong in the Problem TEXT setter",
                 NEW_TEXT, problem.getText());
+    }
+
+    @Test
+    public void getGrade() throws Exception {
+        assertEquals("Something went wrong in the Problem GRADE getter",
+                GRADE, problem.getGrade());
+    }
+
+    @Test
+    public void setGrade() throws Exception {
+        problem.setGrade(NEW_GRADE);
+        assertEquals("Something went wrong in the Problem GRADE setter",
+                NEW_GRADE, problem.getGrade());
+
     }
     @Test
     public void getID() throws Exception {

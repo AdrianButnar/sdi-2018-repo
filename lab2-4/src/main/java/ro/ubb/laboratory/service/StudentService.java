@@ -37,7 +37,7 @@ import java.util.stream.StreamSupport;
 
 /**
  * @author Alexandru Buhai
- * @version 1.0.0
+ * @version 1.0.1
  */
 
 public class StudentService {

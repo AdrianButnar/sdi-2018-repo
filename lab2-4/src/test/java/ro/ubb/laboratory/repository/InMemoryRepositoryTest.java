@@ -26,15 +26,14 @@
 
 package ro.ubb.laboratory.repository;
 
-import org.hamcrest.Matcher;
-import org.hamcrest.core.Every;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import ro.ubb.laboratory.domain.Problems;
+import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
 import ro.ubb.laboratory.domain.validators.InexistentStudentException;
+import ro.ubb.laboratory.domain.validators.StudentValidator;
+import ro.ubb.laboratory.domain.validators.Validator;
 
 import java.util.Arrays;
 
@@ -42,16 +41,17 @@ import static org.junit.Assert.*;
 
 public class InMemoryRepositoryTest {
 
+    Validator<Student> studentValidator = new StudentValidator();
 
-    private Repository<Long, Student> studentRepository = new InMemoryRepository<>();
-    private Repository<Long, Problems> problemsRepository = new InMemoryRepository<>();
+    private Repository<Long, Student> studentRepository = new InMemoryRepository<>(studentValidator);
+    //private Repository<Long, Problem> problemsRepository = new InMemoryRepository<>(studentValidator);
 
-    Student student1;
-    Student student2;
-    Student student3;
-    Problems problem1;
-    Problems problem2;
-    Problems problem3;
+    private Student student1;
+    private Student student2;
+    private Student student3;
+//    private Problem problem1;
+//    private Problem problem2;
+//    private Problem problem3;
 
 
     @Before
@@ -63,19 +63,19 @@ public class InMemoryRepositoryTest {
         student2.setId(34L);
         student3 = new Student("121314", "Ioana");
         student3.setId(55L);
-        problem1 = new Problems(2, "Do 1 + 1!");
-        problem1.setId(1L);
-        problem2 = new Problems(2, "Do 1 + 2!");
-        problem2.setId(2L);
-        problem3 = new Problems(2, "Do 1 + 3!");
-        problem3.setId(3L);
+//        problem1 = new Problem(2, "Do 1 + 1!");
+//        problem1.setId(1L);
+//        problem2 = new Problem(2, "Do 1 + 2!");
+//        problem2.setId(2L);
+//        problem3 = new Problem(2, "Do 1 + 3!");
+//        problem3.setId(3L);
 
         studentRepository.save(student1);
         studentRepository.save(student2);
         studentRepository.save(student3);
-        problemsRepository.save(problem1);
-        problemsRepository.save(problem2);
-        problemsRepository.save(problem3);
+//        problemsRepository.save(problem1);
+//        problemsRepository.save(problem2);
+//        problemsRepository.save(problem3);
     }
 
     @After
@@ -91,7 +91,7 @@ public class InMemoryRepositoryTest {
     @Test
     public void findOne() throws Exception {
       assertTrue("Something went wrong in the Repo Student finder", studentRepository.findOne(21L).isPresent() && student1.equals(studentRepository.findOne(21L).get()));
-      assertTrue("Something went wrong in the Repo Problem finder", problemsRepository.findOne(1L).isPresent() && problem1.equals(problemsRepository.findOne(1L).get()));
+//      assertTrue("Something went wrong in the Repo Problem finder", problemsRepository.findOne(1L).isPresent() && problem1.equals(problemsRepository.findOne(1L).get()));
 
     }
 
@@ -110,12 +110,12 @@ public class InMemoryRepositoryTest {
     public void save() throws Exception {
         Student student4 = new Student("151617", "Carmen");
         student4.setId(89L);
-        Problems problem4 = new Problems(4, "Do 1 + 4!");
+        Problem problem4 = new Problem(4, "Do 1 + 4!");
         problem4.setId(4L);
         studentRepository.save(student4);
-        problemsRepository.save(problem4);
+//        problemsRepository.save(problem4);
         assertTrue("Something went wrong in the Repo Student save", studentRepository.findOne(89L).isPresent() && student4.equals((studentRepository.findOne(89L).get())));
-        assertTrue("Something went wrong in the Repo Problem save", problemsRepository.findOne(4L).isPresent() && problem4.equals((problemsRepository.findOne(4L).get())));
+//        assertTrue("Something went wrong in the Repo Problem save", problemsRepository.findOne(4L).isPresent() && problem4.equals((problemsRepository.findOne(4L).get())));
 
     }
 
