@@ -74,7 +74,8 @@ public class FileRepository extends InMemoryRepository<Long, Student>  {
                     }
                 }
                 if(fileName.equals(".\\data\\problemFile")) {
-                    throw new TestingException("not implemented yet!");
+                    System.out.println("Not ready to read form problem file");
+                    //throw new TestingException("not implemented yet!");
 //                    Long id = Long.valueOf(items.get(0));
 //                    String serialNumber = items.get(1);
 //                    String name = items.get((2));

@@ -27,10 +27,12 @@
 package ro.ubb.laboratory;
 
 import ro.ubb.laboratory.domain.BaseEntity;
+import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
 import ro.ubb.laboratory.domain.validators.StudentValidator;
 import ro.ubb.laboratory.domain.validators.Validator;
 import ro.ubb.laboratory.repository.*;
+import ro.ubb.laboratory.service.ProblemService;
 import ro.ubb.laboratory.service.StudentService;
 import ro.ubb.laboratory.ui.Console;
 
@@ -90,8 +92,10 @@ public class Main {
         //in file repo
         Validator<Student> studentValidator = new StudentValidator();
         Repository<Long, Student> studentRepository = new FileRepository(studentValidator, ".\\data\\studentFile");
+        Repository<Long, Student> problemRepository = new FileRepository(studentValidator, ".\\data\\problemFile");
         StudentService studentService = new StudentService(studentRepository);
-        Console console = new Console(studentService);
+       // ProblemService problemService = new ProblemService(studentRepository);
+        Console console = new Console(studentService, problemService);
         console.runConsole();
 
     }

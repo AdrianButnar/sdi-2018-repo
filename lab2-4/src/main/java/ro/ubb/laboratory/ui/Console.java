@@ -17,9 +17,11 @@ import java.util.concurrent.TimeUnit;
 
 public class Console {
     private StudentService studentService;
+    private ProblemService problemService;
 
-    public Console(StudentService studentService) {
+    public Console(StudentService studentService, ProblemService problemService) {
         this.studentService = studentService;
+        this.problemService = problemService;
     }
 
     private void printMenu(){
@@ -57,13 +59,13 @@ public class Console {
                     removeStudent();
                     continue;
                 case "4":
-
+                    addProblems();
                     continue;
                 case "5":
 
                     continue;
                 case "6":
-
+                    removeProblem();
                     continue;
                 case "0":
                     System.exit(0);
@@ -84,10 +86,20 @@ public class Console {
         }
     }
 
-
+    /**
+     * Prints to the standard output all the students in the repository
+     */
     private void printAllStudents() {
         Set<Student> students = studentService.getAllStudents();
         students.stream().forEach(System.out::println);
+    }
+
+    /**
+     * Prints to the standard output all the problems in the repository
+     */
+    private void printAllProblems() {
+        Set<Problem> problems = problemService.getAllProblems();
+        problems.stream().forEach(System.out::println);
     }
 
     /**
@@ -105,6 +117,21 @@ public class Console {
         }
         catch (InexistentStudentException se){
             se.printStackTrace();
+            myWait(1);
+        }
+    }
+    private void removeProblem(){
+        try {
+            System.out.print("Enter id: ");
+            Scanner sc = new Scanner(System.in);
+            String id = sc.nextLine();
+            if (!isLong(id)){
+                throw new EntityNonExistentException("Invalid id!\n");
+            }
+            problemService.removeProblem(Long.parseLong(id));
+        }
+        catch (EntityNonExistentException ex){
+            ex.printStackTrace();
             myWait(1);
         }
     }
@@ -127,12 +154,12 @@ public class Console {
     private void addProblems() {
         try {
             Problem problem = readProblem();
-            if(problem==null)
+            if(problem == null)
                 return;
-            studentService.addStudent(problem);
+            problemService.addProblem(problem);
         }
-        catch (StudentCannotBeSavedException se){
-            se.printStackTrace();
+        catch (EntityCannotBeSavedException ex){
+            ex.printStackTrace();
             myWait(1);
 
         }
@@ -165,7 +192,6 @@ public class Console {
             String serialNumber = sc.nextLine();
             System.out.print("Enter name: ");
             String name = sc.nextLine();
-
             Student student = new Student(serialNumber, name);
 
             if (isLong(id))
@@ -175,10 +201,7 @@ public class Console {
 
             StudentValidator sv = new StudentValidator();
             sv.validate(student);
-
             return student;
-
-
         }
         catch (IllegalIdException|ValidatorException ex) {
             ex.printStackTrace();
