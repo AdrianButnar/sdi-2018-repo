@@ -16,21 +16,38 @@ public class XmlWriter<ID, T extends BaseEntity<ID>> {
         this.fileName = fileName;
     }
 
+    private void writeFirstPart(FileWriter writer){
+        try {
+            String content = "";
+            content += "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + "\n";
+            content += "<students>" + "\n"; //here could be also name of the class
+            content += "\n";
+            writer.write(content);
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+
     public void writeToFile(T entity, Iterable<Student> students) {
         FileWriter writer = null;
         try {
+            writer = new FileWriter(new File(fileName));
+            writeFirstPart(writer);
             String content = "";
             String block = "";
-            //reader = new BufferedReader(new FileReader(fileToBeModified));
             for (Student st : students) {
-                block = "<entity class=\""+st.getClass()+"\">"+"\n"+
-                        "<field name=\"serialNumber\"" +  "type=\"java.lang.String\""+ "value=\"" + st.getSerialNumber()+"\"/>"+"\n"+
-                        "<field name=\"name\"" + "type=\"java.lang.String\"" +  "value=\"" + st.getName()+ "\"/>" + "\n" +
-                        "<field name=\"id\"" +  "type=\"java.lang.Object\"" +  "value=\"" + st.getId() + "\"/>";
+                block = "   <entity class=\""+st.getClass().getName()+"\">"+"\n"+
+                        "       <field name=\"serialNumber\"" + " " + "type=\"java.lang.String\""+ " " +"value=\"" + st.getSerialNumber()+"\"/>"+"\n"+
+                        "       <field name=\"name\"" + " " + "type=\"java.lang.String\"" + " " + "value=\"" + st.getName()+ "\"/>" + "\n" +
+                        "       <field name=\"id\"" + " " + "type=\"java.lang.Object\"" + " " + "value=\"" + st.getId() + "\"/>" + "\n" +
+                        "   </entity>" + "\n";
+
                 content = content + block + System.lineSeparator();
             }
-            writer = new FileWriter(new File(fileName));
             writer.write(content);
+            writer.write(" </students>");
 
 
         } catch (IOException e1) {

@@ -1,6 +1,7 @@
 package ro.ubb.laboratory.repository;
 
 import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.domain.validators.StudentCannotBeSavedException;
 import ro.ubb.laboratory.domain.validators.Validator;
 import ro.ubb.laboratory.domain.validators.ValidatorException;
 import ro.ubb.laboratory.util.XmlReader;
@@ -9,7 +10,7 @@ import ro.ubb.laboratory.util.XmlWriter;
 import java.util.List;
 import java.util.Optional;
 
-public class StudentXmlRepository extends InMemoryRepository {
+public class StudentXmlRepository extends InMemoryRepository<Long,Student> {
     private String fileName;
 
     public StudentXmlRepository(String fileName) {
@@ -29,13 +30,14 @@ public class StudentXmlRepository extends InMemoryRepository {
         }
     }
 
-    public Optional<Student> save(Student entity) throws ValidatorException {
+    @Override
+    public Optional<Student> save(Student entity) throws StudentCannotBeSavedException {
         Optional<Student> optional = super.save(entity);
         if (optional.isPresent()) {
             return optional;
         }
         new XmlWriter<Long, Student>(fileName).writeToFile(entity,super.findAll());
-        return Optional.empty();
+        return optional;
     }
 
 }
