@@ -58,53 +58,53 @@ public class ProblemTest {
 
     @Test
     public void getNumber() throws Exception {
-        assertEquals("Something went wrong in the Problem NUMBER getter",
+        assertEquals("Something went wrong in the ProblemFileRepository NUMBER getter",
                 NUMBER, problem.getNumber());
     }
 
     @Test
     public void setNumber() throws Exception {
         problem.setNumber(NEW_NUMBER);
-        assertEquals("Something went wrong in the Problem NUMBER setter",
+        assertEquals("Something went wrong in the ProblemFileRepository NUMBER setter",
                 NEW_NUMBER, problem.getNumber());
     }
 
     @Test
     public void getText() throws Exception {
-        assertEquals("Something went wrong in the Problem TEXT getter",
+        assertEquals("Something went wrong in the ProblemFileRepository TEXT getter",
                 TEXT, problem.getText());
     }
 
     @Test
     public void setText() throws Exception {
         problem.setText(NEW_TEXT);
-        assertEquals("Something went wrong in the Problem TEXT setter",
+        assertEquals("Something went wrong in the ProblemFileRepository TEXT setter",
                 NEW_TEXT, problem.getText());
     }
 
     @Test
     public void getGrade() throws Exception {
-        assertEquals("Something went wrong in the Problem GRADE getter",
+        assertEquals("Something went wrong in the ProblemFileRepository GRADE getter",
                 GRADE, problem.getGrade());
     }
 
     @Test
     public void setGrade() throws Exception {
         problem.setGrade(NEW_GRADE);
-        assertEquals("Something went wrong in the Problem GRADE setter",
+        assertEquals("Something went wrong in the ProblemFileRepository GRADE setter",
                 NEW_GRADE, problem.getGrade());
 
     }
     @Test
     public void getID() throws Exception {
-        assertEquals("Something went wrong in the Problem ID getter",
+        assertEquals("Something went wrong in the ProblemFileRepository ID getter",
                 TEXT, problem.getText());
     }
 
     @Test
     public void setId() throws Exception {
         problem.setId(NEW_ID);
-        assertEquals("Something went wrong in the Problem ID setter",
+        assertEquals("Something went wrong in the ProblemFileRepository ID setter",
                 TEXT, problem.getText());
     }
 

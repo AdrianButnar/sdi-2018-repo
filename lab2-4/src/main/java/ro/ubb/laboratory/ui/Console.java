@@ -62,7 +62,7 @@ public class Console {
                     addProblems();
                     continue;
                 case "5":
-
+                    printAllProblems();
                     continue;
                 case "6":
                     removeProblem();
@@ -114,6 +114,7 @@ public class Console {
                 throw new InexistentStudentException("Invalid id!\n");
             }
             studentService.removeStudent(Long.parseLong(id));
+            System.out.println("Student successfully removed!");
         }
         catch (InexistentStudentException se){
             se.printStackTrace();
@@ -129,6 +130,8 @@ public class Console {
                 throw new EntityNonExistentException("Invalid id!\n");
             }
             problemService.removeProblem(Long.parseLong(id));
+            System.out.println("Problem successfully removed!");
+
         }
         catch (EntityNonExistentException ex){
             ex.printStackTrace();

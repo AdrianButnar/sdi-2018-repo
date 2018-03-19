@@ -26,9 +26,9 @@
 
 package ro.ubb.laboratory;
 
-import ro.ubb.laboratory.domain.BaseEntity;
 import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.domain.validators.ProblemValidator;
 import ro.ubb.laboratory.domain.validators.StudentValidator;
 import ro.ubb.laboratory.domain.validators.Validator;
 import ro.ubb.laboratory.repository.*;
@@ -76,27 +76,32 @@ public class Main {
     {
 
 //        In memory repository
-//        Repository<Long, Student> studentRepository = new InMemoryRepository<>();
-//        StudentService studentService = new StudentService(studentRepository);
-//        Console console = new Console(studentService);
-//        console.runConsole();
+        Validator<Student> studentValidator = new StudentValidator();
+        Validator<Problem> problemValidator = new ProblemValidator();
+        Repository<Long, Student> studentRepository = new InMemoryRepository(studentValidator);
+        Repository<Long, Problem> problemRepository = new InMemoryRepository(problemValidator);
+        StudentService studentService = new StudentService(studentRepository);
+        ProblemService problemService = new ProblemService(problemRepository);
+        Console console = new Console(studentService, problemService);
+        console.runConsole();
 //
 //        System.out.println("Hello world!");
 
 //       File Repository
-        try {
-            System.out.println(new File(".").getCanonicalPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //in file repo
-        Validator<Student> studentValidator = new StudentValidator();
-        Repository<Long, Student> studentRepository = new FileRepository(studentValidator, ".\\data\\studentFile");
-        Repository<Long, Student> problemRepository = new FileRepository(studentValidator, ".\\data\\problemFile");
-        StudentService studentService = new StudentService(studentRepository);
-       // ProblemService problemService = new ProblemService(studentRepository);
-        Console console = new Console(studentService, problemService);
-        console.runConsole();
+//        try {
+//            System.out.println(new File(".").getCanonicalPath());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        //in file repo
+//        Validator<Student> studentValidator = new StudentValidator();
+//        Validator<Problem> problemValidator = new ProblemValidator();
+//        Repository<Long, Student> studentRepository = new StudentFileRepository(studentValidator, ".\\data\\studentFile");
+//        Repository<Long, Problem> problemRepository = new ProblemFileRepository(problemValidator, ".\\data\\problemFile");
+//        StudentService studentService = new StudentService(studentRepository);
+//        ProblemService problemService = new ProblemService(problemRepository);
+//        Console console = new Console(studentService, problemService);
+//        console.runConsole();
 
     }
 

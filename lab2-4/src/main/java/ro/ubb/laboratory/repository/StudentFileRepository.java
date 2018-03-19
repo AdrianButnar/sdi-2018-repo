@@ -43,10 +43,10 @@ import java.util.Optional;
 /**
  * @author Alexandru Buhai
  */
-public class FileRepository extends InMemoryRepository<Long, Student>  {
+public class StudentFileRepository extends InMemoryRepository<Long, Student>  {
     private String fileName;
 
-    public FileRepository(Validator<Student> validator, String fileName) {
+    public StudentFileRepository(Validator<Student> validator, String fileName) {
         super(validator);
         this.fileName = fileName;
         System.out.println(fileName);
@@ -73,22 +73,7 @@ public class FileRepository extends InMemoryRepository<Long, Student>  {
                         e.printStackTrace();
                     }
                 }
-                if(fileName.equals(".\\data\\problemFile")) {
-                    System.out.println("Not ready to read form problem file");
-                    //throw new TestingException("not implemented yet!");
-//                    Long id = Long.valueOf(items.get(0));
-//                    String serialNumber = items.get(1);
-//                    String name = items.get((2));
-//
-//                    Student student = new Student(serialNumber, name);
-//                    student.setId(id);
-//
-//                    try {
-//                        super.save(student);
-//                    } catch (ValidatorException e) {
-//                        e.printStackTrace();
-//                    }
-                }
+
             });
         } catch (IOException ex) {
             ex.printStackTrace();

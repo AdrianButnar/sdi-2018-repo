@@ -102,7 +102,7 @@ public class Student extends BaseEntity<Long> {
     public String toString() {
         return "Student {" +
                 "ID = " + this.getId() +
-                ", 1SerialNumber = '" + serialNumber + '\'' +
+                ", SerialNumber = '" + serialNumber + '\'' +
                 ", Name = '" + name + '\'' +
                 '}';
     }
