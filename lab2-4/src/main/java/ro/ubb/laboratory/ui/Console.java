@@ -181,6 +181,16 @@ public class Console {
         }
     }
 
+    private static boolean isInteger(String id){
+        try{
+            Integer id1 = Integer.parseInt(id);
+            return true;
+        }
+        catch (Exception ex){
+            return false;
+        }
+    }
+
     /**
      * Reads a new student from the standard input
      * @return The read student if the data was filled correctly or null otherwise
@@ -230,6 +240,10 @@ public class Console {
             String number = sc.nextLine();
             System.out.print("Enter text: ");
             String text = sc.nextLine();
+
+            if (!isInteger(number)) {
+                throw new IllegalIdException("Invalid number!\n");
+            }
 
             Problem problem = new Problem(Integer.parseInt(number), text);
 

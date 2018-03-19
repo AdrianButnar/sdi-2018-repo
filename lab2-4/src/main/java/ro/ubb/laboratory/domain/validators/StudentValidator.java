@@ -9,8 +9,6 @@ public class StudentValidator implements Validator<Student> {
 
         String message = "";
 
-        //s.getName().chars().filter((c)->{c != ''})
-
         if (s.getId()<0)
             message = message + "Student cannot have a negative id!\n";
 
@@ -19,7 +17,6 @@ public class StudentValidator implements Validator<Student> {
 
         if(s.getSerialNumber().equals(""))
             message = message + "Serial number cannot be left empty!\n";
-
 
         if (!(message.equals("")))
             throw new ValidatorException(message);
