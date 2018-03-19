@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<students>
+
+   <entity class="ro.ubb.laboratory.domain.Student">
+       <field name="serialNumber" type="java.lang.String" value="sad"/>
+       <field name="name" type="java.lang.String" value="asd"/>
+       <field name="id" type="java.lang.Object" value="9"/>
+   </entity>
+
+   <entity class="ro.ubb.laboratory.domain.Student">
+       <field name="serialNumber" type="java.lang.String" value="sn1"/>
+       <field name="name" type="java.lang.String" value="s1"/>
+       <field name="id" type="java.lang.Object" value="1"/>
+   </entity>
+
+   <entity class="ro.ubb.laboratory.domain.Student">
+       <field name="serialNumber" type="java.lang.String" value="sn2"/>
+       <field name="name" type="java.lang.String" value="s2"/>
+       <field name="id" type="java.lang.Object" value="2"/>
+   </entity>
+
+   <entity class="ro.ubb.laboratory.domain.Student">
+       <field name="serialNumber" type="java.lang.String" value="sn3"/>
+       <field name="name" type="java.lang.String" value="s3"/>
+       <field name="id" type="java.lang.Object" value="3"/>
+   </entity>
+
+   <entity class="ro.ubb.laboratory.domain.Student">
+       <field name="serialNumber" type="java.lang.String" value="sn4"/>
+       <field name="name" type="java.lang.String" value="s4"/>
+       <field name="id" type="java.lang.Object" value="4"/>
+   </entity>
+
+   <entity class="ro.ubb.laboratory.domain.Student">
+       <field name="serialNumber" type="java.lang.String" value="sn5"/>
+       <field name="name" type="java.lang.String" value="s5"/>
+       <field name="id" type="java.lang.Object" value="5"/>
+   </entity>
+
+   <entity class="ro.ubb.laboratory.domain.Student">
+       <field name="serialNumber" type="java.lang.String" value="sn6"/>
+       <field name="name" type="java.lang.String" value="s6"/>
+       <field name="id" type="java.lang.Object" value="6"/>
+   </entity>
+
+ </students>

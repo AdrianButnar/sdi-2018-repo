@@ -84,6 +84,10 @@ public class InMemoryRepositoryTest {
 
     }
 
+    @Test(expected = InexistentStudentException.class)
+    public void testInexistentStudent(){
+        studentRepository.remove(93L);
+    }
 
     @Test
     public void findOne() throws Exception {
