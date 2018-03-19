@@ -37,6 +37,7 @@ import ro.ubb.laboratory.service.StudentService;
 import ro.ubb.laboratory.ui.Console;
 
 import java.io.File;
+import java.util.Scanner;
 import java.io.IOException;
 
 /**
@@ -72,9 +73,22 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
+        //In-Memory repository
+//        Repository<Long, Student> studentRepository = new InMemoryRepository<>();
+//        StudentService studentService = new StudentService(studentRepository);
+//        Console console = new Console(studentService);
+//        console.runConsole();
 
+        //xml-repo
+//         Repository<Long, Student> studentRepository =
+//                 new StudentXmlRepository("./data/students.xml");
+//         StudentService studentService = new StudentService(studentRepository);
+//         Console console = new Console(studentService);
+//         console.runConsole();
+      
+      
 //        In memory repository
 //        Repository<Long, Student> studentRepository = new InMemoryRepository<>();
 //        StudentService studentService = new StudentService(studentRepository);
