@@ -84,32 +84,32 @@ public class Main {
       
       
 //        In memory repository
-        Validator<Student> studentValidator = new StudentValidator();
-        Validator<Problem> problemValidator = new ProblemValidator();
-        Repository<Long, Student> studentRepository = new InMemoryRepository(studentValidator);
-        Repository<Long, Problem> problemRepository = new InMemoryRepository(problemValidator);
-        StudentService studentService = new StudentService(studentRepository);
-        ProblemService problemService = new ProblemService(problemRepository);
-        Console console = new Console(studentService, problemService);
-        console.runConsole();
-//
-//        System.out.println("Hello world!");
-
-//       File Repository
-//        try {
-//            System.out.println(new File(".").getCanonicalPath());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        //in file repo
 //        Validator<Student> studentValidator = new StudentValidator();
 //        Validator<Problem> problemValidator = new ProblemValidator();
-//        Repository<Long, Student> studentRepository = new StudentFileRepository(studentValidator, ".\\data\\studentFile");
-//        Repository<Long, Problem> problemRepository = new ProblemFileRepository(problemValidator, ".\\data\\problemFile");
+//        Repository<Long, Student> studentRepository = new InMemoryRepository(studentValidator);
+//        Repository<Long, Problem> problemRepository = new InMemoryRepository(problemValidator);
 //        StudentService studentService = new StudentService(studentRepository);
 //        ProblemService problemService = new ProblemService(problemRepository);
 //        Console console = new Console(studentService, problemService);
 //        console.runConsole();
+//
+//        System.out.println("Hello world!");
+
+//       File Repository
+        try {
+            System.out.println(new File(".").getCanonicalPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //in file repo
+        Validator<Student> studentValidator = new StudentValidator();
+        Validator<Problem> problemValidator = new ProblemValidator();
+        Repository<Long, Student> studentRepository = new StudentFileRepository(studentValidator, ".\\data\\studentFile");
+        Repository<Long, Problem> problemRepository = new ProblemFileRepository(problemValidator, ".\\data\\problemFile");
+        StudentService studentService = new StudentService(studentRepository);
+        ProblemService problemService = new ProblemService(problemRepository);
+        Console console = new Console(studentService, problemService);
+        console.runConsole();
 
     }
 

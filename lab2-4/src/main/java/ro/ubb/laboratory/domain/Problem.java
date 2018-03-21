@@ -17,6 +17,10 @@ public class Problem extends BaseEntity<Long>  {
         this.number = number;
         this.text = text;
     }
+    public Problem() {
+        this.number = 0;
+        this.text = "";
+    }
 
     public int getGrade() {
         return grade;
