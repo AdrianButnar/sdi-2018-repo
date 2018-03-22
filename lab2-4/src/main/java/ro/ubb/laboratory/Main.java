@@ -37,6 +37,7 @@ import ro.ubb.laboratory.service.StudentService;
 import ro.ubb.laboratory.ui.Console;
 
 import java.io.File;
+import java.sql.*;
 import java.util.Scanner;
 import java.io.IOException;
 
@@ -73,16 +74,15 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception
-    {
+    public static void main(String[] args) throws Exception {
         //xml-repo
 //         Repository<Long, Student> studentRepository =
 //                 new StudentXmlRepository("./data/students.xml");
 //         StudentService studentService = new StudentService(studentRepository);
 //         Console console = new Console(studentService);
 //         console.runConsole();
-      
-      
+
+
 //        In memory repository
 //        Validator<Student> studentValidator = new StudentValidator();
 //        Validator<Problem> problemValidator = new ProblemValidator();
@@ -96,22 +96,53 @@ public class Main {
 //        System.out.println("Hello world!");
 
 //       File Repository
-        try {
-            System.out.println(new File(".").getCanonicalPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //in file repo
+//        Validator<Student> studentValidator = new StudentValidator();
+//        Validator<Problem> problemValidator = new ProblemValidator();
+//        Repository<Long, Student> studentRepository = new StudentFileRepository(studentValidator, ".\\data\\studentFile");
+//        Repository<Long, Problem> problemRepository = new ProblemFileRepository(problemValidator, ".\\data\\problemFile");
+//        StudentService studentService = new StudentService(studentRepository);
+//        ProblemService problemService = new ProblemService(problemRepository);
+//        Console console = new Console(studentService, problemService);
+//        console.runConsole();
+
+
+        //in database repo
         Validator<Student> studentValidator = new StudentValidator();
         Validator<Problem> problemValidator = new ProblemValidator();
-        Repository<Long, Student> studentRepository = new StudentFileRepository(studentValidator, ".\\data\\studentFile");
+        Repository<Long, Student> studentRepository = new StudentDbRepository(studentValidator, "jdbc:postgresql://localhost:5432/Mppdatabase", "postgres", "parola12");
         Repository<Long, Problem> problemRepository = new ProblemFileRepository(problemValidator, ".\\data\\problemFile");
         StudentService studentService = new StudentService(studentRepository);
         ProblemService problemService = new ProblemService(problemRepository);
         Console console = new Console(studentService, problemService);
         console.runConsole();
 
+
     }
-
-
 }
+
+
+/*
+Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager
+                    .getConnection("jdbc:postgresql://localhost:5432/Mppdatabase",
+                            "postgres", "parola12");
+            System.out.println("Opened database successfully");
+
+            stmt = c.createStatement();
+            String sql = "CREATE TABLE article2 ( " +
+            "article_id bigserial primary key," +
+            "article_name varchar(20) NOT NULL," +
+            "article_desc text NOT NULL," +
+            "date_added timestamp default NULL)";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Table created successfully");
+ */
