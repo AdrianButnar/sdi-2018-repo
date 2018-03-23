@@ -6,9 +6,9 @@ import ro.ubb.laboratory.domain.validators.*;
 import ro.ubb.laboratory.service.ProblemService;
 import ro.ubb.laboratory.service.StudentService;
 
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author Adrian Butnar
@@ -27,15 +27,17 @@ public class Console {
     private void printMenu(){
         System.out.println(
                 "\n\n----------------------Menu----------------------\n\n"+
-                        "1. Add a new student to the repository\n"+
-                        "2. Show all students\n"+
-                        "3. Remove a student\n"+
-                        "4. Add a new problem to the repository of problems\n"+
-                        "5. Show all problems\n"+
-                        "6. Remove a problem \n"+
-                        "7. Assign problem from repository to a student\n"+
-                        "8. Show problems assigned to a student\n"+
-                        "0. Exit\n\n"+
+                        "1.  Add a new student to the repository\n"+
+                        "2.  Show all students\n"+
+                        "3.  Remove a student\n"+
+                        "4.  Add a new problem to the repository of problems\n"+
+                        "5.  Show all problems\n"+
+                        "6.  Remove a problem \n"+
+                        "7.  Assign problem from repository to a student\n"+
+                        "8.  Show problems assigned to a student\n"+
+                        "9.  Find a student by name(supports partial match)\n"+
+                        "10. Show the most assigned problems\n"+
+                        "0.  Exit\n\n"+
                         "Choose one of the commands above:\n "+
                         "----------------------------------------------------");
 
@@ -74,11 +76,66 @@ public class Console {
                 case "8":
                     showAllProblemsOfAStudent();
                     continue;
+                case "9":
+                    showStudentsByNameMatch();
+                    continue;
+                case "10":
+                    showTheMostAssignedProblems();
+                    continue;
                 case "0":
                     System.exit(0);
             }
         }
 
+    }
+
+    private void showTheMostAssignedProblems() {
+        List<Integer> allProblems = new ArrayList<>();
+        for (Student s :studentService.getAllStudents()){
+            allProblems.addAll(s.getProblemList());
+        }
+        Map<Object, Long> times = allProblems.stream().collect(Collectors.groupingBy(e -> e,Collectors.counting()));
+        Comparator<Object> comparator = new Comparator<Object>() { //in my case not, so warning dismissed! *drop the mic*
+            @Override
+            public int compare(Object key1, Object key2) {
+                int returned = times.get(key2).intValue()-times.get(key1).intValue();
+
+                if (returned == 0 && !key1.equals(key2))
+                    returned = -1;
+
+                return returned;
+
+            }
+        };
+        TreeMap<Object,Long> tm = new TreeMap<Object,Long>(comparator);
+        tm.putAll(times);
+        for (Object item:tm.keySet()){
+            System.out.println("Problem "+ item + " was assigned " + times.get(item) + " time/s.");
+        }
+    }
+
+    private void showStudentsByNameMatch() {
+        try{
+            System.out.print("Enter a name: ");
+            Scanner sc = new Scanner(System.in);
+            String name = sc.nextLine();
+            Set<Student> students = studentService.getAllStudents();
+            boolean found=false;
+            for (Student s:students){
+                if (s.getName().contains(name)){
+                    System.out.println(s);
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new EntityNonExistentException("No student matches this name!");
+            }
+
+        }
+        catch (EntityNonExistentException e){
+            e.printStackTrace();
+            myWait(1);
+        }
     }
 
     private void showAllProblemsOfAStudent() {
