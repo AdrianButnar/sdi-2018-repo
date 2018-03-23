@@ -60,7 +60,6 @@ public class ProblemFileRepository extends InMemoryRepository<Long, Problem> {
             Files.lines(path).forEach(line -> {
                 List<String> items = Arrays.asList(line.split(","));
                 if (fileName.equals(".\\data\\problemFile")) {
-                    System.out.println("Not ready to read form problem file");
                     Long id = Long.valueOf(items.get(0));
                     int number = Integer.parseInt(items.get(1));
                     String text = items.get((2));
