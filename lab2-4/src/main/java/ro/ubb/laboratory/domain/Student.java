@@ -14,6 +14,20 @@ public class Student extends BaseEntity<Long> {
     private String name;
     private List<Integer> problemList = new ArrayList<>();
 
+    public List<Integer> getProblemList() {
+        return problemList;
+    }
+
+    public String getProblemListToString() {
+        String content="";
+        for ( Integer p : problemList){
+            content += String.valueOf(p) + ", ";
+        }
+        content = content.substring(0,content.length()-2)+".";
+        return content;
+    }
+
+
     public Student() {
 
     }

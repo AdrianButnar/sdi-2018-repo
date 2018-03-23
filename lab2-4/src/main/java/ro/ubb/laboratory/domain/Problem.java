@@ -13,13 +13,9 @@ public class Problem extends BaseEntity<Long>  {
     private String text;
     private int grade;
 
-    public Problem(int number, String text) {
+    public Problem(Integer number, String text) {
         this.number = number;
         this.text = text;
-    }
-    public Problem(){
-        this.number = 0;
-        this.text = "";
     }
 
     public int getGrade() {

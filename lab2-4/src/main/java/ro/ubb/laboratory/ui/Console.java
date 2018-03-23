@@ -33,7 +33,7 @@ public class Console {
                         "4. Add a new problem to the repository of problems\n"+
                         "5. Show all problems\n"+
                         "6. Remove a problem \n"+
-                        "7. Assign problem form repository to a student\n"+
+                        "7. Assign problem from repository to a student\n"+
                         "8. Show problems assigned to a student\n"+
                         "0. Exit\n\n"+
                         "Choose one of the commands above:\n "+
@@ -51,7 +51,7 @@ public class Console {
             String command = sc.nextLine();
             switch (command) {
                 case "1":
-                    addStudents();
+                    addStudent();
                     continue;
                 case "2":
                     printAllStudents();
@@ -60,7 +60,7 @@ public class Console {
                     removeStudent();
                     continue;
                 case "4":
-                    addProblems();
+                    addProblem();
                     continue;
                 case "5":
                     printAllProblems();
@@ -83,17 +83,27 @@ public class Console {
 
     private void showAllProblemsOfAStudent() {
         try {
-            System.out.println("Enter a student id: ");
+            System.out.print("Enter a student id: ");
             Scanner sc = new Scanner(System.in);
             String studentId = sc.nextLine();
             if (!isLong(studentId)) {
                 throw new EntityNonExistentException("Invalid id!\n");
             }
             Set<Student> students = this.studentService.getAllStudents();
+            boolean studentExists = false;
             for (Student s : students) {
                 if (s.getId() == Integer.parseInt(studentId)) {
-                    System.out.println(s.toString());
+                    if (s.getProblemList().size()!=0){
+                        System.out.println("Student " + s.getId() + " has the following problems assigned: " + s.getProblemListToString());
+                    }
+                    else{
+                        System.out.println("This student has no assigned problems!");
+                    }
+                    studentExists = true;
                 }
+            }
+            if (!studentExists){
+                throw new EntityNonExistentException("This student does not exist in the list!");
             }
 
         } catch (EntityNonExistentException ex) {
@@ -133,13 +143,13 @@ public class Console {
     private void assignProblemToStudent()
     {
         try {
-            System.out.println("Enter a student id: ");
+            System.out.print("Enter a student id: ");
             Scanner sc = new Scanner(System.in);
             String studentId = sc.nextLine();
 
-            System.out.println("Enter a problem id: ");
+            System.out.print("Enter a problem id: ");
             String problemId = sc.nextLine();
-            if (!isLong(studentId) && !isLong(problemId)) {
+            if (!isLong(studentId) || !isLong(problemId)) {
                 throw new EntityNonExistentException("Invalid id!\n");
             }
             Set<Student> students = this.studentService.getAllStudents();
@@ -152,26 +162,30 @@ public class Console {
             }
             if (problemExists)
             {
+                boolean studentExists = false;
                 for (Student s : students) {
                     if (s.getId() == Integer.parseInt(studentId)) {
                         s.addProblem(Integer.parseInt(problemId));
+                        studentExists = true;
                     }
                 }
-                System.out.println("Problem " + problemId + " added to student " + studentId + ".");
+                if (studentExists) {
+                    System.out.println("Problem " + problemId + " added to student " + studentId + ".");
+                }
+                else{
+                    throw new InexistentStudentException("Student with given id does not exist!");
+                }
             }
             else
-                System.out.println("Problem doesn't exist!");
+                throw new InexistentProblemException("Problem with given id does not exist!");
         }
-        catch (EntityNonExistentException ex)
+        catch (EntityNonExistentException | InexistentStudentException | InexistentProblemException ex)
         {
             ex.printStackTrace();
             myWait(1);
         }
     }
 
-    /**
-     * Adds a new student to the laboratory.domain.repository
-     */
     private void removeStudent(){
         try {
             System.out.print("Enter id: ");
@@ -207,7 +221,7 @@ public class Console {
     }
 
 
-    private void addStudents() {
+    private void addStudent() {
         try {
             Student student = readStudent();
             if(student==null)
@@ -220,22 +234,19 @@ public class Console {
         }
     }
 
-    private void addProblems() {
+    private void addProblem() {
         try {
             Problem problem = readProblem();
             if(problem == null)
                 return;
             problemService.addProblem(problem);
         }
-        catch (EntityCannotBeSavedException ex){
+        catch ( ValidatorException ex){
             ex.printStackTrace();
             myWait(1);
 
         }
     }
-
-
-
 
     private static boolean isLong(String id){
         try{
@@ -278,8 +289,6 @@ public class Console {
             else
                 throw new IllegalIdException("Invalid id\n");
 
-//            StudentValidator sv = new StudentValidator();
-//            sv.validate(student);
             return student;
         }
         catch (IllegalIdException|ValidatorException ex) {

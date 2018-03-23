@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class XmlReader<ID, T extends BaseEntity<ID>> {
     private String fileName;
     public XmlReader(String fileName) {

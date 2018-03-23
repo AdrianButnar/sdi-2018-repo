@@ -76,22 +76,28 @@ public class Main {
     public static void main(String[] args) throws Exception
     {
         //xml-repo
-//         Repository<Long, Student> studentRepository =
-//                 new StudentXmlRepository("./data/students.xml");
-//         StudentService studentService = new StudentService(studentRepository);
-//         Console console = new Console(studentService);
-//         console.runConsole();
+        Validator<Student> studentValidator = new StudentValidator();
+        Validator<Problem> problemValidator = new ProblemValidator();
+
+        Repository<Long, Student> studentRepository =
+                new StudentXmlRepository("./data/students.xml",studentValidator);
+        Repository<Long, Problem> problemRepository =
+                new ProblemXmlRepository("./data/problems.xml",problemValidator);
+        StudentService studentService = new StudentService(studentRepository);
+        ProblemService problemService = new ProblemService(problemRepository);
+        Console console = new Console(studentService,problemService);
+        console.runConsole();
       
       
 //        In memory repository
-        Validator<Student> studentValidator = new StudentValidator();
-        Validator<Problem> problemValidator = new ProblemValidator();
-        Repository<Long, Student> studentRepository = new InMemoryRepository(studentValidator);
-        Repository<Long, Problem> problemRepository = new InMemoryRepository(problemValidator);
-        StudentService studentService = new StudentService(studentRepository);
-        ProblemService problemService = new ProblemService(problemRepository);
-        Console console = new Console(studentService, problemService);
-        console.runConsole();
+//        Validator<Student> studentValidator = new StudentValidator();
+//        Validator<Problem> problemValidator = new ProblemValidator();
+//        Repository<Long, Student> studentRepository = new InMemoryRepository(studentValidator);
+//        Repository<Long, Problem> problemRepository = new InMemoryRepository(problemValidator);
+//        StudentService studentService = new StudentService(studentRepository);
+//        ProblemService problemService = new ProblemService(problemRepository);
+//        Console console = new Console(studentService, problemService);
+//        console.runConsole();
 //
 //        System.out.println("Hello world!");
 
