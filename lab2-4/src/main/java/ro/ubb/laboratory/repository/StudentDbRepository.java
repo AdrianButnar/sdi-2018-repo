@@ -1,15 +1,15 @@
 package ro.ubb.laboratory.repository;
 
 import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.domain.validators.EntityNonExistentException;
 import ro.ubb.laboratory.domain.validators.Validator;
 import ro.ubb.laboratory.domain.validators.ValidatorException;
 
 import java.sql.*;
 import java.sql.Connection;
 import java.math.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Alexandru Buhai
@@ -17,20 +17,28 @@ import java.util.Optional;
 
 public class StudentDbRepository implements Repository<Long, Student> {
     private Validator<Student> validator;
+    private Map<Long, Student> entities;
     private String url;
     private String username;
     private String password;
 
     public StudentDbRepository(Validator<Student> studentValidator, String url, String username, String password) {
         this.validator = studentValidator;
+
         this.url = url;
         this.username = username;
         this.password = password;
+        entities = new HashMap<>();
+
     }
 
     @Override
     public Optional<Student> findOne(Long id) {
-        throw new RuntimeException("not yet implemented");
+        if(id == null)
+        {
+            throw new IllegalArgumentException("Id cannot be null");
+        }
+        return Optional.ofNullable(entities.get(id));
     }
 
     @Override
@@ -53,7 +61,8 @@ public class StudentDbRepository implements Repository<Long, Student> {
                 System.out.println( "Code = " + code );
                 System.out.println();
                 Student st = new Student(code, name);
-                st.setId(Long.valueOf(id));
+                entities.put(Long.valueOf(id), st);
+
                 students.add(st);
 
             }
@@ -65,7 +74,9 @@ public class StudentDbRepository implements Repository<Long, Student> {
             System.exit(0);
         }
         System.out.println("Operation done successfully");
-        return students;
+       // return students;
+        return entities.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toSet());
+
     }
 
     @Override
@@ -75,7 +86,9 @@ public class StudentDbRepository implements Repository<Long, Student> {
 
     @Override
     public Optional<Student> remove(Long id) {
-        throw new RuntimeException("not yet implemented");
+        if (!findOne(id).isPresent())
+            throw new EntityNonExistentException("Entity does not exist in list!\n");
+        return Optional.ofNullable(entities.remove(id));
     }
 
     public Connection getConnection() throws Exception {
