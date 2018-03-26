@@ -31,8 +31,8 @@ public class StudentDbRepository implements Repository<Long, Student> {
         this.password = password;
         Optional<Student> st = findOne(17L);
         System.out.println(st.toString());
-    //    entities = new HashMap<>();
-       //selectAll();
+        //entities = new HashMap<>();
+        //selectAll();
 
     }
 
@@ -111,6 +111,15 @@ public class StudentDbRepository implements Repository<Long, Student> {
         //System.out.println("Operation done successfully");
     }
 
+    /**
+     * Saves the given entity.
+     *
+     * @param entity
+     *            must not be null.
+     * @return an {@code Optional} - null if the entity was saved otherwise (e.g. id already exists) returns the entity.
+     * @throws EntityPresentException
+     *             if the given entity is Present.
+     */
     @Override
     public Optional<Student> save(Student entity) throws ValidatorException {
         if (findOne(entity.getId()).isPresent()) {
@@ -148,36 +157,41 @@ public class StudentDbRepository implements Repository<Long, Student> {
         return Optional.ofNullable(entity);
     }
 
+    /**
+     * Removes the entity with the given id.
+     *
+     * @param id
+     *            must not be null.
+     * @return an {@code Optional} - null if there is no entity with the given id, otherwise the removed entity.
+     * @throws IllegalArgumentException
+     *             if the given id is null.
+     */
     @Override
     public Optional<Student> remove(Long id) {
-//        if (!findOne(id).isPresent()) {
+        if (!findOne(id).isPresent()) {
             throw new EntityNonExistentException("Entity does not exist in list!\n");
-//        }
-//        try {
-//            Connection c = getConnection();
-//            Statement stmt = null;
-//
-//            Class.forName("org.postgresql.Driver");
-//            c.setAutoCommit(false);
-//            stmt = c.createStatement();
-//
+        }
+        Student st = null;
+        try {
+            Connection c = getConnection();
+            Statement stmt = null;
+            Class.forName("org.postgresql.Driver");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+
 //            System.out.println("SELECT * FROM \"Student\";");
-//            String sql = "INSERT INTO \"Students\" " +
-//                    "VALUES('" +
-//                    name + "','" +
-//                    studentCode + "');";
-//
-//            stmt.execute(sql);
-//
-//            stmt.close();
-//            c.close();
-//        } catch ( Exception e ) {
-//            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
-//            System.exit(0);
-//        }
-//
-//        return Optional.ofNullable(entities.putIfAbsent(entity.getId(), entity));
-//        return Optional.ofNullable(entities.remove(id));
+            String sql = "DELETE FROM \"Students\" WHERE id=" + id +";";
+
+            stmt.executeUpdate(sql);
+            c.commit();
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+
+        return Optional.ofNullable(st);
     }
 
     public Connection getConnection() throws Exception {
