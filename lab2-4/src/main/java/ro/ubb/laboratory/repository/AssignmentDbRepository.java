@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,10 +98,11 @@ public class AssignmentDbRepository {
     }
 
 
-    public Assignment findAll() {
+    public Long findAll() {
 
         Assignment as = null;
-        List<Assignment> assignmentList = new ArrayList<>();
+        List<Long> assignmentList = new ArrayList<>();
+        Long num = 0L;
         try {
             Connection c = getConnection();
             Statement stmt = null;
@@ -117,8 +119,9 @@ public class AssignmentDbRepository {
                 String pbId = rs.getString("problemId");
 
                 as = new Assignment(Long.parseLong(stId), Long.parseLong(pbId));
-                assignmentList.add(as);
+                assignmentList.add(as.getProblemID());
             }
+            num = Long.valueOf(Collections.frequency(assignmentList, assignmentList.get(0)));
             stmt.close();
             c.close();
         } catch ( Exception e ) {
@@ -127,6 +130,6 @@ public class AssignmentDbRepository {
         }
 
 
-        return as;
+        return num;
     }
 }

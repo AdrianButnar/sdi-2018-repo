@@ -92,6 +92,10 @@ public class Console {
     }
 
     private void showTheMostAssignedProblems() {
+        AssignmentDbRepository assignmentDbRepository = new AssignmentDbRepository();
+        Long nr = assignmentDbRepository.findAll();
+        System.out.println("Most assigned problem is assigned" +  nr + "times");
+        /*
         List<Integer> allProblems = new ArrayList<>();
         for (Student s :studentService.getAllStudents()){
             allProblems.addAll(s.getProblemList());
@@ -114,6 +118,7 @@ public class Console {
         for (Object item:tm.keySet()){
             System.out.println("Problem "+ item + " was assigned " + times.get(item) + " time/s.");
         }
+        */
     }
 
     private void showStudentsByNameMatch() {
