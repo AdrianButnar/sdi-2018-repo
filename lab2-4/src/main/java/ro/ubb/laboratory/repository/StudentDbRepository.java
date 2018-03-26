@@ -126,12 +126,12 @@ public class StudentDbRepository implements Repository<Long, Student> {
 
             String name = entity.getName();
             String studentCode = entity.getSerialNumber();
-
+            Long studentId = entity.getId();
             //Just a normal variable, my database is serializable
             String sql = "INSERT INTO \"Students\" (name, code, id) " +
                     "VALUES('" +
                     name + "','" +
-                    studentCode + "');";
+                    studentCode + "'," + studentId +  ");";
 
             stmt.executeUpdate(sql);
             c.commit();
@@ -184,9 +184,9 @@ public class StudentDbRepository implements Repository<Long, Student> {
         Connection conn = null;
         try{
             String driver = "org.postgresql.Driver";
-            System.out.println(this.url);
-            System.out.println(this.username);
-            System.out.println(this.password);
+//            System.out.println(this.url);
+//            System.out.println(this.username);
+//            System.out.println(this.password);
             Class.forName(driver);
 
             conn = DriverManager.getConnection(this.url, this.username, this.password);
@@ -231,7 +231,7 @@ public class StudentDbRepository implements Repository<Long, Student> {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
         }
-        System.out.println("Operation done successfully");
+//        System.out.println("Operation done successfully");
     }
 
 
