@@ -37,6 +37,7 @@ import ro.ubb.laboratory.service.StudentService;
 import ro.ubb.laboratory.ui.Console;
 
 import java.io.File;
+import java.sql.*;
 import java.util.Scanner;
 import java.io.IOException;
 
@@ -73,21 +74,20 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception
-    {
+    public static void main(String[] args) throws Exception {
         //xml-repo
-        Validator<Student> studentValidator = new StudentValidator();
-        Validator<Problem> problemValidator = new ProblemValidator();
-
-        Repository<Long, Student> studentRepository =
-                new StudentXmlRepository("./data/students.xml",studentValidator);
-        Repository<Long, Problem> problemRepository =
-                new ProblemXmlRepository("./data/problems.xml",problemValidator);
-        StudentService studentService = new StudentService(studentRepository);
-        ProblemService problemService = new ProblemService(problemRepository);
-        Console console = new Console(studentService,problemService);
-        console.runConsole();
-      
+//        Validator<Student> studentValidator = new StudentValidator();
+//        Validator<Problem> problemValidator = new ProblemValidator();
+//
+//        Repository<Long, Student> studentRepository =
+//                new StudentXmlRepository("./data/students.xml",studentValidator);
+//        Repository<Long, Problem> problemRepository =
+//                new ProblemXmlRepository("./data/problems.xml",problemValidator);
+//        StudentService studentService = new StudentService(studentRepository);
+//        ProblemService problemService = new ProblemService(problemRepository);
+//        Console console = new Console(studentService,problemService);
+//        console.runConsole();
+//
       
 //        In memory repository
 //        Validator<Student> studentValidator = new StudentValidator();
@@ -114,8 +114,8 @@ public class Main {
 //         StudentService studentService = new StudentService(studentRepository);
 //         Console console = new Console(studentService);
 //         console.runConsole();
-      
-      
+
+
 //        In memory repository
 //        Validator<Student> studentValidator = new StudentValidator();
 //        Validator<Problem> problemValidator = new ProblemValidator();
@@ -134,6 +134,7 @@ public class Main {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+
 //        //in file repo
 //        Validator<Student> studentValidator = new StudentValidator();
 //        Validator<Problem> problemValidator = new ProblemValidator();
@@ -144,7 +145,16 @@ public class Main {
 //        Console console = new Console(studentService, problemService);
 //        console.runConsole();
 
+
+        //in database repo
+        Validator<Student> studentValidator = new StudentValidator();
+        Validator<Problem> problemValidator = new ProblemValidator();
+        Repository<Long, Student> studentRepository = new StudentDbRepository(studentValidator, "jdbc:postgresql://localhost:5432/Mppdatabase", "postgres", "parola12");
+        Repository<Long, Problem> problemRepository = new ProblemDbRepository(problemValidator, "jdbc:postgresql://localhost:5432/Mppdatabase", "postgres", "parola12");
+        StudentService studentService = new StudentService(studentRepository);
+        ProblemService problemService = new ProblemService(problemRepository);
+        Console console = new Console(studentService, problemService);
+        console.runConsole();
+
     }
-
-
 }
