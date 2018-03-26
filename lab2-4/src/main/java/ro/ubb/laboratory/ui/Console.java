@@ -1,8 +1,10 @@
 package ro.ubb.laboratory.ui;
 
+import ro.ubb.laboratory.domain.Assignment;
 import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
 import ro.ubb.laboratory.domain.validators.*;
+import ro.ubb.laboratory.repository.AssignmentDbRepository;
 import ro.ubb.laboratory.service.ProblemService;
 import ro.ubb.laboratory.service.StudentService;
 
@@ -150,8 +152,11 @@ public class Console {
             boolean studentExists = false;
             for (Student s : students) {
                 if (s.getId() == Integer.parseInt(studentId)) {
-                    if (s.getProblemList().size()!=0){
-                        System.out.println("Student " + s.getId() + " has the following problems assigned: " + s.getProblemListToString());
+                    AssignmentDbRepository asRepo = new AssignmentDbRepository();
+                    Assignment as = asRepo.findOne(s.getId());
+
+                    if (as != null){
+                        System.out.println("Student " + as.getStudentID() + " has the following problems assigned: " + as.getProblemID());
                     }
                     else{
                         System.out.println("This student has no assigned problems!");
@@ -209,6 +214,7 @@ public class Console {
             if (!isLong(studentId) || !isLong(problemId)) {
                 throw new EntityNonExistentException("Invalid id!\n");
             }
+            AssignmentDbRepository assign = new AssignmentDbRepository();
             Set<Student> students = this.studentService.getAllStudents();
             Set<Problem> problems = this.problemService.getAllProblems();
             boolean problemExists = false;
@@ -223,6 +229,7 @@ public class Console {
                 for (Student s : students) {
                     if (s.getId() == Integer.parseInt(studentId)) {
                         s.addProblem(Integer.parseInt(problemId));
+                        assign.AssignStudentToProblem(s, Integer.parseInt(problemId));
                         studentExists = true;
                     }
                 }

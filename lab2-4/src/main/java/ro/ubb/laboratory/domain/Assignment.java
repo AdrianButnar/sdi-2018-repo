@@ -26,14 +26,19 @@
 
 package ro.ubb.laboratory.domain;
 
-public class Assignement {
+public class Assignment extends BaseEntity<Long>{
 
     private Long studentID;
     private Long problemID;
 
-    public Assignement(Long studentID, Long problemID) {
+    public Assignment(Long studentID, Long problemID) {
         this.studentID = studentID;
         this.problemID = problemID;
+    }
+
+    public Assignment() {
+        this.studentID = 0L;
+        this.problemID = 0L;
     }
 
     public Long getStudentID() {
@@ -52,4 +57,11 @@ public class Assignement {
         this.problemID = problemID;
     }
 
+    @Override
+    public String toString() {
+        return "Assignment {" +
+                " studentID =" + studentID +
+                ", problemID =" + problemID +
+                " }";
+    }
 }
