@@ -1,48 +1,45 @@
 package ro.ubb.laboratory.repository;
 
+import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
 import ro.ubb.laboratory.domain.validators.EntityNonExistentException;
 import ro.ubb.laboratory.domain.validators.EntityPresentException;
 import ro.ubb.laboratory.domain.validators.Validator;
 import ro.ubb.laboratory.domain.validators.ValidatorException;
 
-import java.sql.*;
 import java.sql.Connection;
-import java.math.*;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Alexandru Buhai
  */
 
-public class StudentDbRepository implements Repository<Long, Student> {
-    private Validator<Student> validator;
-    //private Map<Long, Student> entities;
+public class ProblemDbRepository implements Repository<Long, Problem> {
+    private Validator<Problem> validator;
     private String url;
     private String username;
     private String password;
 
-    public StudentDbRepository(Validator<Student> studentValidator, String url, String username, String password) {
-        this.validator = studentValidator;
+    public ProblemDbRepository(Validator<Problem> problemValidator, String url, String username, String password) {
+        this.validator = problemValidator;
 
         this.url = url;
         this.username = username;
         this.password = password;
-        //Optional<Student> st = findOne(17L);
-        //System.out.println(st.toString());
-        //entities = new HashMap<>();
-        //selectAll();
-
     }
 
     //done
     @Override
-    public Optional<Student> findOne(Long id) {
-        if(id == null){
+    public Optional<Problem> findOne(Long id) {
+        if (id == null) {
             throw new IllegalArgumentException("Id cannot be null");
         }
-        Student st = null;
+        Problem pb = null;
         try {
             Connection c = getConnection();
             Statement stmt = null;
@@ -50,82 +47,71 @@ public class StudentDbRepository implements Repository<Long, Student> {
             c.setAutoCommit(false);
             stmt = c.createStatement();
 
-            String studentId = id.toString();
-            String sql = "SELECT * FROM \"Students\" WHERE id=" + studentId + ";";
+            String problemId = id.toString();
+            String sql = "SELECT * FROM \"Problems\" WHERE id=" + problemId + ";";
 
-            ResultSet rs = stmt.executeQuery( sql );
-
-            while ( rs.next() ) {
-                String name = rs.getString("name");
-                String code = rs.getString("code");
-//                System.out.println("Id = " + id);
-//                System.out.println("Name = " + name);
-//                System.out.println("Code = " + code);
-//                System.out.println();
-                st = new Student(code, name);
-                st.setId(id);
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String text = rs.getString("text");
+                String number = rs.getString("number");
+                pb = new Problem(Integer.parseInt(number), text);
+                pb.setId(id);
             }
             //System.out.println("Executed successfully " + sql);
             stmt.close();
             c.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
-        return Optional.ofNullable(st);
+        return Optional.ofNullable(pb);
     }
 
     @Override
-    public Iterable<Student> findAll()
-    {
-        List<Student> students = new ArrayList<>();
+    public Iterable<Problem> findAll() {
+        List<Problem> problems = new ArrayList<>();
         try {
             Connection c = getConnection();
             Statement stmt = null;
             Class.forName("org.postgresql.Driver");
-
             stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM \"Students\";" );
-            while ( rs.next() ) {
-                long id = Long.valueOf( rs.getInt("id") );
-                String  name = rs.getString("name");
-                String  code = rs.getString("code");
-//                System.out.println( "Id = " + id );
-//                System.out.println( "Name = " + name );
-//                System.out.println( "Code = " + code );
-//                System.out.println();
-                Student st = new Student(code, name);
-                st.setId(id);
-                students.add(st);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM \"Problems\";");
 
+            while (rs.next()) {
+                long id = Long.valueOf(rs.getInt("id"));
+                String text = rs.getString("text");
+                String number = rs.getString("number");
+
+                Problem pb = new Problem(Integer.parseInt(number), text);
+                pb.setId(id);
+                problems.add(pb);
             }
+
             rs.close();
             stmt.close();
             c.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        return students;
+        return problems;
         //System.out.println("Operation done successfully");
     }
 
     /**
      * Saves the given entity.
      *
-     * @param entity
-     *            must not be null.
+     * @param entity must not be null.
      * @return an {@code Optional} - null if the entity was saved otherwise (e.g. id already exists) returns the entity.
-     * @throws EntityPresentException
-     *             if the given entity is Present.
+     * @throws EntityPresentException if the given entity is Present.
      */
     @Override
-    public Optional<Student> save(Student entity) throws ValidatorException {
+    public Optional<Problem> save(Problem entity) throws ValidatorException {
         if (findOne(entity.getId()).isPresent()) {
             throw new EntityPresentException("Entity already in list!\n");
         }
-        //Student st = null;
+
         try {
             Connection c = getConnection();
             Statement stmt = null;
@@ -133,24 +119,22 @@ public class StudentDbRepository implements Repository<Long, Student> {
             c.setAutoCommit(false);
             stmt = c.createStatement();
 
-            String name = entity.getName();
-            String studentCode = entity.getSerialNumber();
-            Long studentId = entity.getId();
+            String text = entity.getText();
+            int number = entity.getNumber();
+            Long problemId = entity.getId();
             //Just a normal variable, my database is serializable
-            String sql = "INSERT INTO \"Students\" (name, code, id) " +
-                    "VALUES('" +
-                    name + "','" +
-                    studentCode + "'," + studentId +  ");";
+            String sql = "INSERT INTO \"Problems\" (id, \"number\", text)" +
+                    "VALUES(" +
+                    problemId + "," +
+                    number + ",'" + text + "');";
 
             stmt.executeUpdate(sql);
             c.commit();
-            //System.out.println(stmt.executeUpdate(sql));
-            //System.out.println("Executed successfully " + sql);
             entity = null;
             stmt.close();
             c.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
@@ -160,18 +144,16 @@ public class StudentDbRepository implements Repository<Long, Student> {
     /**
      * Removes the entity with the given id.
      *
-     * @param id
-     *            must not be null.
+     * @param id must not be null.
      * @return an {@code Optional} - null if there is no entity with the given id, otherwise the removed entity.
-     * @throws IllegalArgumentException
-     *             if the given id is null.
+     * @throws IllegalArgumentException if the given id is null.
      */
     @Override
-    public Optional<Student> remove(Long id) {
+    public Optional<Problem> remove(Long id) {
         if (!findOne(id).isPresent()) {
             throw new EntityNonExistentException("Entity does not exist in list!\n");
         }
-        Student st = null;
+        Problem pb = null;
         try {
             Connection c = getConnection();
             Statement stmt = null;
@@ -180,35 +162,31 @@ public class StudentDbRepository implements Repository<Long, Student> {
             stmt = c.createStatement();
 
 //            System.out.println("SELECT * FROM \"Student\";");
-            String sql = "DELETE FROM \"Students\" WHERE id=" + id +";";
+            String sql = "DELETE FROM \"Problems\" WHERE id=" + id + ";";
 
             stmt.executeUpdate(sql);
             c.commit();
             stmt.close();
             c.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
-        return Optional.ofNullable(st);
+        return Optional.ofNullable(pb);
     }
 
     public Connection getConnection() throws Exception {
         Connection conn = null;
-        try{
+        try {
             String driver = "org.postgresql.Driver";
-//            System.out.println(this.url);
-//            System.out.println(this.username);
-//            System.out.println(this.password);
             Class.forName(driver);
 
             conn = DriverManager.getConnection(this.url, this.username, this.password);
             System.out.println("Connected");
 
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("My exception");
             ex.printStackTrace();
         }
@@ -224,14 +202,14 @@ public class StudentDbRepository implements Repository<Long, Student> {
 
             stmt = c.createStatement();
             //System.out.println("SELECT * FROM \"Student\";");
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM \"Students\";" );
-            while ( rs.next() ) {
-                long id = Long.valueOf( rs.getInt("id") );
-                String  name = rs.getString("name");
-                String  code = rs.getString("code");
-                System.out.println( "Id = " + id );
-                System.out.println( "Name = " + name );
-                System.out.println( "Code = " + code );
+            ResultSet rs = stmt.executeQuery("SELECT * FROM \"Problems\";");
+            while (rs.next()) {
+                long id = Long.valueOf(rs.getInt("id"));
+                String name = rs.getString("name");
+                String code = rs.getString("code");
+                System.out.println("Id = " + id);
+                System.out.println("Name = " + name);
+                System.out.println("Code = " + code);
                 System.out.println();
                 Student st = new Student(code, name);
                 st.setId(id);
@@ -241,12 +219,13 @@ public class StudentDbRepository implements Repository<Long, Student> {
             rs.close();
             stmt.close();
             c.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 //        System.out.println("Operation done successfully");
     }
+}
 
 
 //    @Override
@@ -254,4 +233,3 @@ public class StudentDbRepository implements Repository<Long, Student> {
 //        throw new RuntimeException("not yet implemented");
 //    }
 
-}
