@@ -58,10 +58,6 @@ public class StudentDbRepository implements Repository<Long, Student> {
             while ( rs.next() ) {
                 String name = rs.getString("name");
                 String code = rs.getString("code");
-//                System.out.println("Id = " + id);
-//                System.out.println("Name = " + name);
-//                System.out.println("Code = " + code);
-//                System.out.println();
                 st = new Student(code, name);
                 st.setId(id);
             }
