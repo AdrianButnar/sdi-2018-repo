@@ -27,6 +27,8 @@
 package ro.ubb.laboratory.repository;
 
 import ro.ubb.laboratory.domain.BaseEntity;
+import ro.ubb.laboratory.domain.validators.EntityCannotBeSavedException;
+import ro.ubb.laboratory.domain.validators.EntityNonExistentException;
 import ro.ubb.laboratory.domain.validators.InexistentStudentException;
 import ro.ubb.laboratory.domain.validators.StudentCannotBeSavedException;
 
@@ -44,9 +46,9 @@ public interface Repository<ID, T extends BaseEntity<ID>> {
 
     Iterable<T> findAll();
 
-    Optional<T> save(T entity) throws StudentCannotBeSavedException;
+    Optional<T> save(T entity) throws EntityCannotBeSavedException;
 
-    Optional<T> remove(ID id) throws InexistentStudentException; //here has to be a custom exception
+    Optional<T> remove(ID id) throws EntityNonExistentException; 
 
 //    Optional<T> update(T entity) throws Exception;
 

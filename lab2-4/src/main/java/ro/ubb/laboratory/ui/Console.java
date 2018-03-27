@@ -297,7 +297,7 @@ public class Console {
                 return;
             studentService.addStudent(student);
         }
-        catch (StudentCannotBeSavedException se){
+        catch (ValidatorException se){
             se.printStackTrace();
             myWait(1);
         }
