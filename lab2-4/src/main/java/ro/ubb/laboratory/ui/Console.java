@@ -10,7 +10,6 @@ import ro.ubb.laboratory.service.StudentService;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * @author Adrian Butnar
@@ -135,11 +134,11 @@ public class Console {
                 }
             }
             if(!found){
-                throw new EntityNonExistentException("No student matches this name!");
+                throw new InexistentEntityException("No student matches this name!");
             }
 
         }
-        catch (EntityNonExistentException e){
+        catch (InexistentEntityException e){
             e.printStackTrace();
             myWait(1);
         }
@@ -151,7 +150,7 @@ public class Console {
             Scanner sc = new Scanner(System.in);
             String studentId = sc.nextLine();
             if (!isLong(studentId)) {
-                throw new EntityNonExistentException("Invalid id!\n");
+                throw new InexistentEntityException("Invalid id!\n");
             }
             Set<Student> students = this.studentService.getAllStudents();
             boolean studentExists = false;
@@ -170,10 +169,10 @@ public class Console {
                 }
             }
             if (!studentExists){
-                throw new EntityNonExistentException("This student does not exist in the list!");
+                throw new InexistentEntityException("This student does not exist in the list!");
             }
 
-        } catch (EntityNonExistentException ex) {
+        } catch (InexistentEntityException ex) {
             ex.printStackTrace();
             myWait(1);
         }
@@ -217,7 +216,7 @@ public class Console {
             System.out.print("Enter a problem id: ");
             String problemId = sc.nextLine();
             if (!isLong(studentId) || !isLong(problemId)) {
-                throw new EntityNonExistentException("Invalid id!\n");
+                throw new InexistentEntityException("Invalid id!\n");
             }
             AssignmentDbRepository assign = new AssignmentDbRepository();
             Set<Student> students = this.studentService.getAllStudents();
@@ -248,7 +247,7 @@ public class Console {
             else
                 throw new InexistentProblemException("Problem with given id does not exist!");
         }
-        catch (EntityNonExistentException | InexistentStudentException | InexistentProblemException ex)
+        catch (InexistentEntityException | InexistentStudentException | InexistentProblemException ex)
         {
             ex.printStackTrace();
             myWait(1);
@@ -261,12 +260,12 @@ public class Console {
             Scanner sc = new Scanner(System.in);
             String id = sc.nextLine();
             if (!isLong(id)){
-                throw new EntityNonExistentException("Invalid id!\n");
+                throw new InexistentEntityException("Invalid id!\n");
             }
             studentService.removeStudent(Long.parseLong(id));
             System.out.println("Student successfully removed!");
         }
-        catch (EntityNonExistentException se){
+        catch (InexistentEntityException se){
             se.printStackTrace();
             myWait(1);
         }
@@ -277,13 +276,13 @@ public class Console {
             Scanner sc = new Scanner(System.in);
             String id = sc.nextLine();
             if (!isLong(id)){
-                throw new EntityNonExistentException("Invalid id!\n");
+                throw new InexistentEntityException("Invalid id!\n");
             }
             problemService.removeProblem(Long.parseLong(id));
             System.out.println("Problem successfully removed!");
 
         }
-        catch (EntityNonExistentException ex){
+        catch (InexistentEntityException ex){
             ex.printStackTrace();
             myWait(1);
         }
@@ -297,7 +296,7 @@ public class Console {
                 return;
             studentService.addStudent(student);
         }
-        catch (StudentCannotBeSavedException se){
+        catch ( ValidatorException se){
             se.printStackTrace();
             myWait(1);
         }

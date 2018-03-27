@@ -32,7 +32,6 @@ import ro.ubb.laboratory.domain.validators.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class InMemoryRepository<ID, T extends BaseEntity<ID>> implements Repository<ID, T> {
@@ -73,9 +72,9 @@ public class InMemoryRepository<ID, T extends BaseEntity<ID>> implements Reposit
     }
 
     @Override
-    public Optional<T> remove(ID id) throws EntityNonExistentException {
+    public Optional<T> remove(ID id) throws InexistentEntityException {
         if (!findOne(id).isPresent())
-            throw new EntityNonExistentException("Entity does not exist in list!\n");
+            throw new InexistentEntityException("Entity does not exist in list!\n");
         return Optional.ofNullable(entities.remove(id));
     }
 

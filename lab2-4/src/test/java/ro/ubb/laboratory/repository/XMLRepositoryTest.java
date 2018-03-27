@@ -1,12 +1,9 @@
 package ro.ubb.laboratory.repository;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
 import ro.ubb.laboratory.domain.validators.*;
-
-import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -41,7 +38,7 @@ public class XMLRepositoryTest {
 
     }
 
-    @Test(expected = EntityNonExistentException.class)
+    @Test(expected = InexistentEntityException.class)
     public void testInexistentStudent() {
         studentRepository.remove(93L);
     }

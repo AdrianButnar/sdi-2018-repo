@@ -31,7 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
-import ro.ubb.laboratory.domain.validators.EntityNonExistentException;
+import ro.ubb.laboratory.domain.validators.InexistentEntityException;
 import ro.ubb.laboratory.domain.validators.InexistentStudentException;
 import ro.ubb.laboratory.domain.validators.StudentValidator;
 import ro.ubb.laboratory.domain.validators.Validator;
@@ -96,7 +96,7 @@ public class InMemoryRepositoryTest {
 
     }
 
-    @Test(expected = EntityNonExistentException.class)
+    @Test(expected = InexistentEntityException.class)
     public void testEntityNonExistentException()
     {
         studentRepository.remove(94L);
