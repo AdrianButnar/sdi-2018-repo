@@ -202,7 +202,7 @@ public class StudentDbRepository implements Repository<Long, Student> {
         }
         catch (Exception ex)
         {
-            System.out.println("My exception in getConnection.");
+            System.out.println("My exception in StudentDbRepository.");
             ex.printStackTrace();
         }
         return conn;
