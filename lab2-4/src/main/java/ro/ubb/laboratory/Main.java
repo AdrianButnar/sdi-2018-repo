@@ -155,7 +155,7 @@ public class Main {
         Validator<Assignment> assignmentValidator = new AssignmentValidator();
         Repository<Long, Student> studentRepository = new StudentDbRepository(studentValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
         Repository<Long, Problem> problemRepository = new ProblemDbRepository(problemValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
-        Repository<Long, Problem> assignmentRepository = new AssignmentDbRepository(assignmentValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
+        Repository<Long, Assignment> assignmentRepository = new AssignmentDbRepository(assignmentValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
 
         StudentService studentService = new StudentService(studentRepository);
         ProblemService problemService = new ProblemService(problemRepository);

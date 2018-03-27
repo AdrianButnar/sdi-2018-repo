@@ -12,6 +12,10 @@ import java.util.stream.StreamSupport;
 public class AssignmentDbService {
     public Repository<Long, Assignment> repository;
 
+    public AssignmentDbService(Repository<Long, Assignment> repository) {
+        this.repository = repository;
+    }
+
     public void addAssignment(Assignment ass) throws EntityCannotBeSavedException
     {
         repository.save(ass);
