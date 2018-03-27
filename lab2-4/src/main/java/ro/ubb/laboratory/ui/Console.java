@@ -5,6 +5,7 @@ import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
 import ro.ubb.laboratory.domain.validators.*;
 import ro.ubb.laboratory.repository.AssignmentDbRepository;
+import ro.ubb.laboratory.service.AssignmentDbService;
 import ro.ubb.laboratory.service.ProblemService;
 import ro.ubb.laboratory.service.StudentService;
 
@@ -19,10 +20,17 @@ import java.util.concurrent.TimeUnit;
 public class Console {
     private StudentService studentService;
     private ProblemService problemService;
+    private AssignmentDbService assignmentService;
 
     public Console(StudentService studentService, ProblemService problemService) {
         this.studentService = studentService;
         this.problemService = problemService;
+    }
+
+    public Console (StudentService studentService, ProblemService problemService, AssignmentDbService assignmentService) {
+        this.studentService = studentService;
+        this.problemService = problemService;
+        this.assignmentService = assignmentService;
     }
 
     private void printMenu(){
@@ -206,51 +214,55 @@ public class Console {
         problems.stream().forEach(System.out::println);
     }
 
-    private void assignProblemToStudent()
-    {
-        try {
+    private void assignProblemToStudent() throws Exception {
+        if (this.getClass().getDeclaredConstructor().getParameterCount() != 3) {
+            try {
+                System.out.print("Enter a student id: ");
+                Scanner sc = new Scanner(System.in);
+                String studentId = sc.nextLine();
+
+                System.out.print("Enter a problem id: ");
+                String problemId = sc.nextLine();
+                if (!isLong(studentId) || !isLong(problemId)) {
+                    throw new InexistentEntityException("Invalid id!\n");
+                }
+                AssignmentDbRepository assign = new AssignmentDbRepository();
+                Set<Student> students = this.studentService.getAllStudents();
+                Set<Problem> problems = this.problemService.getAllProblems();
+                boolean problemExists = false;
+                for (Problem pb : problems) {
+                    if (pb.getId() == Integer.parseInt(problemId)) {
+                        problemExists = true;
+                    }
+                }
+                if (problemExists) {
+                    boolean studentExists = false;
+                    for (Student s : students) {
+                        if (s.getId() == Integer.parseInt(studentId)) {
+                            s.addProblem(Integer.parseInt(problemId));
+                            assign.AssignStudentToProblem(s, Integer.parseInt(problemId));
+                            studentExists = true;
+                        }
+                    }
+                    if (studentExists) {
+                        System.out.println("Problem " + problemId + " added to student " + studentId + ".");
+                    } else {
+                        throw new InexistentStudentException("Student with given id does not exist!");
+                    }
+                } else
+                    throw new InexistentProblemException("Problem with given id does not exist!");
+            } catch (InexistentEntityException | InexistentStudentException | InexistentProblemException ex) {
+                ex.printStackTrace();
+                myWait(1);
+            }
+        }
+        else{
             System.out.print("Enter a student id: ");
             Scanner sc = new Scanner(System.in);
             String studentId = sc.nextLine();
 
             System.out.print("Enter a problem id: ");
             String problemId = sc.nextLine();
-            if (!isLong(studentId) || !isLong(problemId)) {
-                throw new InexistentEntityException("Invalid id!\n");
-            }
-            AssignmentDbRepository assign = new AssignmentDbRepository();
-            Set<Student> students = this.studentService.getAllStudents();
-            Set<Problem> problems = this.problemService.getAllProblems();
-            boolean problemExists = false;
-            for (Problem pb : problems) {
-                if (pb.getId() == Integer.parseInt(problemId)) {
-                    problemExists = true;
-                }
-            }
-            if (problemExists)
-            {
-                boolean studentExists = false;
-                for (Student s : students) {
-                    if (s.getId() == Integer.parseInt(studentId)) {
-                        s.addProblem(Integer.parseInt(problemId));
-                        assign.AssignStudentToProblem(s, Integer.parseInt(problemId));
-                        studentExists = true;
-                    }
-                }
-                if (studentExists) {
-                    System.out.println("Problem " + problemId + " added to student " + studentId + ".");
-                }
-                else{
-                    throw new InexistentStudentException("Student with given id does not exist!");
-                }
-            }
-            else
-                throw new InexistentProblemException("Problem with given id does not exist!");
-        }
-        catch (InexistentEntityException | InexistentStudentException | InexistentProblemException ex)
-        {
-            ex.printStackTrace();
-            myWait(1);
         }
     }
 
