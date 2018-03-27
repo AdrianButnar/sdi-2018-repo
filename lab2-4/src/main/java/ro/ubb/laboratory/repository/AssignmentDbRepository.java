@@ -124,20 +124,22 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
             throw new EntityPresentException("Entity already in list!\n");
         }
         validator.validate(entity);
+        Assignment as = null;
         try {
+
             Connection c = getConnection();
             Statement stmt = null;
             Class.forName("org.postgresql.Driver");
             c.setAutoCommit(false);
             stmt = c.createStatement();
 
-            String text = entity.getText();
-            int number = entity.getNumber();
-            Long problemId = entity.getId();
+            String studentId = entity.getStudentID().toString();
+            String problemId = entity.getProblemID().toString();
+            String assignmentId = entity.getId().toString();
             String sql = "INSERT INTO \"Assigned\" (id, \"studentId\", \"problem\")" +
                     "VALUES(" +
-                    problemId + "," +
-                    number + ",'" + text + "');";
+                    assignmentId + "," +
+                    studentId + ",'" + problemId + "');";
 
             stmt.executeUpdate(sql);
             c.commit();
@@ -171,20 +173,20 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
             Class.forName("org.postgresql.Driver");
             c.setAutoCommit(false);
             stmt = c.createStatement();
-            String sql = "SELECT * FROM \"Problems\" WHERE id=" + id + ";";
+            String sql = "SELECT * FROM \"Assigned\" WHERE id=" + id + ";";
 
             ResultSet rs = stmt.executeQuery( sql );
 
             while ( rs.next() ) {
-                String text = rs.getString("text");
-                String number = rs.getString("number");
-                as = new Assignment(Integer.parseInt(number), text);
+                String studentId = rs.getString("studentId");
+                String problemId = rs.getString("problemId");
+                as = new Assignment(Long.parseLong(studentId),Long.parseLong(problemId));
                 as.setId(id);
                 validator.validate(as);
 
             }
 
-            String sql2 = "DELETE FROM \"Problems\" WHERE id=" + id + ";";
+            String sql2 = "DELETE FROM \"Assigned\" WHERE id=" + id + ";";
             stmt.executeUpdate(sql2);
             c.commit();
             stmt.close();
@@ -210,7 +212,7 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
             Long stId = st.getId();
             //Long pbId = pb.getId();
 //            System.out.println("SELECT * FROM \"Student\";");
-            String sql = "INSERT INTO \"Assigned\" (\"studentId\", \"problemId\"7) VALUES" + "(" + stId + ", " + pb + ")";
+            String sql = "INSERT INTO \"Assigned\" (\"studentId\", \"problemId\") VALUES" + "(" + stId + ", " + pb + ")";
             System.out.println(sql);
             stmt.executeUpdate(sql);
             c.commit();
