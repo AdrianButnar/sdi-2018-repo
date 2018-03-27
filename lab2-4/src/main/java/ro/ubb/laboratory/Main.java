@@ -26,8 +26,10 @@
 
 package ro.ubb.laboratory;
 
+import ro.ubb.laboratory.domain.Assignment;
 import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.domain.validators.AssignmentValidator;
 import ro.ubb.laboratory.domain.validators.ProblemValidator;
 import ro.ubb.laboratory.domain.validators.StudentValidator;
 import ro.ubb.laboratory.domain.validators.Validator;
@@ -149,6 +151,7 @@ public class Main {
         //in database repo
         Validator<Student> studentValidator = new StudentValidator();
         Validator<Problem> problemValidator = new ProblemValidator();
+        Validator<Assignment> assignmentValidator = new AssignmentValidator();
         Repository<Long, Student> studentRepository = new StudentDbRepository(studentValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
         Repository<Long, Problem> problemRepository = new ProblemDbRepository(problemValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
         StudentService studentService = new StudentService(studentRepository);
