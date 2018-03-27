@@ -135,8 +135,8 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
 
             String studentId = entity.getStudentID().toString();
             String problemId = entity.getProblemID().toString();
-            String assignmentId = entity.getId().toString();
-            String sql = "INSERT INTO \"Assigned\" (id, \"studentId\", \"problem\")" +
+            Long assignmentId = entity.getId();
+            String sql = "INSERT INTO \"Assigned\" (id, \"studentId\", \"problemId\")" +
                     "VALUES(" +
                     assignmentId + "," +
                     studentId + ",'" + problemId + "');";
