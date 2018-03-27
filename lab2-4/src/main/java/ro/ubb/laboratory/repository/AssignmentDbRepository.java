@@ -93,10 +93,8 @@ public class AssignmentDbRepository {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
         }
-
         return as;
     }
-
 
     public Long findAll() {
 
