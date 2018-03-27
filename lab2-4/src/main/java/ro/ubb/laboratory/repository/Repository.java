@@ -30,6 +30,7 @@ import ro.ubb.laboratory.domain.BaseEntity;
 import ro.ubb.laboratory.domain.validators.EntityCannotBeSavedException;
 import ro.ubb.laboratory.domain.validators.InexistentEntityException;
 
+
 import java.util.Optional;
 
 /**
@@ -81,7 +82,6 @@ public interface Repository<ID, T extends BaseEntity<ID>> {
      *             if the entity does not exist.
      */
     Optional<T> remove(ID id) throws InexistentEntityException;
-
 //    Optional<T> update(T entity) throws Exception;
 
 }

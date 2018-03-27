@@ -296,7 +296,7 @@ public class Console {
                 return;
             studentService.addStudent(student);
         }
-        catch ( ValidatorException se){
+        catch (ValidatorException se){
             se.printStackTrace();
             myWait(1);
         }
