@@ -201,30 +201,30 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
         return Optional.ofNullable(as);
     }
 
-    public void AssignStudentToProblem(Student st, long pb)
-    {
-        try {
-            Connection c = getConnection();
-            Statement stmt = null;
-            Class.forName("org.postgresql.Driver");
-            c.setAutoCommit(false);
-            stmt = c.createStatement();
-            Long stId = st.getId();
-            //Long pbId = pb.getId();
-//            System.out.println("SELECT * FROM \"Student\";");
-            String sql = "INSERT INTO \"Assigned\" (\"studentId\", \"problemId\") VALUES" + "(" + stId + ", " + pb + ")";
-            System.out.println(sql);
-            stmt.executeUpdate(sql);
-            c.commit();
-            stmt.close();
-            c.close();
-
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-
-    }
+//    public void AssignStudentToProblem(Student st, long pb)
+//    {
+//        try {
+//            Connection c = getConnection();
+//            Statement stmt = null;
+//            Class.forName("org.postgresql.Driver");
+//            c.setAutoCommit(false);
+//            stmt = c.createStatement();
+//            Long stId = st.getId();
+//            //Long pbId = pb.getId();
+////            System.out.println("SELECT * FROM \"Student\";");
+//            String sql = "INSERT INTO \"Assigned\" (\"studentId\", \"problemId\") VALUES" + "(" + stId + ", " + pb + ")";
+////            System.out.println(sql);
+//            stmt.executeUpdate(sql);
+//            c.commit();
+//            stmt.close();
+//            c.close();
+//
+//        } catch (Exception e) {
+//            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+//            System.exit(0);
+//        }
+//
+//    }
 
 
     public Connection getConnection() {
@@ -234,7 +234,7 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
             Class.forName(driver);
 
             conn = DriverManager.getConnection(this.url,  System.getProperty("dbUsername"), System.getProperty("dbPassword"));
-            System.out.println("Connected");
+            //System.out.println("Connected");
 
         } catch (Exception ex) {
             System.out.println("My exception in AssignementDBRepo");

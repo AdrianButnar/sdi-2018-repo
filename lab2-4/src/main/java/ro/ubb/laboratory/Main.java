@@ -79,17 +79,16 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         //xml-repo
-        Validator<Student> studentValidator = new StudentValidator();
-        Validator<Problem> problemValidator = new ProblemValidator();
-
-        Repository<Long, Student> studentRepository =
-                new StudentXmlRepository("./data/students.xml",studentValidator);
-        Repository<Long, Problem> problemRepository =
-                new ProblemXmlRepository("./data/problems.xml",problemValidator);
-        StudentService studentService = new StudentService(studentRepository);
-        ProblemService problemService = new ProblemService(problemRepository);
-        Console console = new Console(studentService,problemService);
-        console.runConsole();
+//        Validator<Student> studentValidator = new StudentValidator();
+//        Validator<Problem> problemValidator = new ProblemValidator();
+//        Repository<Long, Student> studentRepository =
+//                new StudentXmlRepository("./data/students.xml",studentValidator);
+//        Repository<Long, Problem> problemRepository =
+//                new ProblemXmlRepository("./data/problems.xml",problemValidator);
+//        StudentService studentService = new StudentService(studentRepository);
+//        ProblemService problemService = new ProblemService(problemRepository);
+//        Console console = new Console(studentService,problemService);
+//        console.runConsole();
 //
       
 //        In memory repository
@@ -150,18 +149,18 @@ public class Main {
 
 
         //in database repo
-//        Validator<Student> studentValidator = new StudentValidator();
-//        Validator<Problem> problemValidator = new ProblemValidator();
-//        Validator<Assignment> assignmentValidator = new AssignmentValidator();
-//        Repository<Long, Student> studentRepository = new StudentDbRepository(studentValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
-//        Repository<Long, Problem> problemRepository = new ProblemDbRepository(problemValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
-//        Repository<Long, Assignment> assignmentRepository = new AssignmentDbRepository(assignmentValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
-//
-//        StudentService studentService = new StudentService(studentRepository);
-//        ProblemService problemService = new ProblemService(problemRepository);
-//        AssignmentDbService assignmentDbService = new AssignmentDbService(assignmentRepository);
-//        Console console = new Console(studentService, problemService,assignmentDbService);
-//        console.runConsole();
+        Validator<Student> studentValidator = new StudentValidator();
+        Validator<Problem> problemValidator = new ProblemValidator();
+        Validator<Assignment> assignmentValidator = new AssignmentValidator();
+        Repository<Long, Student> studentRepository = new StudentDbRepository(studentValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
+        Repository<Long, Problem> problemRepository = new ProblemDbRepository(problemValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
+        Repository<Long, Assignment> assignmentRepository = new AssignmentDbRepository(assignmentValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
+
+        StudentService studentService = new StudentService(studentRepository);
+        ProblemService problemService = new ProblemService(problemRepository);
+        AssignmentDbService assignmentDbService = new AssignmentDbService(assignmentRepository);
+        Console console = new Console(studentService, problemService,assignmentDbService);
+        console.runConsole();
 
     }
 }

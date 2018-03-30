@@ -231,14 +231,10 @@ public class Console {
 
                 System.out.print("Enter a problem id: ");
                 String problemId = sc.nextLine();
-                System.out.println("Database");
-//
-//                if (!isLong(studentId) || !isLong(problemId) || !isLong(assignmentId)) {
-//                    throw new InexistentEntityException("Invalid id!\n");
-//                }
-//                Assignment as = new Assignment(Long.parseLong(studentId),Long.parseLong(problemId));
-//                as.setId(Long.parseLong(assignmentId));
-//                assignmentService.addAssignment(as);
+
+                Assignment as = new Assignment(Long.parseLong(studentId), Long.parseLong(problemId));
+                as.setId(Long.parseLong(assignmentId));
+                assignmentService.addAssignment(as);
             }
         }
         catch (InexistentEntityException | InexistentStudentException | InexistentProblemException | EntityPresentException ex) {
@@ -280,7 +276,20 @@ public class Console {
         }
         else
         {
-            System.out.println("Database");
+            System.out.print("Enter a student id: ");
+            Scanner sc = new Scanner(System.in);
+            String studentId = sc.nextLine();
+            if (!isLong(studentId)) {
+                throw new InexistentEntityException("Invalid id!\n");
+            }
+            Set<Assignment> assignments = this.assignmentService.getAllAssignments();
+            for (Assignment a : assignments) {
+                if (a.getStudentID() == Long.parseLong(studentId)) {
+                    System.out.println("Student " + a.getStudentID() + " has the following problems assigned: " + a.getProblemID());
+
+                }
+            }
+            System.out.println("Done");
         }
     }
 
@@ -294,7 +303,7 @@ public class Console {
             Set<Student> students = studentService.getAllStudents();
             boolean found=false;
             for (Student s:students){
-                if (s.getName().contains(name)){
+                if (s.getName().toLowerCase().contains(name)){
                     System.out.println(s);
                     found = true;
                 }
@@ -337,6 +346,32 @@ public class Console {
         }
         else
         {
+            Set<Assignment> assignments = this.assignmentService.getAllAssignments();
+            HashMap<Long, Integer> elementCountMap = new HashMap<>();
+            for(Assignment as : assignments)
+            {
+                if (elementCountMap.containsKey(as.getProblemID()))
+                {
+                    elementCountMap.put(as.getProblemID(), elementCountMap.get(as.getProblemID())+1);
+                }
+                else
+                {
+                    elementCountMap.put(as.getProblemID(), 1);
+                }
+            }
+            Set<Map.Entry<Long, Integer>> entrySet = elementCountMap.entrySet();
+            long element = 0;
+            int frequency = 1;
+
+            for (Map.Entry<Long, Integer> entry : entrySet)
+            {
+                if(entry.getValue() > frequency)
+                {
+                    element = entry.getKey();
+                    frequency = entry.getValue();
+                }
+            }
+            System.out.println("Most assigned problem is " + element + ".");
             System.out.println("Database");
         }
     }
