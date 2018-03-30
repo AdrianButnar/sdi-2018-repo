@@ -11,6 +11,7 @@ import ro.ubb.laboratory.service.StudentService;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author Adrian Butnar
@@ -21,18 +22,19 @@ public class Console {
     private StudentService studentService;
     private ProblemService problemService;
     private AssignmentDbService assignmentService;
-    private int flag=0;
+    private int flag;
 
     public Console(StudentService studentService, ProblemService problemService) {
         this.studentService = studentService;
         this.problemService = problemService;
+        flag = 2; //if there is not a database Repo
     }
 
     public Console (StudentService studentService, ProblemService problemService, AssignmentDbService assignmentService) {
         this.studentService = studentService;
         this.problemService = problemService;
         this.assignmentService = assignmentService;
-        flag=1;
+        flag = 1; //with database Repo
     }
 
     private void printMenu(){
@@ -51,7 +53,6 @@ public class Console {
                         "0.  Exit\n\n"+
                         "Choose one of the commands above:\n "+
                         "----------------------------------------------------");
-
     }
 
     /**
@@ -97,106 +98,19 @@ public class Console {
                     System.exit(0);
             }
         }
-
     }
 
-    private void showTheMostAssignedProblems() {
-        /*
-        AssignmentDbRepository assignmentDbRepository = new AssignmentDbRepository();
-        Long nr = assignmentDbRepository.findAll();
-        System.out.println("Most assigned problem is assigned" +  nr + "times");
-        List<Integer> allProblems = new ArrayList<>();
-        for (Student s :studentService.getAllStudents()){
-            allProblems.addAll(s.getProblemList());
-        }
-        Map<Object, Long> times = allProblems.stream().collect(Collectors.groupingBy(e -> e,Collectors.counting()));
-        Comparator<Object> comparator = new Comparator<Object>() { //in my case not, so warning dismissed! *drop the mic*
-            @Override
-            public int compare(Object key1, Object key2) {
-                int returned = times.get(key2).intValue()-times.get(key1).intValue();
 
-                if (returned == 0 && !key1.equals(key2))
-                    returned = -1;
-
-                return returned;
-
-            }
-        };
-        TreeMap<Object,Long> tm = new TreeMap<Object,Long>(comparator);
-        tm.putAll(times);
-        for (Object item:tm.keySet()){
-            System.out.println("Problem "+ item + " was assigned " + times.get(item) + " time/s.");
-        }
-        */
-    }
-
-    private void showStudentsByNameMatch() {
-        try{
-            System.out.print("Enter a name: ");
-            Scanner sc = new Scanner(System.in);
-            String name = sc.nextLine();
-            Set<Student> students = studentService.getAllStudents();
-            boolean found=false;
-            for (Student s:students){
-                if (s.getName().contains(name)){
-                    System.out.println(s);
-                    found = true;
-                }
-            }
-            if(!found){
-                throw new InexistentEntityException("No student matches this name!");
-            }
-
-        }
-        catch (InexistentEntityException e){
-            e.printStackTrace();
-            myWait(1);
-        }
-    }
-
-    private void showAllProblemsOfAStudent() {
-//        try {
-//            System.out.print("Enter a student id: ");
-//            Scanner sc = new Scanner(System.in);
-//            String studentId = sc.nextLine();
-//            if (!isLong(studentId)) {
-//                throw new InexistentEntityException("Invalid id!\n");
-//            }
-//            Set<Student> students = this.studentService.getAllStudents();
-//            boolean studentExists = false;
-//            for (Student s : students) {
-//                if (s.getId() == Integer.parseInt(studentId)) {
-//                    AssignmentDbRepository asRepo = new AssignmentDbRepository();
-//                    Assignment as = asRepo.findOne(s.getId());
-//
-//                    if (as != null){
-//                        System.out.println("Student " + as.getStudentID() + " has the following problems assigned: " + as.getProblemID());
-//                    }
-//                    else{
-//                        System.out.println("This student has no assigned problems!");
-//                    }
-//                    studentExists = true;
-//                }
-//            }
-//            if (!studentExists){
-//                throw new InexistentEntityException("This student does not exist in the list!");
-//            }
-//
-//        } catch (InexistentEntityException ex) {
-//            ex.printStackTrace();
-//            myWait(1);
-//        }
-    }
-
-    /**
-     * Displays all the students from the laboratory.domain.repository
-     */
-    private void myWait(long f){
+    private void addStudent() {
         try {
-            TimeUnit.SECONDS.sleep(f);
+            Student student = readStudent();
+            if(student==null)
+                return;
+            studentService.addStudent(student);
         }
-        catch (Exception ex){
-            ex.printStackTrace();
+        catch (ValidatorException se){
+            se.printStackTrace();
+            myWait(1);
         }
     }
 
@@ -208,6 +122,38 @@ public class Console {
         students.stream().forEach(System.out::println);
     }
 
+    private void removeStudent(){
+        try {
+            System.out.print("Enter id: ");
+            Scanner sc = new Scanner(System.in);
+            String id = sc.nextLine();
+            if (!isLong(id)){
+                throw new InexistentEntityException("Invalid id!\n");
+            }
+            studentService.removeStudent(Long.parseLong(id));
+            System.out.println("Student successfully removed!");
+        }
+        catch (InexistentEntityException se){
+            se.printStackTrace();
+            myWait(1);
+        }
+    }
+
+    private void addProblem() {
+        try {
+            Problem problem = readProblem();
+            if(problem == null)
+                return;
+            problemService.addProblem(problem);
+        }
+        catch ( ValidatorException ex){
+            ex.printStackTrace();
+            myWait(1);
+
+        }
+    }
+
+
     /**
      * Prints to the standard output all the problems in the repository
      */
@@ -216,10 +162,31 @@ public class Console {
         problems.stream().forEach(System.out::println);
     }
 
+
+    private void removeProblem(){
+        try {
+            System.out.print("Enter id: ");
+            Scanner sc = new Scanner(System.in);
+            String id = sc.nextLine();
+            if (!isLong(id)){
+                throw new InexistentEntityException("Invalid id!\n");
+            }
+            problemService.removeProblem(Long.parseLong(id));
+            System.out.println("Problem successfully removed!");
+
+        }
+        catch (InexistentEntityException ex){
+            ex.printStackTrace();
+            myWait(1);
+        }
+    }
+
+
     private void assignProblemToStudent(){
         try {
             //if (this.getClass().getConstructor().getParameterCount()!= 3) {
-            if (flag==0){
+            if (flag == 2)
+            {
                 System.out.print("Enter a student id: ");
                 Scanner sc = new Scanner(System.in);
                 String studentId = sc.nextLine();
@@ -264,82 +231,126 @@ public class Console {
 
                 System.out.print("Enter a problem id: ");
                 String problemId = sc.nextLine();
-
-                if (!isLong(studentId) || !isLong(problemId) || !isLong(assignmentId)) {
-                    throw new InexistentEntityException("Invalid id!\n");
-                }
-                Assignment ass = new Assignment(Long.parseLong(studentId),Long.parseLong(problemId));
-                ass.setId(Long.parseLong(assignmentId));
-                assignmentService.addAssignment(ass);
+                System.out.println("Database");
+//
+//                if (!isLong(studentId) || !isLong(problemId) || !isLong(assignmentId)) {
+//                    throw new InexistentEntityException("Invalid id!\n");
+//                }
+//                Assignment as = new Assignment(Long.parseLong(studentId),Long.parseLong(problemId));
+//                as.setId(Long.parseLong(assignmentId));
+//                assignmentService.addAssignment(as);
             }
         }
         catch (InexistentEntityException | InexistentStudentException | InexistentProblemException | EntityPresentException ex) {
             ex.printStackTrace();
-            myWait(1);{
-
+            myWait(1);
         }
-     }
     }
 
-    private void removeStudent(){
-        try {
-            System.out.print("Enter id: ");
-            Scanner sc = new Scanner(System.in);
-            String id = sc.nextLine();
-            if (!isLong(id)){
-                throw new InexistentEntityException("Invalid id!\n");
+    private void showAllProblemsOfAStudent() {
+        if(flag == 2) {
+            try {
+                System.out.print("Enter a student id: ");
+                Scanner sc = new Scanner(System.in);
+                String studentId = sc.nextLine();
+                if (!isLong(studentId)) {
+                    throw new InexistentEntityException("Invalid id!\n");
+                }
+                Set<Student> students = this.studentService.getAllStudents();
+                boolean studentExists = false;
+                for (Student s : students) {
+                    if (s.getId() == Integer.parseInt(studentId)) {
+                        if (s.getProblemList().size()!=0){
+                            System.out.println("Student " + s.getId() + " has the following problems assigned: " + s.getProblemListToString());
+                        }
+                        else{
+                            System.out.println("This student has no assigned problems!");
+                        }
+                        studentExists = true;
+                    }
+                }
+                if (!studentExists){
+                    throw new InexistentEntityException("This student does not exist in the list!");
+                }
+
+            } catch (InexistentEntityException ex) {
+                ex.printStackTrace();
+                myWait(1);
             }
-            studentService.removeStudent(Long.parseLong(id));
-            System.out.println("Student successfully removed!");
         }
-        catch (InexistentEntityException se){
-            se.printStackTrace();
-            myWait(1);
+        else
+        {
+            System.out.println("Database");
         }
     }
-    private void removeProblem(){
-        try {
-            System.out.print("Enter id: ");
+
+
+    private void showStudentsByNameMatch() {
+
+        try{
+            System.out.print("Enter a name: ");
             Scanner sc = new Scanner(System.in);
-            String id = sc.nextLine();
-            if (!isLong(id)){
-                throw new InexistentEntityException("Invalid id!\n");
+            String name = sc.nextLine();
+            Set<Student> students = studentService.getAllStudents();
+            boolean found=false;
+            for (Student s:students){
+                if (s.getName().contains(name)){
+                    System.out.println(s);
+                    found = true;
+                }
             }
-            problemService.removeProblem(Long.parseLong(id));
-            System.out.println("Problem successfully removed!");
+            if(!found){
+                throw new InexistentEntityException("No student matches this name!");
+            }
 
         }
-        catch (InexistentEntityException ex){
-            ex.printStackTrace();
+        catch (InexistentEntityException e){
+            e.printStackTrace();
             myWait(1);
         }
     }
 
+    private void showTheMostAssignedProblems() {
+        if(flag == 2) {
+            List<Integer> allProblems = new ArrayList<>();
+            for (Student s :studentService.getAllStudents()){
+                allProblems.addAll(s.getProblemList());
+            }
+            Map<Object, Long> times = allProblems.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+            Comparator<Object> comparator = new Comparator<Object>() { //in my case not, so warning dismissed! *drop the mic*
+                @Override
+                public int compare(Object key1, Object key2) {
+                    int returned = times.get(key2).intValue()-times.get(key1).intValue();
 
-    private void addStudent() {
-        try {
-            Student student = readStudent();
-            if(student==null)
-                return;
-            studentService.addStudent(student);
+                    if (returned == 0 && !key1.equals(key2))
+                        returned = -1;
+
+                    return returned;
+
+                }
+            };
+            TreeMap<Object,Long> tm = new TreeMap<Object,Long>(comparator);
+            tm.putAll(times);
+            for (Object item:tm.keySet()){
+                System.out.println("Problem "+ item + " was assigned " + times.get(item) + " time/s.");
+            }
         }
-        catch (ValidatorException se){
-            se.printStackTrace();
-            myWait(1);
+        else
+        {
+            System.out.println("Database");
         }
     }
 
-    private void addProblem() {
-        try {
-            Problem problem = readProblem();
-            if(problem == null)
-                return;
-            problemService.addProblem(problem);
-        }
-        catch ( ValidatorException ex){
-            ex.printStackTrace();
-            myWait(1);
 
+    /**
+     * Displays all the students from the laboratory.domain.repository
+     */
+    private void myWait(long f){
+        try {
+            TimeUnit.SECONDS.sleep(f);
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 
