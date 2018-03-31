@@ -244,8 +244,8 @@ public class Console {
     }
 
     private void showAllProblemsOfAStudent() {
-        if(flag == 2) {
-            try {
+        try {
+            if (flag == 2) {
                 System.out.print("Enter a student id: ");
                 Scanner sc = new Scanner(System.in);
                 String studentId = sc.nextLine();
@@ -256,40 +256,42 @@ public class Console {
                 boolean studentExists = false;
                 for (Student s : students) {
                     if (s.getId() == Integer.parseInt(studentId)) {
-                        if (s.getProblemList().size()!=0){
+                        if (s.getProblemList().size() != 0) {
                             System.out.println("Student " + s.getId() + " has the following problems assigned: " + s.getProblemListToString());
-                        }
-                        else{
+                        } else {
                             System.out.println("This student has no assigned problems!");
                         }
                         studentExists = true;
                     }
                 }
-                if (!studentExists){
+                if (!studentExists) {
                     throw new InexistentEntityException("This student does not exist in the list!");
                 }
 
-            } catch (InexistentEntityException ex) {
-                ex.printStackTrace();
-                myWait(1);
+            } else {
+                System.out.print("Enter a student id: ");
+                Scanner sc = new Scanner(System.in);
+                String studentId = sc.nextLine();
+                if (!isLong(studentId)) {
+                    throw new InexistentEntityException("Invalid id!\n");
+                }
+                Set<Assignment> assignments = this.assignmentService.getAllAssignments();
+                String problems="";
+                for (Assignment a : assignments) {
+                    if (a.getStudentID() == Long.parseLong(studentId)) {
+                        problems+=a.getProblemID()+" ";
+                    }
+                }
+                if (!problems.equals("")){
+                    System.out.println("Student " + studentId + " has the following problems assigned: " + problems);
+                }
+                else
+                    throw new InexistentEntityException("This student has no assigned problems!");
             }
         }
-        else
-        {
-            System.out.print("Enter a student id: ");
-            Scanner sc = new Scanner(System.in);
-            String studentId = sc.nextLine();
-            if (!isLong(studentId)) {
-                throw new InexistentEntityException("Invalid id!\n");
-            }
-            Set<Assignment> assignments = this.assignmentService.getAllAssignments();
-            for (Assignment a : assignments) {
-                if (a.getStudentID() == Long.parseLong(studentId)) {
-                    System.out.println("Student " + a.getStudentID() + " has the following problems assigned: " + a.getProblemID());
-
-                }
-            }
-            System.out.println("Done");
+        catch (InexistentEntityException ex) {
+            ex.printStackTrace();
+            myWait(1);
         }
     }
 
@@ -371,8 +373,7 @@ public class Console {
                     frequency = entry.getValue();
                 }
             }
-            System.out.println("Most assigned problem is " + element + ".");
-            System.out.println("Database");
+            System.out.println("Most assigned problem is " + element + " with " +frequency+ " occurences.");
         }
     }
 
