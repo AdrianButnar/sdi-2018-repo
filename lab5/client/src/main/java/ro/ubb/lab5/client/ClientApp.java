@@ -8,7 +8,6 @@ import ro.ubb.socket.common.ServiceInterface;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-//veronica
 public class ClientApp {
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
