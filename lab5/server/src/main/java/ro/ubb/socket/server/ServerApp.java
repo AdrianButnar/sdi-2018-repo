@@ -27,6 +27,8 @@ import java.util.concurrent.Future;
 public class ServerApp {
     public static void main(String[] args) {
 
+        System.out.println(System.getProperty("dbUsername"));
+        //System.out.println(System.getProperty("dbPassword"));
         //here we put data from service and repo from lab4
         Validator<Student> studentValidator = new StudentValidator();
         Validator<Problem> problemValidator = new ProblemValidator();
