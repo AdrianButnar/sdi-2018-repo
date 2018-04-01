@@ -2,12 +2,14 @@ package ro.ubb.lab5.client.ui;
 
 import ro.ubb.socket.common.ServiceInterface;
 import ro.ubb.socket.common.domain.Student;
+import ro.ubb.socket.common.domain.validators.IllegalIdException;
+import ro.ubb.socket.common.domain.validators.InexistentEntityException;
+import ro.ubb.socket.common.domain.validators.ValidatorException;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.swing.plaf.InternalFrameUI;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 
 public class ClientConsole {
     private ServiceInterface helloService;
@@ -35,6 +37,7 @@ public class ClientConsole {
     }
 
     public void runConsole() {
+
         while (true) {
             printMenu();
             Scanner sc = new Scanner(System.in);
@@ -42,26 +45,30 @@ public class ClientConsole {
 
             String command = sc.nextLine();
 
-            Future<String> res;
+            Future<String> res = null;
             switch (command) {
                 case "1":
-                    res = helloService.addStudent(name);
+//                    res = addStudent();
                     addStudent();
-                    continue;
+                    break;
+
                 case "2":
-                    res = helloService.printAllStudents(name);
-                    continue;
+//                    res = printAllStudents();
+                    printAllStudents();
+                    break;
                 case "3":
-                    res = helloService.removeStudent();
-                    continue;
+                    removeStudent();
+                    break;
+
                 case "4":
-                    res = helloService.addProblem();
+                    addProblem();
                     continue;
-                    /*
+/*
                 case "5":
                     res = helloService.addStudent(name);
                     printAllProblems();
                     continue;
+
                 case "6":
                     res = helloService.addStudent(name);
                     removeProblem();
@@ -85,98 +92,149 @@ public class ClientConsole {
                     */
                 case "0":
                     System.exit(0);
+                    res = null;
+                    break;
                 default:
                     res = null;
                     break;
-            }
-            try {
-                System.out.println(res.get());
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
 
+            }
+//            try {
+//                //if(res.isDone())
+//                System.out.println(res.get());
+//            } catch (InterruptedException | ExecutionException | NullPointerException e) {
+//                e.printStackTrace();
+//            }
 
         }
-
     }
 
     /**
      * Reads a new student from the standard input
      * @return The read student if the data was filled correctly or null otherwise
      */
-    private Student readStudent() {
-        System.out.println("Enter params: ");
-        Scanner sc = new Scanner(System.in);
-//        String name = sc.nextLine();
-//        try {
-//            Scanner sc = new Scanner(System.in);
-//            System.out.print("Enter student id: ");
-//            String id = sc.nextLine();
-//            System.out.print("Enter serial number: ");
-//            String serialNumber = sc.nextLine();
-//            System.out.print("Enter name: ");
-//            String name = sc.nextLine();
-//            Student student = new Student(serialNumber, name);
-//
-//            if (isLong(id))
-//                student.setId(Long.parseLong(id));
-//            else
-//                throw new IllegalIdException("Invalid id\n");
-//
-//            return student;
-//        }
-//        catch (IllegalIdException|ValidatorException ex) {
-//            ex.printStackTrace();
-//            myWait(1);
-//
-//        }
-//
-//
-//        return null;
-//    }
-//    private void addStudent() {
-//        try {
-//            Student student = readStudent();
-//            if(student==null)
-//                return;
-//            studentService.addStudent(student);
+    private String readStudent() {
+        try {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Enter student id: ");
+            String id = sc.nextLine();
+            System.out.print("Enter serial number: ");
+            String serialNumber = sc.nextLine();
+            System.out.print("Enter name: ");
+            String name = sc.nextLine();
 
-        String params = sc.nextLine();
-        Future<String> res;
-        switch (command) {
-            case "addStudent":
-                res = helloService.addStudent(params);
-                break;
-            case "printAllStudents":
-                res = helloService.printAllStudents(params);
-                break;
-            case "removeStudent":
-                res = helloService.removeStudent(params);
-                break;
-            case "printAllProblems":
-                res = helloService.printAllProblems(params);
-                break;
-            case "addProblem":
-                res = helloService.addProblem(params);
-                break;
-            default:
-                res= null;
-                break;
+            String returnString = id+";"+serialNumber+";"+name;
+
+            if (!isLong(id)) {
+                throw new IllegalIdException("Invalid id\n");
+            }
+
+            return returnString;
         }
-        catch (ValidatorException se){
+        catch (IllegalIdException | ValidatorException ex) {
+            ex.printStackTrace();
+            myWait(1);
+
+        }
+        return "";
+    }
+
+    private  void addStudent() {
+        try {
+            String received = readStudent();
+            if (!received.equals("")) {
+                Future<String> s = helloService.addStudent(received);
+                if(s.isDone())
+                {
+                    String result = s.get();
+                    System.out.println(result);
+                }
+            }
+            else
+            {
+                System.out.println("Please try again, something is not right client-side");
+            }
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Exception client-side: ");
+            ex.printStackTrace();
+            myWait(1);
+        }
+//        throw new NotImplementedException(); //I don't understand futures
+    }
+
+    /**
+     * Prints to the standard output all the students in the repository
+     */
+//    private  Future<String> printAllStudents() {
+    private void printAllStudents() {
+        Future<String> students = helloService.printAllStudents("");
+       // System.out.println(students);
+        try {
+            while (!students.isDone()) { //if- doesn't really work //also kind of blocking
+//            if (students.isDone()){
+                String result = students.get(); //kind of blocking
+                String[] args = result.split(";");
+                for (String row : args) {
+                    System.out.println(row);
+                }
+            }
+//           return students;
+        } catch (CancellationException | ExecutionException | InterruptedException ex)
+        {
+            System.out.println("Error serverside(or canceled):");
+            ex.printStackTrace();
+        }
+
+//        throw new NotImplementedException();
+    }
+
+    private void removeStudent(){
+        try {
+            System.out.print("Enter id: ");
+            Scanner sc = new Scanner(System.in);
+            String id = sc.nextLine();
+            if (!isLong(id)){
+                throw new InexistentEntityException("Invalid id!\n");
+            }
+            Future<String> s = helloService.removeStudent(id);
+//            if(s.isDone())
+            {
+                String result = s.get(); //blocking also
+                System.out.println(result);
+            }
+        }
+        catch (InexistentEntityException|InterruptedException|ExecutionException se){
+            System.out.println("Exception client-side: ");
             se.printStackTrace();
             myWait(1);
         }
     }
 
-
-
-
-
-
-
-
-
+    private void addProblem() {
+        try {
+            String received = readStudent();
+            if (!received.equals("")) {
+                Future<String> s = helloService.addStudent(received);
+//                if(s.isDone())
+                {
+                    String result = s.get();
+                    System.out.println(result);
+                }
+            }
+            else
+            {
+                System.out.println("Please try again, something is not right client-side");
+            }
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Exception client-side: ");
+            ex.printStackTrace();
+            myWait(1);
+        }
+    }
 
 
     private static boolean isLong(String id){
@@ -188,6 +246,7 @@ public class ClientConsole {
             return false;
         }
     }
+
     /**
      * Displays all the students from the laboratory.domain.repository
      */

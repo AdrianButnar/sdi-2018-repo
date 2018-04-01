@@ -26,7 +26,7 @@ public class TcpClient {
              InputStream is = socket.getInputStream();
         ) {
             request.writeTo(os);
-            System.out.println("client -sending request: " + request);
+            System.out.println("client - sending request: " + request);
 
 //            Message response = new Message();
             Message response = Message.builder().build();

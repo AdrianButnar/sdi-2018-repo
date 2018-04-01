@@ -45,7 +45,7 @@ public class ServerServiceImpl implements ServiceInterface {
             s.setId(Long.parseLong(args[0]));
             //((StudentDbRepository)srepo).getValidator().validate(s);
             studentService.addStudent(s);
-            return executorService.submit(() -> "added student! ");
+            return executorService.submit(() -> "Student was added successfully! ");
         }
         catch (Exception ex){
             return executorService.submit(()->"Student data was invalid!");
@@ -55,10 +55,14 @@ public class ServerServiceImpl implements ServiceInterface {
     @Override
     public Future<String> printAllStudents(String paramsAndTypes) {
         String out ="";
+        StringBuilder sb = new StringBuilder();
         for (Student s: studentService.getAllStudents()){
-            out = out + s.toString()+" \n";
+            sb.append(s.toString());
+            sb.append(";");
+           // out = out + s.toString()+" \n";
         }
-        final String finalOut = out;
+        final String finalOut = sb.toString();
+        System.out.println(sb.toString());
         return executorService.submit(()->finalOut);
     }
 
@@ -66,7 +70,7 @@ public class ServerServiceImpl implements ServiceInterface {
     public Future<String> removeStudent(String paramsAndTypes) {
         try{
             studentService.removeStudent(Long.parseLong(paramsAndTypes));
-            return executorService.submit(() -> "removed student! ");
+            return executorService.submit(() -> "Student was removed! ");
         }
         catch (Exception ex){
             return executorService.submit(()->"Student id was invalid!");
@@ -80,7 +84,7 @@ public class ServerServiceImpl implements ServiceInterface {
             Problem pb= new Problem(Integer.parseInt(args[1]),args[2]);
             pb.setId(Long.parseLong(args[0]));
             problemService.addProblem(pb);
-            return executorService.submit(() -> "added problem! ");
+            return executorService.submit(() -> "Problem was added successfully! ");
         }
         catch (Exception ex){
             return executorService.submit(()->"Problem data was invalid!");
@@ -101,7 +105,7 @@ public class ServerServiceImpl implements ServiceInterface {
     public Future<String> removeProblem(String paramsAndTypes) {
         try{
             problemService.removeProblem(Long.parseLong(paramsAndTypes));
-            return executorService.submit(() -> "Removed Problem! ");
+            return executorService.submit(() -> "Problem removed successfully! ");
         }
         catch (Exception ex){
             return executorService.submit(()->"Problem id was invalid!");
