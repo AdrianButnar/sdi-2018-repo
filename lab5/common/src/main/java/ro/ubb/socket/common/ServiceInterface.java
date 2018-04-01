@@ -6,9 +6,8 @@ public interface ServiceInterface {
     String SERVER_HOST = "localhost";
     int SERVER_PORT = 1234;
 
-    String SAY_HELLO = "sayHello";
-    String ADD="add";
+    String ADD_STUDENT="addStudent";
 
-    Future<String> doCommand(String name);
+    Future<String> addStudent(String paramsAndTypes);
 }
 

@@ -3,15 +3,16 @@ package ro.ubb.lab5.client.service;
 import ro.ubb.lab5.client.tcp.TcpClient;
 import ro.ubb.socket.common.Message;
 import ro.ubb.socket.common.ServiceInterface;
+import ro.ubb.socket.common.service.StudentService;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-public class ServiceClient implements ServiceInterface {
+public class ClientServiceImpl implements ServiceInterface {
     private ExecutorService executorService;
     private TcpClient tcpClient;
 
-    public ServiceClient(ExecutorService executorService, TcpClient tcpClient) {
+    public ClientServiceImpl(ExecutorService executorService, TcpClient tcpClient) {
         this.executorService = executorService;
         this.tcpClient = tcpClient;
     }
@@ -32,15 +33,17 @@ public class ServiceClient implements ServiceInterface {
 //    }
 
     @Override
-    public Future<String> doCommand(String name) {
+    public Future<String> addStudent(String paramsAndTypes) {
         return executorService.submit(()->{
             Message request = Message.builder()
-                    .header(ServiceClient.ADD)
-                    .body(name)
+                    .header(ServiceInterface.ADD_STUDENT)
+                    .body(paramsAndTypes)
                     .build();
             Message response = tcpClient.sendAndReceive(request);
             return response.getBody();
         });
     }
+
+
 }
 

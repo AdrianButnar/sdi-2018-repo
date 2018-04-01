@@ -31,6 +31,10 @@ public class StudentDbRepository implements Repository<Long, Student> {
 
     }
 
+    public Validator<Student> getValidator() {
+        return validator;
+    }
+
     /**
      * Find the entity with the given {@code id}.
      *
