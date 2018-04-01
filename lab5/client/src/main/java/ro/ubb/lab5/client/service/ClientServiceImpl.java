@@ -32,16 +32,60 @@ public class ClientServiceImpl implements ServiceInterface {
 //
 //    }
 
-    @Override
-    public Future<String> addStudent(String paramsAndTypes) {
+    public Future<String> processCommand(String paramsAndTypes,String header){
         return executorService.submit(()->{
             Message request = Message.builder()
-                    .header(ServiceInterface.ADD_STUDENT)
+                    .header(header)
                     .body(paramsAndTypes)
                     .build();
             Message response = tcpClient.sendAndReceive(request);
             return response.getBody();
         });
+    }
+    @Override
+    public Future<String> addStudent(String paramsAndTypes) {
+        return processCommand(paramsAndTypes,ServiceInterface.ADD_STUDENT);
+    }
+
+    @Override
+    public Future<String> printAllStudents(String paramsAndTypes) {
+        return processCommand(paramsAndTypes,ServiceInterface.PRINT_ALL_STUDENTS);
+    }
+
+    @Override
+    public Future<String> removeStudent(String paramsAndTypes) {
+        return processCommand(paramsAndTypes,ServiceInterface.REMOVE_STUDENT);
+    }
+
+    @Override
+    public Future<String> addProblem(String paramsAndTypes) {
+        return processCommand(paramsAndTypes,ServiceInterface.ADD_PROBLEM);
+
+    }
+
+    @Override
+    public Future<String> printAllProblems(String paramsAndTypes) {
+        return processCommand(paramsAndTypes,ServiceInterface.PRINT_ALL_PROBLEMS);
+    }
+
+    @Override
+    public Future<String> removeProblem(String paramsAndTypes) {
+        return null;
+    }
+
+    @Override
+    public Future<String> assignProblemToStudent(String paramsAndTypes) {
+        return null;
+    }
+
+    @Override
+    public Future<String> showAllProblemsOfAStudent(String paramsAndTypes) {
+        return null;
+    }
+
+    @Override
+    public Future<String> showTheMostAssignedProblems(String paramsAndTypes) {
+        return null;
     }
 
 

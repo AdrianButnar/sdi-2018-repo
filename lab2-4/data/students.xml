@@ -8,6 +8,12 @@
    </entity>
 
    <entity class="ro.ubb.laboratory.domain.Student">
+       <field name="serialNumber" type="java.lang.String" value="123456"/>
+       <field name="name" type="java.lang.String" value="Ana"/>
+       <field name="id" type="java.lang.Object" value="21"/>
+   </entity>
+
+   <entity class="ro.ubb.laboratory.domain.Student">
        <field name="serialNumber" type="java.lang.String" value="sn1"/>
        <field name="name" type="java.lang.String" value="s1"/>
        <field name="id" type="java.lang.Object" value="1"/>

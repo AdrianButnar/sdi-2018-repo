@@ -22,19 +22,19 @@ import java.util.concurrent.Future;
 
 public class ServerServiceImpl implements ServiceInterface {
     private ExecutorService executorService;
-    private Repository srepo;
-    private Repository pbrepo;
-    private Repository asrepo;
+    private StudentService studentService;
+    private ProblemService problemService;
+    private AssignmentDbService assignmentDbService;
 
     public ServerServiceImpl(ExecutorService executorService, StudentService studentService, ProblemService problemService, AssignmentDbService assignmentDbService, Validator<Student> studentValidator, Validator<Assignment> assignmentValidator, Validator<Problem> problemValidator) {
         this.executorService = executorService;
     }
 
-    public ServerServiceImpl(ExecutorService executorService, Repository<Long, Student> srepo, Repository<Long, Problem> pbrepo, Repository<Long, Assignment> asrepo) {
+    public ServerServiceImpl(ExecutorService executorService, StudentService studentService, ProblemService problemService, AssignmentDbService assignmentDbService) {
         this.executorService = executorService;
-        this.srepo = srepo;
-        this.pbrepo = pbrepo;
-        this.asrepo = asrepo;
+        this.studentService = studentService;
+        this.problemService = problemService;
+        this.assignmentDbService = assignmentDbService;
     }
 
     @Override
@@ -44,11 +44,82 @@ public class ServerServiceImpl implements ServiceInterface {
             Student s= new Student(args[1],args[2]);
             s.setId(Long.parseLong(args[0]));
             //((StudentDbRepository)srepo).getValidator().validate(s);
-            srepo.save(s);
+            studentService.addStudent(s);
             return executorService.submit(() -> "added student! ");
         }
         catch (Exception ex){
             return executorService.submit(()->"Student data was invalid!");
         }
+    }
+
+    @Override
+    public Future<String> printAllStudents(String paramsAndTypes) {
+        String out ="";
+        for (Student s: studentService.getAllStudents()){
+            out = out + s.toString()+" \n";
+        }
+        final String finalOut = out;
+        return executorService.submit(()->finalOut);
+    }
+
+    @Override
+    public Future<String> removeStudent(String paramsAndTypes) {
+        try{
+            studentService.removeStudent(Long.parseLong(paramsAndTypes));
+            return executorService.submit(() -> "removed student! ");
+        }
+        catch (Exception ex){
+            return executorService.submit(()->"Student id was invalid!");
+        }
+    }
+
+    @Override
+    public Future<String> addProblem(String paramsAndTypes) {
+        String[] args=paramsAndTypes.split(";");
+        try{
+            Problem pb= new Problem(Integer.parseInt(args[1]),args[2]);
+            pb.setId(Long.parseLong(args[0]));
+            problemService.addProblem(pb);
+            return executorService.submit(() -> "added problem! ");
+        }
+        catch (Exception ex){
+            return executorService.submit(()->"Problem data was invalid!");
+        }
+    }
+
+    @Override
+    public Future<String> printAllProblems(String paramsAndTypes) {
+        String out ="";
+        for (Problem pb: problemService.getAllProblems()){
+            out = out +  pb.toString()+" \n";
+        }
+        final String finalOut = out;
+        return executorService.submit(()->finalOut);
+    }
+
+    @Override
+    public Future<String> removeProblem(String paramsAndTypes) {
+        try{
+            problemService.removeProblem(Long.parseLong(paramsAndTypes));
+            return executorService.submit(() -> "Removed Problem! ");
+        }
+        catch (Exception ex){
+            return executorService.submit(()->"Problem id was invalid!");
+        }
+    }
+
+    @Override
+    public Future<String> assignProblemToStudent(String paramsAndTypes) {
+        return null;
+    }
+
+    @Override
+    public Future<String> showAllProblemsOfAStudent(String paramsAndTypes) {
+        return null;
+    }
+
+    @Override
+    public Future<String> showTheMostAssignedProblems(String paramsAndTypes) {
+        return null;
     }
 }

@@ -26,6 +26,12 @@
    </entity>
 
    <entity class="ro.ubb.laboratory.domain.Problem">
+       <field name="number" type="java.lang.Integer" value="2"/>
+       <field name="text" type="java.lang.String" value="Do"/>
+       <field name="id" type="java.lang.Object" value="10"/>
+   </entity>
+
+   <entity class="ro.ubb.laboratory.domain.Problem">
        <field name="number" type="java.lang.Integer" value="10"/>
        <field name="text" type="java.lang.String" value="text5"/>
        <field name="id" type="java.lang.Object" value="5"/>

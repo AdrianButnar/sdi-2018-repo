@@ -107,39 +107,61 @@ public class ClientConsole {
     private Student readStudent() {
         System.out.println("Enter params: ");
         Scanner sc = new Scanner(System.in);
-        String name = sc.nextLine();
-        try {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Enter student id: ");
-            String id = sc.nextLine();
-            System.out.print("Enter serial number: ");
-            String serialNumber = sc.nextLine();
-            System.out.print("Enter name: ");
-            String name = sc.nextLine();
-            Student student = new Student(serialNumber, name);
+//        String name = sc.nextLine();
+//        try {
+//            Scanner sc = new Scanner(System.in);
+//            System.out.print("Enter student id: ");
+//            String id = sc.nextLine();
+//            System.out.print("Enter serial number: ");
+//            String serialNumber = sc.nextLine();
+//            System.out.print("Enter name: ");
+//            String name = sc.nextLine();
+//            Student student = new Student(serialNumber, name);
+//
+//            if (isLong(id))
+//                student.setId(Long.parseLong(id));
+//            else
+//                throw new IllegalIdException("Invalid id\n");
+//
+//            return student;
+//        }
+//        catch (IllegalIdException|ValidatorException ex) {
+//            ex.printStackTrace();
+//            myWait(1);
+//
+//        }
+//
+//
+//        return null;
+//    }
+//    private void addStudent() {
+//        try {
+//            Student student = readStudent();
+//            if(student==null)
+//                return;
+//            studentService.addStudent(student);
 
-            if (isLong(id))
-                student.setId(Long.parseLong(id));
-            else
-                throw new IllegalIdException("Invalid id\n");
-
-            return student;
-        }
-        catch (IllegalIdException|ValidatorException ex) {
-            ex.printStackTrace();
-            myWait(1);
-
-        }
-
-
-        return null;
-    }
-    private void addStudent() {
-        try {
-            Student student = readStudent();
-            if(student==null)
-                return;
-            studentService.addStudent(student);
+        String params = sc.nextLine();
+        Future<String> res;
+        switch (command) {
+            case "addStudent":
+                res = helloService.addStudent(params);
+                break;
+            case "printAllStudents":
+                res = helloService.printAllStudents(params);
+                break;
+            case "removeStudent":
+                res = helloService.removeStudent(params);
+                break;
+            case "printAllProblems":
+                res = helloService.printAllProblems(params);
+                break;
+            case "addProblem":
+                res = helloService.addProblem(params);
+                break;
+            default:
+                res= null;
+                break;
         }
         catch (ValidatorException se){
             se.printStackTrace();
