@@ -45,69 +45,45 @@ public class ClientConsole {
 
             String command = sc.nextLine();
 
-            Future<String> res = null;
             switch (command) {
                 case "1":
-//                    res = addStudent();
                     addStudent();
                     break;
-
                 case "2":
-//                    res = printAllStudents();
                     printAllStudents();
                     break;
                 case "3":
                     removeStudent();
                     break;
-
                 case "4":
                     addProblem();
                     break;
-
                 case "5":
                     printAllProblems();
                     break;
-
                 case "6":
                     removeProblem();
                     break;
-
                 case "7":
                     assignProblemToStudent();
                     break;
                 case "8":
                     showAllProblemsOfAStudent();
                     break;
-                    /*
                 case "9":
-                    res = helloService.addStudent(name);
-                    showAllProblemsOfAStudent();
-                    continue;
+                    System.out.println("Not yet implemented");
+                    break;
                 case "10":
-                    res = helloService.addStudent(name);
-                    showStudentsByNameMatch();
-                    continue;
-                case "11":
-                    res = helloService.addStudent(name);
-                    showTheMostAssignedProblems();
-                    continue;
-                    */
+                    System.out.println("Not yet implemented");
+                    break;
                 case "0":
                     System.exit(0);
-                    res = null;
                     break;
                 default:
-                    res = null;
+                    System.out.println("Command not recognised, try again. ");
                     break;
 
             }
-//            try {
-//                //if(res.isDone())
-//                System.out.println(res.get());
-//            } catch (InterruptedException | ExecutionException | NullPointerException e) {
-//                e.printStackTrace();
-//            }
-
         }
     }
 
@@ -163,7 +139,6 @@ public class ClientConsole {
             ex.printStackTrace();
             myWait(1);
         }
-//        throw new NotImplementedException(); //I don't understand futures
     }
 
     /**
@@ -188,8 +163,6 @@ public class ClientConsole {
             System.out.println("Error serverside(or canceled):");
             ex.printStackTrace();
         }
-
-//        throw new NotImplementedException();
     }
 
     private void removeStudent(){
@@ -293,7 +266,6 @@ public class ClientConsole {
     }
     private void printAllProblems() {
         Future<String> students = helloService.printAllProblems("");
-        // System.out.println(students);
         try {
             while (!students.isDone()) { //if- doesn't really work //also kind of blocking
 //            if (students.isDone()){
@@ -303,14 +275,11 @@ public class ClientConsole {
                     System.out.println(row);
                 }
             }
-//           return students;
         } catch (CancellationException | ExecutionException | InterruptedException ex)
         {
             System.out.println("Error serverside(or canceled):");
             ex.printStackTrace();
         }
-
-//        throw new NotImplementedException();
     }
     private void assignProblemToStudent(){
         try {
@@ -355,17 +324,12 @@ public class ClientConsole {
             for (String row : args) {
                 System.out.println(row);
             }
-
-//            if (!problems.equals("")){
-//                System.out.println("Student " + studentId + " has the following problems assigned: " + problems);
-//            }
-//            else
-//                throw new InexistentEntityException("This student has no assigned problems!");
         } catch (Exception ex) {
             ex.printStackTrace();
             myWait(1);
         }
     }
+
     private static boolean isLong(String id){
         try{
             Long id1 = Long.parseLong(id);

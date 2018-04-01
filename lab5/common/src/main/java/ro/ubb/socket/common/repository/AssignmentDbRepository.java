@@ -202,32 +202,6 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
         return Optional.ofNullable(as);
     }
 
-//    public void AssignStudentToProblem(Student st, long pb)
-//    {
-//        try {
-//            Connection c = getConnection();
-//            Statement stmt = null;
-//            Class.forName("org.postgresql.Driver");
-//            c.setAutoCommit(false);
-//            stmt = c.createStatement();
-//            Long stId = st.getId();
-//            //Long pbId = pb.getId();
-////            System.out.println("SELECT * FROM \"Student\";");
-//            String sql = "INSERT INTO \"Assigned\" (\"studentId\", \"problemId\") VALUES" + "(" + stId + ", " + pb + ")";
-////            System.out.println(sql);
-//            stmt.executeUpdate(sql);
-//            c.commit();
-//            stmt.close();
-//            c.close();
-//
-//        } catch (Exception e) {
-//            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-//            System.exit(0);
-//        }
-//
-//    }
-
-
     public Connection getConnection() {
         Connection conn = null;
         try {
@@ -245,68 +219,3 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
     }
 
 }
-
-
-//    public Assignment findOne(Long id) {
-//
-//        Assignment as = null;
-//
-//        try {
-//            Connection c = getConnection();
-//            Statement stmt = null;
-//            Class.forName("org.postgresql.Driver");
-//            c.setAutoCommit(false);
-//            stmt = c.createStatement();
-//
-//            String sql = "SELECT * FROM \"Assigned\" WHERE \"studentId\"=" + id + ";";
-//            ResultSet rs = stmt.executeQuery( sql );
-//
-//            while ( rs.next() ) {
-//                String stId = rs.getString("studentId");
-//                String pbId = rs.getString("problemId");
-//
-//                as = new Assignment(Long.parseLong(stId), Long.parseLong(pbId));
-//            }
-//            stmt.close();
-//            c.close();
-//        } catch ( Exception e ) {
-//            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
-//            System.exit(0);
-//        }
-//        return as;
-//    }
-//
-//    public Long findAll() {
-//
-//        Assignment as = null;
-//        List<Long> assignmentList = new ArrayList<>();
-//        Long num = 0L;
-//        try {
-//            Connection c = getConnection();
-//            Statement stmt = null;
-//            Class.forName("org.postgresql.Driver");
-//            c.setAutoCommit(false);
-//            stmt = c.createStatement();
-//
-//            String sql = "SELECT * FROM \"Assigned\";";
-//            ResultSet rs = stmt.executeQuery( sql );
-//
-//            while ( rs.next() ) {
-//
-//                String stId = rs.getString("studentId");
-//                String pbId = rs.getString("problemId");
-//
-//                as = new Assignment(Long.parseLong(stId), Long.parseLong(pbId));
-//                assignmentList.add(as.getProblemID());
-//            }
-//            num = Long.valueOf(Collections.frequency(assignmentList, assignmentList.get(0)));
-//            stmt.close();
-//            c.close();
-//        } catch ( Exception e ) {
-//            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
-//            System.exit(0);
-//        }
-//
-//
-//        return num;
-//    }

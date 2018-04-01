@@ -85,9 +85,12 @@ public class ClientServiceImpl implements ServiceInterface {
 
     @Override
     public Future<String> showTheMostAssignedProblems(String paramsAndTypes) {
-        return null;
+        return processCommand(paramsAndTypes,ServiceInterface.SHOW_THE_MOST_ASSIGNED_PROBLEMS);
     }
-
+    @Override
+    public Future<String> showStudentsByNameMatch(String paramsAndTypes) {
+        return processCommand(paramsAndTypes,ServiceInterface.SHOW_STUDENTS_BY_NAME_MATCH);
+    }
 
 }
 

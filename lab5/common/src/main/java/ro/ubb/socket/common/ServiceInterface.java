@@ -15,6 +15,7 @@ public interface ServiceInterface {
     String ASSIGN_PROBLEM_TO_STUDENT = "assignProblemToStudent";
     String SHOW_ALL_PROBLEMS_OF_A_STUDENT = "showAllProblemsOfAStudent";
     String SHOW_THE_MOST_ASSIGNED_PROBLEMS = "showTheMostAssignedProblems";
+    String SHOW_STUDENTS_BY_NAME_MATCH = "showStudentsByNameMatch";
 
     Future<String> addStudent(String paramsAndTypes);
     Future<String> printAllStudents(String paramsAndTypes);
@@ -25,6 +26,6 @@ public interface ServiceInterface {
     Future<String> assignProblemToStudent(String paramsAndTypes);
     Future<String> showAllProblemsOfAStudent(String paramsAndTypes);
     Future<String> showTheMostAssignedProblems(String paramsAndTypes);
-
+    Future<String> showStudentsByNameMatch(String paramsAndTypes);
 }
 

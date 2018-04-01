@@ -103,6 +103,10 @@ public class ServerApp {
             Future<String> res = serverService.showAllProblemsOfAStudent(request.getBody());
             return process(res);
         });
+        tcpServer.addHandler(ServiceInterface.SHOW_THE_MOST_ASSIGNED_PROBLEMS, (request) -> {
+            Future<String> res = serverService.showTheMostAssignedProblems(request.getBody());
+            return process(res);
+        });
         tcpServer.startServer();
 
         System.out.println("bye - server");

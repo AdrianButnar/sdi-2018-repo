@@ -15,6 +15,7 @@ import ro.ubb.socket.common.repository.StudentDbRepository;
 import ro.ubb.socket.common.service.AssignmentDbService;
 import ro.ubb.socket.common.service.ProblemService;
 import ro.ubb.socket.common.service.StudentService;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -149,6 +150,11 @@ public class ServerServiceImpl implements ServiceInterface {
 
     @Override
     public Future<String> showTheMostAssignedProblems(String paramsAndTypes) {
-        return null;
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Future<String> showStudentsByNameMatch(String paramsAndTypes){
+        throw new NotImplementedException();
     }
 }
