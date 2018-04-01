@@ -70,12 +70,12 @@ public class ClientServiceImpl implements ServiceInterface {
 
     @Override
     public Future<String> removeProblem(String paramsAndTypes) {
-        return null;
+        return processCommand(paramsAndTypes,ServiceInterface.REMOVE_PROBLEM);
     }
 
     @Override
     public Future<String> assignProblemToStudent(String paramsAndTypes) {
-        return null;
+        return processCommand(paramsAndTypes,ServiceInterface.ASSIGN_PROBLEM_TO_STUDENT);
     }
 
     @Override

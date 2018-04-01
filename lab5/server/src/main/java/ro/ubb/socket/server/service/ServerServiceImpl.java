@@ -93,17 +93,20 @@ public class ServerServiceImpl implements ServiceInterface {
 
     @Override
     public Future<String> printAllProblems(String paramsAndTypes) {
-        String out ="";
-        for (Problem pb: problemService.getAllProblems()){
-            out = out +  pb.toString()+" \n";
+        StringBuilder sb = new StringBuilder();
+        for (Problem s: problemService.getAllProblems()){
+            sb.append(s.toString());
+            sb.append(";");
         }
-        final String finalOut = out;
+        final String finalOut = sb.toString();
+        System.out.println(sb.toString());
         return executorService.submit(()->finalOut);
     }
 
     @Override
     public Future<String> removeProblem(String paramsAndTypes) {
         try{
+            System.out.println("Am ajuns");
             problemService.removeProblem(Long.parseLong(paramsAndTypes));
             return executorService.submit(() -> "Problem removed successfully! ");
         }

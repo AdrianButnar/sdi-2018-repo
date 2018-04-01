@@ -62,30 +62,33 @@ public class ClientConsole {
 
                 case "4":
                     addProblem();
-                    continue;
-/*
+                    break;
+
                 case "5":
-                    res = helloService.addStudent(name);
                     printAllProblems();
-                    continue;
+                    break;
 
                 case "6":
+                    removeProblem();
+                    break;
+                    /*
+                case "7":
                     res = helloService.addStudent(name);
                     removeProblem();
                     continue;
-                case "7":
+                case "8":
                     res = helloService.addStudent(name);
                     assignProblemToStudent();
                     continue;
-                case "8":
+                case "9":
                     res = helloService.addStudent(name);
                     showAllProblemsOfAStudent();
                     continue;
-                case "9":
+                case "10":
                     res = helloService.addStudent(name);
                     showStudentsByNameMatch();
                     continue;
-                case "10":
+                case "11":
                     res = helloService.addStudent(name);
                     showTheMostAssignedProblems();
                     continue;
@@ -111,7 +114,7 @@ public class ClientConsole {
 
     /**
      * Reads a new student from the standard input
-     * @return The read student if the data was filled correctly or null otherwise
+     * @return The read student as a string or null string otherwise
      */
     private String readStudent() {
         try {
@@ -212,14 +215,45 @@ public class ClientConsole {
         }
     }
 
+    /**
+     * Reads a new problem from the standard input
+     * @return The read problem as a string or null string otherwise
+     */
+    private String readProblem() {
+
+        try {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Enter problem id: ");
+            String id = sc.nextLine();
+            System.out.print("Enter problem number: ");
+            String number = sc.nextLine();
+            System.out.print("Enter text: ");
+            String text = sc.nextLine();
+            String returnString = id+";"+number+";"+text;
+
+            if (!isLong(id)) {
+                throw new IllegalIdException("Invalid id\n");
+            }
+
+            return returnString;
+        }
+        catch (IllegalIdException | ValidatorException ex) {
+            ex.printStackTrace();
+            myWait(1);
+
+        }
+        return "";
+    }
+
+
     private void addProblem() {
         try {
-            String received = readStudent();
+            String received = readProblem();
             if (!received.equals("")) {
-                Future<String> s = helloService.addStudent(received);
+                Future<String> s = helloService.addProblem(received);
 //                if(s.isDone())
                 {
-                    String result = s.get();
+                    String result = s.get(); //blocking
                     System.out.println(result);
                 }
             }
@@ -236,6 +270,48 @@ public class ClientConsole {
         }
     }
 
+    private void removeProblem(){
+        try {
+            System.out.print("Enter id: ");
+            Scanner sc = new Scanner(System.in);
+            String id = sc.nextLine();
+            if (!isLong(id)){
+                throw new InexistentEntityException("Invalid id!\n");
+            }
+            Future<String> s = helloService.removeProblem(id);
+//            if(s.isDone())
+            {
+                String result = s.get(); //blocking
+                System.out.println(result);
+            }
+        }
+        catch (InexistentEntityException|InterruptedException|ExecutionException|NullPointerException ex){
+            System.out.println("Exception client-side: ");
+            ex.printStackTrace();
+            myWait(1);
+        }
+    }
+    private void printAllProblems() {
+        Future<String> students = helloService.printAllProblems("");
+        // System.out.println(students);
+        try {
+            while (!students.isDone()) { //if- doesn't really work //also kind of blocking
+//            if (students.isDone()){
+                String result = students.get(); //kind of blocking
+                String[] args = result.split(";");
+                for (String row : args) {
+                    System.out.println(row);
+                }
+            }
+//           return students;
+        } catch (CancellationException | ExecutionException | InterruptedException ex)
+        {
+            System.out.println("Error serverside(or canceled):");
+            ex.printStackTrace();
+        }
+
+//        throw new NotImplementedException();
+    }
 
     private static boolean isLong(String id){
         try{
