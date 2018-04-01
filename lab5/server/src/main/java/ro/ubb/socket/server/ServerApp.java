@@ -25,6 +25,25 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class ServerApp {
+
+    private static Message process(Future<String> res){
+        try {
+            String result = res.get();
+            return Message.builder()
+                    .header(Message.OK)
+                    .body(result)
+                    .build();
+        }
+        catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            //return new Message(Message.ERROR, "");
+            return Message.builder()
+                    .header(Message.ERROR)
+                    .build();
+
+        }
+    }
+
     public static void main(String[] args) {
 
         System.out.println(System.getProperty("dbUsername"));
@@ -45,26 +64,34 @@ public class ServerApp {
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         TcpServer tcpServer = new TcpServer(executorService, ServiceInterface.SERVER_HOST, ServiceInterface.SERVER_PORT);
         //ServiceInterface serverService = new ServerServiceImpl(executorService);
-        ServiceInterface serverService = new ServerServiceImpl(executorService,studentRepository,problemRepository,assignmentRepository);
+        ServiceInterface serverService = new ServerServiceImpl(executorService,studentService,problemService,assignmentDbService);
+
 
         tcpServer.addHandler(ServiceInterface.ADD_STUDENT, (request) -> {
             Future<String> res = serverService.addStudent(request.getBody());
-            try {
-                String result = res.get();
-                return Message.builder()
-                        .header(Message.OK)
-                        .body(result)
-                        .build();
-            }
-            catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-                //return new Message(Message.ERROR, "");
-                return Message.builder()
-                        .header(Message.ERROR)
-                        .build();
-
-            }
+            return process(res);
         });
+
+        tcpServer.addHandler(ServiceInterface.PRINT_ALL_STUDENTS, (request) -> {
+            Future<String> res = serverService.printAllStudents(request.getBody());
+            return process(res);
+        });
+
+        tcpServer.addHandler(ServiceInterface.REMOVE_STUDENT, (request) -> {
+            Future<String> res = serverService.removeStudent(request.getBody());
+            return process(res);
+        });
+
+        tcpServer.addHandler(ServiceInterface.ADD_PROBLEM, (request) -> {
+            Future<String> res = serverService.addProblem(request.getBody());
+            return process(res);
+        });
+
+        tcpServer.addHandler(ServiceInterface.PRINT_ALL_PROBLEMS, (request) -> {
+            Future<String> res = serverService.printAllProblems(request.getBody());
+            return process(res);
+        });
+
 
         tcpServer.startServer();
 

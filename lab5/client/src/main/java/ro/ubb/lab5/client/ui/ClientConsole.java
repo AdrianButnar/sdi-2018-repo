@@ -24,11 +24,23 @@ public class ClientConsole {
         System.out.println("Input command: ");
         String command = sc.nextLine();
         System.out.println("Enter params: ");
-        String name = sc.nextLine();
+        String params = sc.nextLine();
         Future<String> res;
         switch (command) {
             case "addStudent":
-                res = helloService.addStudent(name);
+                res = helloService.addStudent(params);
+                break;
+            case "printAllStudents":
+                res = helloService.printAllStudents(params);
+                break;
+            case "removeStudent":
+                res = helloService.removeStudent(params);
+                break;
+            case "printAllProblems":
+                res = helloService.printAllProblems(params);
+                break;
+            case "addProblem":
+                res = helloService.addProblem(params);
                 break;
             default:
                 res= null;
