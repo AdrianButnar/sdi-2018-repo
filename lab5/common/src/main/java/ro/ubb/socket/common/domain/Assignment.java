@@ -60,8 +60,8 @@ public class Assignment extends BaseEntity<Long>{
     @Override
     public String toString() {
         return "Assignment {" +
-                " studentID =" + studentID +
-                ", problemID =" + problemID +
+                " studentID = " + studentID +
+                ", problemID = " + problemID +
                 " }";
     }
 }

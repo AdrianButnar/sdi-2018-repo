@@ -80,7 +80,7 @@ public class ClientServiceImpl implements ServiceInterface {
 
     @Override
     public Future<String> showAllProblemsOfAStudent(String paramsAndTypes) {
-        return null;
+        return processCommand(paramsAndTypes,ServiceInterface.SHOW_ALL_PROBLEMS_OF_A_STUDENT);
     }
 
     @Override

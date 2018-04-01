@@ -71,15 +71,14 @@ public class ClientConsole {
                 case "6":
                     removeProblem();
                     break;
-                    /*
+
                 case "7":
-                    res = helloService.addStudent(name);
-                    removeProblem();
-                    continue;
-                case "8":
-                    res = helloService.addStudent(name);
                     assignProblemToStudent();
-                    continue;
+                    break;
+                case "8":
+                    showAllProblemsOfAStudent();
+                    break;
+                    /*
                 case "9":
                     res = helloService.addStudent(name);
                     showAllProblemsOfAStudent();
@@ -238,6 +237,7 @@ public class ClientConsole {
             return returnString;
         }
         catch (IllegalIdException | ValidatorException ex) {
+            System.out.println("Exception client-side: ");
             ex.printStackTrace();
             myWait(1);
 
@@ -312,7 +312,60 @@ public class ClientConsole {
 
 //        throw new NotImplementedException();
     }
+    private void assignProblemToStudent(){
+        try {
+            Scanner sc = new Scanner(System.in);
 
+            System.out.print("Enter an assignment id: ");
+            String assignmentId = sc.nextLine();
+
+            System.out.print("Enter a student id: ");
+            String studentId = sc.nextLine();
+
+            System.out.print("Enter a problem id: ");
+            String problemId = sc.nextLine();
+
+            String returnString = assignmentId+";"+studentId+";"+problemId;
+//            String returnString = " "+";"+studentId+";"+problemId;
+            Future<String> s = helloService.assignProblemToStudent(returnString);
+            {
+                String result = s.get(); //blocking
+                System.out.println(result);
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Exception client-side: ");
+            ex.printStackTrace();
+            myWait(1);
+        }
+    }
+
+    private void showAllProblemsOfAStudent() {
+        try {
+            System.out.print("Enter a student id: ");
+            Scanner sc = new Scanner(System.in);
+            String studentId = sc.nextLine();
+            if (!isLong(studentId)) {
+                throw new InexistentEntityException("Invalid id!\n");
+            }
+            Future<String> assignments = helloService.showAllProblemsOfAStudent(studentId);
+
+            String result = assignments.get(); //kind of blocking
+            String[] args = result.split(";");
+            for (String row : args) {
+                System.out.println(row);
+            }
+
+//            if (!problems.equals("")){
+//                System.out.println("Student " + studentId + " has the following problems assigned: " + problems);
+//            }
+//            else
+//                throw new InexistentEntityException("This student has no assigned problems!");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            myWait(1);
+        }
+    }
     private static boolean isLong(String id){
         try{
             Long id1 = Long.parseLong(id);

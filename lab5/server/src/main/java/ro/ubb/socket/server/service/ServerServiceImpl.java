@@ -105,8 +105,9 @@ public class ServerServiceImpl implements ServiceInterface {
 
     @Override
     public Future<String> removeProblem(String paramsAndTypes) {
+        System.out.println("Am ajuns");
         try{
-            System.out.println("Am ajuns");
+
             problemService.removeProblem(Long.parseLong(paramsAndTypes));
             return executorService.submit(() -> "Problem removed successfully! ");
         }
@@ -117,12 +118,33 @@ public class ServerServiceImpl implements ServiceInterface {
 
     @Override
     public Future<String> assignProblemToStudent(String paramsAndTypes) {
-        return null;
+        String[] args = paramsAndTypes.split(";");
+        try{
+            Assignment as = new Assignment(Long.parseLong(args[1]), Long.parseLong(args[2]));
+            as.setId(Long.parseLong(args[0]));
+            assignmentDbService.addAssignment(as);
+            return executorService.submit(() -> "Assignment was added successfully! ");
+        }
+        catch (Exception ex){
+            return executorService.submit(()->"Assignment data was invalid!");
+        }
     }
 
     @Override
     public Future<String> showAllProblemsOfAStudent(String paramsAndTypes) {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        //String[] args = paramsAndTypes.split(";");
+        String studentId = paramsAndTypes;
+        for (Assignment as: assignmentDbService.getAllAssignments()){
+            if (as.getStudentID() == Long.parseLong(studentId)) {
+                sb.append(as.toString());
+                sb.append(";");
+            }
+
+        }
+        final String finalOut = sb.toString();
+        System.out.println(sb.toString());
+        return executorService.submit(()->finalOut);
     }
 
     @Override

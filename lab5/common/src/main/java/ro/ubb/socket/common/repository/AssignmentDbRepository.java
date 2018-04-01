@@ -138,7 +138,10 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
                     "VALUES(" +
                     assignmentId + "," +
                     studentId + ",'" + problemId + "');";
-
+            /*String sql = "INSERT INTO \"Assigned\" (\"studentId\", \"problemId\")" +
+                    "VALUES(" +
+                    studentId + ",'" + problemId + "');";
+                    */
             stmt.executeUpdate(sql);
             c.commit();
             entity = null;
