@@ -30,43 +30,43 @@ public class ClientServiceImpl implements ServiceInterface {
     }
     @Override
     public CompletableFuture<String> addStudent(Long studentId,String serialNumber,String name) {
-        return processCommand(paramsAndTypes,ServiceInterface.ADD_STUDENT);
+        return processCommand(studentId.toString() + ";" + serialNumber + ";" + name,ServiceInterface.ADD_STUDENT);
     }
 
     @Override
     public CompletableFuture<String> printAllStudents(String options) {
-        return processCommand(paramsAndTypes,ServiceInterface.PRINT_ALL_STUDENTS);
+        return processCommand(options,ServiceInterface.PRINT_ALL_STUDENTS);
     }
 
     @Override
     public CompletableFuture<String> removeStudent(Long studentId) {
-        return processCommand(paramsAndTypes,ServiceInterface.REMOVE_STUDENT);
+        return processCommand(studentId.toString(),ServiceInterface.REMOVE_STUDENT);
     }
 
     @Override
     public CompletableFuture<String> addProblem(Long problemId,Integer number,String text) {
-        return processCommand(paramsAndTypes,ServiceInterface.ADD_PROBLEM);
+        return processCommand(problemId+";"+number.toString()+";"+text,ServiceInterface.ADD_PROBLEM);
 
     }
 
     @Override
     public CompletableFuture<String> printAllProblems(String options) {
-        return processCommand(paramsAndTypes,ServiceInterface.PRINT_ALL_PROBLEMS);
+        return processCommand(options,ServiceInterface.PRINT_ALL_PROBLEMS);
     }
 
     @Override
     public CompletableFuture<String> removeProblem(Long problemId) {
-        return processCommand(paramsAndTypes,ServiceInterface.REMOVE_PROBLEM);
+        return processCommand(problemId.toString(),ServiceInterface.REMOVE_PROBLEM);
     }
 
     @Override
     public CompletableFuture<String> assignProblemToStudent(Long assignmentId, Long studentId, Long problemId) {
-        return processCommand(paramsAndTypes,ServiceInterface.ASSIGN_PROBLEM_TO_STUDENT);
+        return processCommand(assignmentId.toString()+";"+studentId.toString()+";"+problemId.toString(),ServiceInterface.ASSIGN_PROBLEM_TO_STUDENT);
     }
 
     @Override
     public CompletableFuture<String> showAllProblemsOfAStudent(Long studentId) {
-        return processCommand(paramsAndTypes,ServiceInterface.SHOW_ALL_PROBLEMS_OF_A_STUDENT);
+        return processCommand(studentId.toString(),ServiceInterface.SHOW_ALL_PROBLEMS_OF_A_STUDENT);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class ClientServiceImpl implements ServiceInterface {
 
     @Override
     public CompletableFuture<String> showStudentsByNameMatch(String name) {
-        return processCommand(paramsAndTypes,ServiceInterface.SHOW_STUDENTS_BY_NAME_MATCH);
+        return processCommand(name,ServiceInterface.SHOW_STUDENTS_BY_NAME_MATCH);
     }
 
 }
