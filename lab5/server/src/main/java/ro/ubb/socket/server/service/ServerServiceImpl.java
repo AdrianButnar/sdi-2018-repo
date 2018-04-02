@@ -28,9 +28,9 @@ public class ServerServiceImpl implements ServiceInterface {
     private ProblemService problemService;
     private AssignmentDbService assignmentDbService;
 
-    public ServerServiceImpl(ExecutorService executorService, StudentService studentService, ProblemService problemService, AssignmentDbService assignmentDbService, Validator<Student> studentValidator, Validator<Assignment> assignmentValidator, Validator<Problem> problemValidator) {
-        this.executorService = executorService;
-    }
+//    public ServerServiceImpl(ExecutorService executorService, StudentService studentService, ProblemService problemService, AssignmentDbService assignmentDbService, Validator<Student> studentValidator, Validator<Assignment> assignmentValidator, Validator<Problem> problemValidator) {
+//        this.executorService = executorService;
+//    }
 
     public ServerServiceImpl(ExecutorService executorService, StudentService studentService, ProblemService problemService, AssignmentDbService assignmentDbService) {
         this.executorService = executorService;
@@ -146,12 +146,21 @@ public class ServerServiceImpl implements ServiceInterface {
     }
 
     @Override
+    public CompletableFuture<String> showStudentsByNameMatch(String paramsAndTypes){
+        StringBuilder sb = new StringBuilder();
+        for (Student s: studentService.getAllStudents()){
+            if(s.getName().toLowerCase().contains(paramsAndTypes)) {
+                sb.append(s.toString());
+                sb.append(";");
+            }
+        }
+        final String finalOut = sb.toString();
+        return CompletableFuture.supplyAsync(() -> finalOut,executorService);
+    }
+
+    @Override
     public CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes) {
         throw new NotImplementedException();
     }
 
-//    @Override
-//    public CompletableFuture<String> showStudentsByNameMatch(String paramsAndTypes){
-//        throw new NotImplementedException();
-//    }
 }

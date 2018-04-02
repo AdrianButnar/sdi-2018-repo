@@ -9,12 +9,13 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.swing.plaf.InternalFrameUI;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.concurrent.*;
 
 public class ClientConsole {
     private ServiceInterface serviceInterface;
 
-    public ClientConsole(ServiceInterface helloService) {
+    public ClientConsole(ServiceInterface serviceInterface) {
         this.serviceInterface = serviceInterface;
     }
 
@@ -71,7 +72,7 @@ public class ClientConsole {
                     showAllProblemsOfAStudent();
                     break;
                 case "9":
-                    System.out.println("Not yet implemented");
+                    showStudentsByNameMatch();
                     break;
                 case "10":
                     System.out.println("Not yet implemented");
@@ -146,10 +147,11 @@ public class ClientConsole {
             handleResult(result);
         } catch (CancellationException ex)
         {
-            System.out.println("Error serverside(or canceled):");
+            System.out.println("Error server-side(or canceled):");
             ex.printStackTrace();
         }
     }
+
 
     private void removeStudent(){
         try {
@@ -244,6 +246,7 @@ public class ClientConsole {
             handleResult(result);
 
         } catch (CancellationException ex)
+
 //        Future<String> students = helloService.printAllProblems("");
 //        try {
 //            while (!students.isDone()) { //if- doesn't really work //also kind of blocking
@@ -314,7 +317,24 @@ public class ClientConsole {
         }
     }
 
-    private static boolean isLong(String id){
+    private void showStudentsByNameMatch() {
+
+        try{
+            System.out.print("Enter a name or part of the name: ");
+            Scanner sc = new Scanner(System.in);
+            String name = sc.nextLine();
+            CompletableFuture<String> result = serviceInterface.showStudentsByNameMatch(name);
+            handleResult(result);
+
+        }
+        catch (InexistentEntityException e){
+            e.printStackTrace();
+            myWait(1);
+        }
+    }
+
+
+    private boolean isLong(String id){
         try{
             Long id1 = Long.parseLong(id);
             return true;

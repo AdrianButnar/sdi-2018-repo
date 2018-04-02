@@ -33,7 +33,6 @@ public class ServerApp {
         }
         catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            //return new Message(Message.ERROR, "");
             return Message.builder()
                     .header(Message.ERROR)
                     .build();
@@ -43,7 +42,6 @@ public class ServerApp {
 
     public static void main(String[] args) {
 
-        //here we put data from service and repo from lab4
         Validator<Student> studentValidator = new StudentValidator();
         Validator<Problem> problemValidator = new ProblemValidator();
         Validator<Assignment> assignmentValidator = new AssignmentValidator();
@@ -54,7 +52,6 @@ public class ServerApp {
         StudentService studentService = new StudentService(studentRepository);
         ProblemService problemService = new ProblemService(problemRepository);
         AssignmentDbService assignmentDbService = new AssignmentDbService(assignmentRepository);
-        //
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         TcpServer tcpServer = new TcpServer(executorService, ServiceInterface.SERVER_HOST, ServiceInterface.SERVER_PORT);
@@ -95,6 +92,10 @@ public class ServerApp {
         });
         tcpServer.addHandler(ServiceInterface.SHOW_ALL_PROBLEMS_OF_A_STUDENT, (request) -> {
             Future<String> res = serverService.showAllProblemsOfAStudent(request.getBody());
+            return process(res);
+        });
+        tcpServer.addHandler(ServiceInterface.SHOW_STUDENTS_BY_NAME_MATCH, (request) -> {
+            Future<String> res = serverService.showStudentsByNameMatch(request.getBody());
             return process(res);
         });
         tcpServer.addHandler(ServiceInterface.SHOW_THE_MOST_ASSIGNED_PROBLEMS, (request) -> {

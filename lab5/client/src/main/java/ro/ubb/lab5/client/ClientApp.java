@@ -18,7 +18,7 @@ public class ClientApp {
 
         executorService.shutdownNow();
 
-        System.out.println("bye - client");
+        System.out.println("Good bye!");
     }
 }
 

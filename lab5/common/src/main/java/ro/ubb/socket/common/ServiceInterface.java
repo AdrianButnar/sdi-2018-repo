@@ -27,8 +27,8 @@ public interface ServiceInterface {
     CompletableFuture<String> assignProblemToStudent(String paramsAndTypes);
     CompletableFuture<String> showAllProblemsOfAStudent(String paramsAndTypes);
     CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes);
+    CompletableFuture<String> showStudentsByNameMatch(String paramsAndTypes);
 
-//=======
 //    Future<String> addStudent(String paramsAndTypes);
 //    Future<String> printAllStudents(String paramsAndTypes);
 //    Future<String> removeStudent(String paramsAndTypes);
@@ -39,6 +39,6 @@ public interface ServiceInterface {
 //    Future<String> showAllProblemsOfAStudent(String paramsAndTypes);
 //    Future<String> showTheMostAssignedProblems(String paramsAndTypes);
 //    Future<String> showStudentsByNameMatch(String paramsAndTypes);
-//>>>>>>> 1b515d704f6bf1c5e573cacb40ea4bc912a31fb7
+//
 }
 

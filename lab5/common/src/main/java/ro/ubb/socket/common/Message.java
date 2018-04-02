@@ -42,10 +42,10 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" +
-                "header='" + header + '\'' +
-                ", body='" + body + '\'' +
-                '}';
+        return "Message{ " +
+                "header ='" + header + '\'' +
+                ", body ='" + body + '\'' +
+                " }";
     }
 
 
