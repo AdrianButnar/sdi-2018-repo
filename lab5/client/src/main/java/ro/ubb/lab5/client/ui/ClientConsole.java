@@ -117,7 +117,7 @@ public class ClientConsole {
     private  void addStudent() {
         try {
             String received = readStudent();
-            String[] args = readStudent().split(";");
+            String[] args = received.split(";");
             Long studentId = Long.parseLong(args[0]);
             String serialNumber = args[1];
             String name = args[2];
@@ -206,7 +206,7 @@ public class ClientConsole {
     private void addProblem() {
         try {
             String received = readProblem();
-            String[] args = readStudent().split(";");
+            String[] args = received.split(";");
             Long problemId = Long.parseLong(args[0]);
             Integer number = Integer.parseInt(args[1]);
             String text = args[2];
