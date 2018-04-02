@@ -28,9 +28,9 @@ public class ServerServiceImpl implements ServiceInterface {
     private ProblemService problemService;
     private AssignmentDbService assignmentDbService;
 
-    public ServerServiceImpl(ExecutorService executorService, StudentService studentService, ProblemService problemService, AssignmentDbService assignmentDbService, Validator<Student> studentValidator, Validator<Assignment> assignmentValidator, Validator<Problem> problemValidator) {
-        this.executorService = executorService;
-    }
+//    public ServerServiceImpl(ExecutorService executorService, StudentService studentService, ProblemService problemService, AssignmentDbService assignmentDbService, Validator<Student> studentValidator, Validator<Assignment> assignmentValidator, Validator<Problem> problemValidator) {
+//        this.executorService = executorService;
+//    }
 
     public ServerServiceImpl(ExecutorService executorService, StudentService studentService, ProblemService problemService, AssignmentDbService assignmentDbService) {
         this.executorService = executorService;
@@ -45,7 +45,6 @@ public class ServerServiceImpl implements ServiceInterface {
         try{
             Student s= new Student(args[1],args[2]);
             s.setId(Long.parseLong(args[0]));
-            //((StudentDbRepository)srepo).getValidator().validate(s);
             studentService.addStudent(s);
             return CompletableFuture.supplyAsync(() -> "Student was added successfully! ",executorService);
         }
@@ -151,16 +150,13 @@ public class ServerServiceImpl implements ServiceInterface {
     @Override
     public CompletableFuture<String> showStudentsByNameMatch(String paramsAndTypes){
         StringBuilder sb = new StringBuilder();
-//        boolean found=false;
         for (Student s: studentService.getAllStudents()){
             if(s.getName().toLowerCase().contains(paramsAndTypes)) {
                 sb.append(s.toString());
                 sb.append(";");
-//                found = true;
             }
         }
         final String finalOut = sb.toString();
-//        System.out.println(sb.toString());
         return CompletableFuture.supplyAsync(() -> finalOut,executorService);
     }
 

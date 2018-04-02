@@ -64,10 +64,10 @@ public class TcpServer {
 
                 Message request = Message.builder().build();
                 request.readFrom(is);
-                System.out.println("server - received request: " + request);
+                System.out.println("Server - received request: " + request);
 
                 Message response = methodHandlers.get(request.getHeader()).apply(request);
-                System.out.println("server - computed response: " + response);
+                System.out.println("Server - computed response: " + response);
 
                 response.writeTo(os);
 

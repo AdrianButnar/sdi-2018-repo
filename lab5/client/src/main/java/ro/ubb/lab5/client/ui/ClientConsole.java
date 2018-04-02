@@ -148,10 +148,11 @@ public class ClientConsole {
             handleResult(result);
         } catch (CancellationException ex)
         {
-            System.out.println("Error serverside(or canceled):");
+            System.out.println("Error server-side(or canceled):");
             ex.printStackTrace();
         }
     }
+
 
     private void removeStudent(){
         try {
