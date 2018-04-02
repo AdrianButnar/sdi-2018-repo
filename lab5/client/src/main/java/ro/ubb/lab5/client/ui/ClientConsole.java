@@ -1,15 +1,11 @@
 package ro.ubb.lab5.client.ui;
 
 import ro.ubb.socket.common.ServiceInterface;
-import ro.ubb.socket.common.domain.Student;
 import ro.ubb.socket.common.domain.validators.IllegalIdException;
 import ro.ubb.socket.common.domain.validators.InexistentEntityException;
 import ro.ubb.socket.common.domain.validators.ValidatorException;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.swing.plaf.InternalFrameUI;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.concurrent.*;
 
 public class ClientConsole {
@@ -247,7 +243,7 @@ public class ClientConsole {
 
         } catch (CancellationException ex)
 
-//        Future<String> students = helloService.printAllProblems("");
+//        Future<String> students = serviceInterface.printAllProblems("");
 //        try {
 //            while (!students.isDone()) { //if- doesn't really work //also kind of blocking
 ////            if (students.isDone()){

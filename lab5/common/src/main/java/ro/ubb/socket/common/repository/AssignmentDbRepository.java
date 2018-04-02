@@ -46,10 +46,9 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
         Assignment as = null;
         try {
             Connection c = getConnection();
-            Statement stmt = null;
             Class.forName("org.postgresql.Driver");
             c.setAutoCommit(false);
-            stmt = c.createStatement();
+            Statement stmt = c.createStatement();
 
             String searchId = id.toString();
             String sql = "SELECT * FROM \"Assigned\" WHERE id=" + searchId + ";";
@@ -79,7 +78,6 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
     @Override
     public Iterable<Assignment> findAll() {
         List<Assignment> assignmentList = new ArrayList<>();
-        Assignment as = null;
         try {
             Connection c = getConnection();
             Statement stmt = null;
@@ -91,7 +89,7 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
                 long id = (long) rs.getInt("id");
                 String studentId = rs.getString("studentId");
                 String problemId = rs.getString("problemId");
-                as = new Assignment(Long.parseLong(studentId),Long.parseLong(problemId));
+                Assignment as = new Assignment(Long.parseLong(studentId),Long.parseLong(problemId));
                 as.setId(id);
                 validator.validate(as);
 
@@ -125,10 +123,9 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
         try {
 
             Connection c = getConnection();
-            Statement stmt = null;
             Class.forName("org.postgresql.Driver");
             c.setAutoCommit(false);
-            stmt = c.createStatement();
+            Statement stmt = c.createStatement();
 
             String studentId = entity.getStudentID().toString();
             String problemId = entity.getProblemID().toString();
@@ -209,7 +206,6 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
 
             conn = DriverManager.getConnection(this.url,  System.getProperty("dbUsername"), System.getProperty("dbPassword"));
             //System.out.println("Connected");
-
         } catch (Exception ex) {
             System.out.println("My exception in AssignementDBRepo");
             ex.printStackTrace();
