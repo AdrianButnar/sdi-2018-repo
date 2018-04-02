@@ -24,13 +24,13 @@
  *
  */
 
-package ro.ubb.socket.common.service;
+package ro.ubb.socket.server.service;
 
 
 import ro.ubb.socket.common.domain.Student;
 import ro.ubb.socket.common.domain.validators.InexistentStudentException;
 import ro.ubb.socket.common.domain.validators.StudentCannotBeSavedException;
-import ro.ubb.socket.common.repository.Repository;
+import ro.ubb.socket.server.repository.Repository;
 
 import java.util.Set;
 import java.util.stream.Collectors;

@@ -18,16 +18,16 @@ public interface ServiceInterface {
     String SHOW_THE_MOST_ASSIGNED_PROBLEMS = "showTheMostAssignedProblems";
     String SHOW_STUDENTS_BY_NAME_MATCH = "showStudentsByNameMatch";
 
-    CompletableFuture<String> addStudent(String paramsAndTypes);
+    CompletableFuture<String> addStudent(Long studentId,String serialNumber,String name);
     CompletableFuture<String> printAllStudents(String paramsAndTypes);
-    CompletableFuture<String> removeStudent(String paramsAndTypes);
-    CompletableFuture<String> addProblem(String paramsAndTypes);
+    CompletableFuture<String> removeStudent(Long studentId);
+    CompletableFuture<String> addProblem(Long problemID,Integer number,String text);
     CompletableFuture<String> printAllProblems(String paramsAndTypes);
-    CompletableFuture<String> removeProblem(String paramsAndTypes);
-    CompletableFuture<String> assignProblemToStudent(String paramsAndTypes);
-    CompletableFuture<String> showAllProblemsOfAStudent(String paramsAndTypes);
+    CompletableFuture<String> removeProblem(Long problemId);
+    CompletableFuture<String> assignProblemToStudent(Long assignmentId, Long studentId, Long problemId);
+    CompletableFuture<String> showAllProblemsOfAStudent(Long studentId);
     CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes);
-    CompletableFuture<String> showStudentsByNameMatch(String paramsAndTypes);
+    CompletableFuture<String> showStudentsByNameMatch(String name);
 
 //    Future<String> addStudent(String paramsAndTypes);
 //    Future<String> printAllStudents(String paramsAndTypes);
