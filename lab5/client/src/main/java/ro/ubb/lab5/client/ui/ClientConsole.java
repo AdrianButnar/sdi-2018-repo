@@ -145,6 +145,7 @@ public class ClientConsole {
         try {
             CompletableFuture<String> result = helloService.printAllStudents("");
             handleResult(result);
+            System.out.println("eu merg inainte");
         } catch (CancellationException ex)
         {
             System.out.println("Error serverside(or canceled):");
@@ -245,7 +246,6 @@ public class ClientConsole {
             handleResult(result);
 
         } catch (CancellationException ex)
-//=======
 //        Future<String> students = helloService.printAllProblems("");
 //        try {
 //            while (!students.isDone()) { //if- doesn't really work //also kind of blocking
@@ -257,7 +257,6 @@ public class ClientConsole {
 //                }
 //            }
 //        } catch (CancellationException | ExecutionException | InterruptedException ex)
-//>>>>>>> 1b515d704f6bf1c5e573cacb40ea4bc912a31fb7
         {
             System.out.println("Error serverside(or canceled):");
             ex.printStackTrace();
@@ -277,12 +276,15 @@ public class ClientConsole {
             String problemId = sc.nextLine();
 
             String returnString = assignmentId+";"+studentId+";"+problemId;
-//            String returnString = " "+";"+studentId+";"+problemId;
-            Future<String> s = helloService.assignProblemToStudent(returnString);
-            {
-                String result = s.get(); //blocking
-                System.out.println(result);
-            }
+////            String returnString = " "+";"+studentId+";"+problemId;
+//            Future<String> s = helloService.assignProblemToStudent(returnString);
+//            {
+//                String result = s.get(); //blocking
+//                System.out.println(result);
+//            }
+            CompletableFuture<String> result = helloService.assignProblemToStudent(returnString);
+            handleResult(result);
+
 
         } catch (Exception ex) {
             System.out.println("Exception client-side: ");
@@ -299,13 +301,15 @@ public class ClientConsole {
             if (!isLong(studentId)) {
                 throw new InexistentEntityException("Invalid id!\n");
             }
-            Future<String> assignments = helloService.showAllProblemsOfAStudent(studentId);
+//            Future<String> assignments = helloService.showAllProblemsOfAStudent(studentId);
+            CompletableFuture<String> result = helloService.showAllProblemsOfAStudent(studentId);
+            handleResult(result);
 
-            String result = assignments.get(); //kind of blocking
-            String[] args = result.split(";");
-            for (String row : args) {
-                System.out.println(row);
-            }
+//            String result = assignments.get(); //kind of blocking
+//            String[] args = result.split(";");
+//            for (String row : args) {
+//                System.out.println(row);
+//            }
         } catch (Exception ex) {
             ex.printStackTrace();
             myWait(1);
@@ -338,11 +342,11 @@ public class ClientConsole {
         result.whenComplete((task,throwable)->{
         if (throwable!=null)
             System.err.println(throwable.getMessage());
-            try{
-                System.out.println(result.get().replace("-","\n"));
-            } catch (InterruptedException|ExecutionException e) {
-                e.printStackTrace();
-            }
+        try{
+            System.out.println(result.get().replace(";","\n"));
+        } catch (InterruptedException|ExecutionException e) {
+            e.printStackTrace();
+        }
         });
     }
 

@@ -56,12 +56,10 @@ public class ServerServiceImpl implements ServiceInterface {
 
     @Override
     public CompletableFuture<String> printAllStudents(String paramsAndTypes) {
-        String out ="";
         StringBuilder sb = new StringBuilder();
         for (Student s: studentService.getAllStudents()){
             sb.append(s.toString());
-            sb.append("-");
-           // out = out + s.toString()+" \n";
+            sb.append(";");
         }
         final String finalOut = sb.toString();
         System.out.println(sb.toString());
