@@ -60,7 +60,7 @@ public class ServerServiceImpl implements ServiceInterface {
         StringBuilder sb = new StringBuilder();
         for (Student s: studentService.getAllStudents()){
             sb.append(s.toString());
-            sb.append("\n");
+            sb.append("-");
            // out = out + s.toString()+" \n";
         }
         final String finalOut = sb.toString();
