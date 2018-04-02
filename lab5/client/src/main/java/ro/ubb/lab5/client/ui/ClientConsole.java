@@ -339,7 +339,7 @@ public class ClientConsole {
         if (throwable!=null)
             System.err.println(throwable.getMessage());
             try{
-                System.out.println(result.get().replace("-","/n"));
+                System.out.println(result.get().replace("-","\n"));
             } catch (InterruptedException|ExecutionException e) {
                 e.printStackTrace();
             }
