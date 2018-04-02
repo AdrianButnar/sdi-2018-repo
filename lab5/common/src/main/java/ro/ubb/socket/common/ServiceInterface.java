@@ -16,6 +16,7 @@ public interface ServiceInterface {
     String ASSIGN_PROBLEM_TO_STUDENT = "assignProblemToStudent";
     String SHOW_ALL_PROBLEMS_OF_A_STUDENT = "showAllProblemsOfAStudent";
     String SHOW_THE_MOST_ASSIGNED_PROBLEMS = "showTheMostAssignedProblems";
+    String SHOW_STUDENTS_BY_NAME_MATCH = "showStudentsByNameMatch";
 
     CompletableFuture<String> addStudent(String paramsAndTypes);
     CompletableFuture<String> printAllStudents(String paramsAndTypes);
@@ -27,5 +28,17 @@ public interface ServiceInterface {
     CompletableFuture<String> showAllProblemsOfAStudent(String paramsAndTypes);
     CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes);
 
+//=======
+//    Future<String> addStudent(String paramsAndTypes);
+//    Future<String> printAllStudents(String paramsAndTypes);
+//    Future<String> removeStudent(String paramsAndTypes);
+//    Future<String> addProblem(String paramsAndTypes);
+//    Future<String> printAllProblems(String paramsAndTypes);
+//    Future<String> removeProblem(String paramsAndTypes);
+//    Future<String> assignProblemToStudent(String paramsAndTypes);
+//    Future<String> showAllProblemsOfAStudent(String paramsAndTypes);
+//    Future<String> showTheMostAssignedProblems(String paramsAndTypes);
+//    Future<String> showStudentsByNameMatch(String paramsAndTypes);
+//>>>>>>> 1b515d704f6bf1c5e573cacb40ea4bc912a31fb7
 }
 

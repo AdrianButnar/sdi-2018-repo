@@ -17,9 +17,9 @@ public class AssignmentDbService {
         this.repository = repository;
     }
 
-    public void addAssignment(Assignment ass) throws EntityCannotBeSavedException
+    public void addAssignment(Assignment as) throws EntityCannotBeSavedException
     {
-        repository.save(ass);
+        repository.save(as);
     }
 
     public void removeAssignment(Long id) throws InexistentEntityException {

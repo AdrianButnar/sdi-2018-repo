@@ -45,68 +45,45 @@ public class ClientConsole {
 
             String command = sc.nextLine();
 
-            Future<String> res = null;
             switch (command) {
                 case "1":
                     addStudent();
                     break;
-
                 case "2":
                     printAllStudents();
                     break;
                 case "3":
                     removeStudent();
                     break;
-
                 case "4":
                     addProblem();
                     break;
-
                 case "5":
                     printAllProblems();
                     break;
-
                 case "6":
                     removeProblem();
                     break;
-                    /*
                 case "7":
-                    res = helloService.addStudent(name);
-                    removeProblem();
-                    continue;
-                case "8":
-                    res = helloService.addStudent(name);
                     assignProblemToStudent();
-                    continue;
-                case "9":
-                    res = helloService.addStudent(name);
+                    break;
+                case "8":
                     showAllProblemsOfAStudent();
-                    continue;
+                    break;
+                case "9":
+                    System.out.println("Not yet implemented");
+                    break;
                 case "10":
-                    res = helloService.addStudent(name);
-                    showStudentsByNameMatch();
-                    continue;
-                case "11":
-                    res = helloService.addStudent(name);
-                    showTheMostAssignedProblems();
-                    continue;
-                    */
+                    System.out.println("Not yet implemented");
+                    break;
                 case "0":
                     System.exit(0);
-                    res = null;
                     break;
                 default:
-                    res = null;
+                    System.out.println("Command not recognised, try again. ");
                     break;
 
             }
-//            try {
-//                //if(res.isDone())
-//                System.out.println(res.get());
-//            } catch (InterruptedException | ExecutionException | NullPointerException e) {
-//                e.printStackTrace();
-//            }
-
         }
     }
 
@@ -158,7 +135,6 @@ public class ClientConsole {
             ex.printStackTrace();
             myWait(1);
         }
-//        throw new NotImplementedException(); //I don't understand futures
     }
 
     /**
@@ -174,8 +150,6 @@ public class ClientConsole {
             System.out.println("Error serverside(or canceled):");
             ex.printStackTrace();
         }
-
-//        throw new NotImplementedException();
     }
 
     private void removeStudent(){
@@ -219,6 +193,7 @@ public class ClientConsole {
             return returnString;
         }
         catch (IllegalIdException | ValidatorException ex) {
+            System.out.println("Exception client-side: ");
             ex.printStackTrace();
             myWait(1);
 
@@ -270,12 +245,71 @@ public class ClientConsole {
             handleResult(result);
 
         } catch (CancellationException ex)
+//=======
+//        Future<String> students = helloService.printAllProblems("");
+//        try {
+//            while (!students.isDone()) { //if- doesn't really work //also kind of blocking
+////            if (students.isDone()){
+//                String result = students.get(); //kind of blocking
+//                String[] args = result.split(";");
+//                for (String row : args) {
+//                    System.out.println(row);
+//                }
+//            }
+//        } catch (CancellationException | ExecutionException | InterruptedException ex)
+//>>>>>>> 1b515d704f6bf1c5e573cacb40ea4bc912a31fb7
         {
             System.out.println("Error serverside(or canceled):");
             ex.printStackTrace();
         }
+    }
+    private void assignProblemToStudent(){
+        try {
+            Scanner sc = new Scanner(System.in);
 
-//        throw new NotImplementedException();
+            System.out.print("Enter an assignment id: ");
+            String assignmentId = sc.nextLine();
+
+            System.out.print("Enter a student id: ");
+            String studentId = sc.nextLine();
+
+            System.out.print("Enter a problem id: ");
+            String problemId = sc.nextLine();
+
+            String returnString = assignmentId+";"+studentId+";"+problemId;
+//            String returnString = " "+";"+studentId+";"+problemId;
+            Future<String> s = helloService.assignProblemToStudent(returnString);
+            {
+                String result = s.get(); //blocking
+                System.out.println(result);
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Exception client-side: ");
+            ex.printStackTrace();
+            myWait(1);
+        }
+    }
+
+    private void showAllProblemsOfAStudent() {
+        try {
+            System.out.print("Enter a student id: ");
+            Scanner sc = new Scanner(System.in);
+            String studentId = sc.nextLine();
+            if (!isLong(studentId)) {
+                throw new InexistentEntityException("Invalid id!\n");
+            }
+            Future<String> assignments = helloService.showAllProblemsOfAStudent(studentId);
+
+            String result = assignments.get(); //kind of blocking
+            String[] args = result.split(";");
+            for (String row : args) {
+                System.out.println(row);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            myWait(1);
+        }
     }
 
     private static boolean isLong(String id){
@@ -307,7 +341,6 @@ public class ClientConsole {
             try{
                 System.out.println(result.get());
             } catch (InterruptedException|ExecutionException e) {
-                e.printStackTrace();
                 e.printStackTrace();
             }
         });

@@ -15,6 +15,7 @@ import ro.ubb.socket.common.repository.StudentDbRepository;
 import ro.ubb.socket.common.service.AssignmentDbService;
 import ro.ubb.socket.common.service.ProblemService;
 import ro.ubb.socket.common.service.StudentService;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -115,18 +116,47 @@ public class ServerServiceImpl implements ServiceInterface {
         }
     }
 
+
     @Override
     public CompletableFuture<String> assignProblemToStudent(String paramsAndTypes) {
-        return null;
+    //nu am testat asta inca, am adaptat doar in functie de tiparul de completableFuture
+        String[] args = paramsAndTypes.split(";");
+        try{
+            Assignment as = new Assignment(Long.parseLong(args[1]), Long.parseLong(args[2]));
+            as.setId(Long.parseLong(args[0]));
+            assignmentDbService.addAssignment(as);
+            return CompletableFuture.supplyAsync(() -> "Assignment was added successfully! ",executorService);
+        }
+        catch (Exception ex){
+            return CompletableFuture.supplyAsync(()->"Assignment data was invalid!",executorService);
+        }
     }
+
 
     @Override
     public CompletableFuture<String> showAllProblemsOfAStudent(String paramsAndTypes) {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        //String[] args = paramsAndTypes.split(";");
+        String studentId = paramsAndTypes;
+        for (Assignment as: assignmentDbService.getAllAssignments()){
+            if (as.getStudentID() == Long.parseLong(studentId)) {
+                sb.append(as.toString());
+                sb.append(";");
+            }
+
+        }
+        final String finalOut = sb.toString();
+        System.out.println(sb.toString());
+        return CompletableFuture.supplyAsync(()->finalOut,executorService);
     }
 
     @Override
     public CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes) {
-        return null;
+        throw new NotImplementedException();
     }
+
+//    @Override
+//    public CompletableFuture<String> showStudentsByNameMatch(String paramsAndTypes){
+//        throw new NotImplementedException();
+//    }
 }

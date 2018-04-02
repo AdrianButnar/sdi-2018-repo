@@ -88,8 +88,22 @@ public class ServerApp {
             CompletableFuture<String> res = serverService.printAllProblems(request.getBody());
             return process(res);
         });
-
-
+        tcpServer.addHandler(ServiceInterface.REMOVE_PROBLEM, (request) -> {
+            Future<String> res = serverService.removeProblem(request.getBody());
+            return process(res);
+        });
+        tcpServer.addHandler(ServiceInterface.ASSIGN_PROBLEM_TO_STUDENT, (request) -> {
+            Future<String> res = serverService.assignProblemToStudent(request.getBody());
+            return process(res);
+        });
+        tcpServer.addHandler(ServiceInterface.SHOW_ALL_PROBLEMS_OF_A_STUDENT, (request) -> {
+            Future<String> res = serverService.showAllProblemsOfAStudent(request.getBody());
+            return process(res);
+        });
+        tcpServer.addHandler(ServiceInterface.SHOW_THE_MOST_ASSIGNED_PROBLEMS, (request) -> {
+            Future<String> res = serverService.showTheMostAssignedProblems(request.getBody());
+            return process(res);
+        });
         tcpServer.startServer();
 
         System.out.println("bye - server");
