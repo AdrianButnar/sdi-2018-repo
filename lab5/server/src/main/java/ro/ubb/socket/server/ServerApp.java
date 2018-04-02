@@ -59,7 +59,8 @@ public class ServerApp {
 
 
         tcpServer.addHandler(ServiceInterface.ADD_STUDENT, (request) -> {
-            CompletableFuture<String> res = serverService.addStudent(request.getBody());
+            String as[] = request.getBody().split(";");
+            CompletableFuture<String> res = serverService.addStudent(Long.parseLong(as[0]),as[1],as[2]);
             return process(res);
         });
 
@@ -69,12 +70,13 @@ public class ServerApp {
         });
 
         tcpServer.addHandler(ServiceInterface.REMOVE_STUDENT, (request) -> {
-            CompletableFuture<String> res = serverService.removeStudent(request.getBody());
+            CompletableFuture<String> res = serverService.removeStudent(Long.parseLong(request.getBody()));
             return process(res);
         });
 
         tcpServer.addHandler(ServiceInterface.ADD_PROBLEM, (request) -> {
-            CompletableFuture<String> res = serverService.addProblem(request.getBody());
+            String as[] = request.getBody().split(";");
+            CompletableFuture<String> res = serverService.addProblem(Long.parseLong(as[0]),Integer.parseInt(as[1]),as[2]);
             return process(res);
         });
 
@@ -83,15 +85,16 @@ public class ServerApp {
             return process(res);
         });
         tcpServer.addHandler(ServiceInterface.REMOVE_PROBLEM, (request) -> {
-            Future<String> res = serverService.removeProblem(request.getBody());
+            Future<String> res = serverService.removeProblem(Long.parseLong(request.getBody()));
             return process(res);
         });
         tcpServer.addHandler(ServiceInterface.ASSIGN_PROBLEM_TO_STUDENT, (request) -> {
-            Future<String> res = serverService.assignProblemToStudent(request.getBody());
+            String[] as = request.getBody().split(";");
+            Future<String> res = serverService.assignProblemToStudent(Long.parseLong(as[0]),Long.parseLong(as[1]),Long.parseLong(as[2]));
             return process(res);
         });
         tcpServer.addHandler(ServiceInterface.SHOW_ALL_PROBLEMS_OF_A_STUDENT, (request) -> {
-            Future<String> res = serverService.showAllProblemsOfAStudent(request.getBody());
+            Future<String> res = serverService.showAllProblemsOfAStudent(Long.parseLong(request.getBody()));
             return process(res);
         });
         tcpServer.addHandler(ServiceInterface.SHOW_STUDENTS_BY_NAME_MATCH, (request) -> {
