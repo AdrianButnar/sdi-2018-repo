@@ -19,10 +19,7 @@ import ro.ubb.socket.common.service.StudentService;
 import ro.ubb.socket.server.service.ServerServiceImpl;
 import ro.ubb.socket.server.tcp.TcpServer;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 public class ServerApp {
 
@@ -68,27 +65,27 @@ public class ServerApp {
 
 
         tcpServer.addHandler(ServiceInterface.ADD_STUDENT, (request) -> {
-            Future<String> res = serverService.addStudent(request.getBody());
+            CompletableFuture<String> res = serverService.addStudent(request.getBody());
             return process(res);
         });
 
         tcpServer.addHandler(ServiceInterface.PRINT_ALL_STUDENTS, (request) -> {
-            Future<String> res = serverService.printAllStudents(request.getBody());
+            CompletableFuture<String> res = serverService.printAllStudents(request.getBody());
             return process(res);
         });
 
         tcpServer.addHandler(ServiceInterface.REMOVE_STUDENT, (request) -> {
-            Future<String> res = serverService.removeStudent(request.getBody());
+            CompletableFuture<String> res = serverService.removeStudent(request.getBody());
             return process(res);
         });
 
         tcpServer.addHandler(ServiceInterface.ADD_PROBLEM, (request) -> {
-            Future<String> res = serverService.addProblem(request.getBody());
+            CompletableFuture<String> res = serverService.addProblem(request.getBody());
             return process(res);
         });
 
         tcpServer.addHandler(ServiceInterface.PRINT_ALL_PROBLEMS, (request) -> {
-            Future<String> res = serverService.printAllProblems(request.getBody());
+            CompletableFuture<String> res = serverService.printAllProblems(request.getBody());
             return process(res);
         });
 

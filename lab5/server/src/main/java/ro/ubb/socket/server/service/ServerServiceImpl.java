@@ -16,6 +16,7 @@ import ro.ubb.socket.common.service.AssignmentDbService;
 import ro.ubb.socket.common.service.ProblemService;
 import ro.ubb.socket.common.service.StudentService;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -38,61 +39,61 @@ public class ServerServiceImpl implements ServiceInterface {
     }
 
     @Override
-    public Future<String> addStudent(String paramsAndTypes) {
+    public CompletableFuture<String> addStudent(String paramsAndTypes) {
         String[] args=paramsAndTypes.split(";");
         try{
             Student s= new Student(args[1],args[2]);
             s.setId(Long.parseLong(args[0]));
             //((StudentDbRepository)srepo).getValidator().validate(s);
             studentService.addStudent(s);
-            return executorService.submit(() -> "Student was added successfully! ");
+            return CompletableFuture.supplyAsync(() -> "Student was added successfully! ",executorService);
         }
         catch (Exception ex){
-            return executorService.submit(()->"Student data was invalid!");
+            return CompletableFuture.supplyAsync(() -> "Student data was invalid! ",executorService);
         }
     }
 
     @Override
-    public Future<String> printAllStudents(String paramsAndTypes) {
+    public CompletableFuture<String> printAllStudents(String paramsAndTypes) {
         String out ="";
         StringBuilder sb = new StringBuilder();
         for (Student s: studentService.getAllStudents()){
             sb.append(s.toString());
-            sb.append(";");
+            sb.append("\n");
            // out = out + s.toString()+" \n";
         }
         final String finalOut = sb.toString();
         System.out.println(sb.toString());
-        return executorService.submit(()->finalOut);
+        return CompletableFuture.supplyAsync(() -> finalOut,executorService);
     }
 
     @Override
-    public Future<String> removeStudent(String paramsAndTypes) {
+    public CompletableFuture<String> removeStudent(String paramsAndTypes) {
         try{
             studentService.removeStudent(Long.parseLong(paramsAndTypes));
-            return executorService.submit(() -> "Student was removed! ");
+            return CompletableFuture.supplyAsync(() -> "Student was removed! ",executorService);
         }
         catch (Exception ex){
-            return executorService.submit(()->"Student id was invalid!");
+            return CompletableFuture.supplyAsync(() -> "Student id is invalid! ",executorService);
         }
     }
 
     @Override
-    public Future<String> addProblem(String paramsAndTypes) {
+    public CompletableFuture<String> addProblem(String paramsAndTypes) {
         String[] args=paramsAndTypes.split(";");
         try{
             Problem pb= new Problem(Integer.parseInt(args[1]),args[2]);
             pb.setId(Long.parseLong(args[0]));
             problemService.addProblem(pb);
-            return executorService.submit(() -> "Problem was added successfully! ");
+            return CompletableFuture.supplyAsync(() -> "Problem was added successfully! ",executorService);
         }
         catch (Exception ex){
-            return executorService.submit(()->"Problem data was invalid!");
+            return CompletableFuture.supplyAsync(() -> "Problem data was invalid!",executorService);
         }
     }
 
     @Override
-    public Future<String> printAllProblems(String paramsAndTypes) {
+    public CompletableFuture<String> printAllProblems(String paramsAndTypes) {
         StringBuilder sb = new StringBuilder();
         for (Problem s: problemService.getAllProblems()){
             sb.append(s.toString());
@@ -100,33 +101,32 @@ public class ServerServiceImpl implements ServiceInterface {
         }
         final String finalOut = sb.toString();
         System.out.println(sb.toString());
-        return executorService.submit(()->finalOut);
+        return CompletableFuture.supplyAsync(() -> finalOut,executorService);
     }
 
     @Override
-    public Future<String> removeProblem(String paramsAndTypes) {
+    public CompletableFuture<String> removeProblem(String paramsAndTypes) {
         try{
-            System.out.println("Am ajuns");
             problemService.removeProblem(Long.parseLong(paramsAndTypes));
-            return executorService.submit(() -> "Problem removed successfully! ");
+            return CompletableFuture.supplyAsync(() -> "Problem removed successfully! ",executorService);
         }
         catch (Exception ex){
-            return executorService.submit(()->"Problem id was invalid!");
+            return CompletableFuture.supplyAsync(() -> "Problem id is invalid!",executorService);
         }
     }
 
     @Override
-    public Future<String> assignProblemToStudent(String paramsAndTypes) {
+    public CompletableFuture<String> assignProblemToStudent(String paramsAndTypes) {
         return null;
     }
 
     @Override
-    public Future<String> showAllProblemsOfAStudent(String paramsAndTypes) {
+    public CompletableFuture<String> showAllProblemsOfAStudent(String paramsAndTypes) {
         return null;
     }
 
     @Override
-    public Future<String> showTheMostAssignedProblems(String paramsAndTypes) {
+    public CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes) {
         return null;
     }
 }

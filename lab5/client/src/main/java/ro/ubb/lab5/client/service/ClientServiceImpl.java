@@ -3,8 +3,8 @@ package ro.ubb.lab5.client.service;
 import ro.ubb.lab5.client.tcp.TcpClient;
 import ro.ubb.socket.common.Message;
 import ro.ubb.socket.common.ServiceInterface;
-import ro.ubb.socket.common.service.StudentService;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -32,59 +32,59 @@ public class ClientServiceImpl implements ServiceInterface {
 //
 //    }
 
-    public Future<String> processCommand(String paramsAndTypes,String header){
-        return executorService.submit(()->{
+    public CompletableFuture<String> processCommand(String paramsAndTypes,String header){
+        return CompletableFuture.supplyAsync(()->{
             Message request = Message.builder()
                     .header(header)
                     .body(paramsAndTypes)
                     .build();
             Message response = tcpClient.sendAndReceive(request);
             return response.getBody();
-        });
+        },executorService);
     }
     @Override
-    public Future<String> addStudent(String paramsAndTypes) {
+    public CompletableFuture<String> addStudent(String paramsAndTypes) {
         return processCommand(paramsAndTypes,ServiceInterface.ADD_STUDENT);
     }
 
     @Override
-    public Future<String> printAllStudents(String paramsAndTypes) {
+    public CompletableFuture<String> printAllStudents(String paramsAndTypes) {
         return processCommand(paramsAndTypes,ServiceInterface.PRINT_ALL_STUDENTS);
     }
 
     @Override
-    public Future<String> removeStudent(String paramsAndTypes) {
+    public CompletableFuture<String> removeStudent(String paramsAndTypes) {
         return processCommand(paramsAndTypes,ServiceInterface.REMOVE_STUDENT);
     }
 
     @Override
-    public Future<String> addProblem(String paramsAndTypes) {
+    public CompletableFuture<String> addProblem(String paramsAndTypes) {
         return processCommand(paramsAndTypes,ServiceInterface.ADD_PROBLEM);
 
     }
 
     @Override
-    public Future<String> printAllProblems(String paramsAndTypes) {
+    public CompletableFuture<String> printAllProblems(String paramsAndTypes) {
         return processCommand(paramsAndTypes,ServiceInterface.PRINT_ALL_PROBLEMS);
     }
 
     @Override
-    public Future<String> removeProblem(String paramsAndTypes) {
+    public CompletableFuture<String> removeProblem(String paramsAndTypes) {
         return processCommand(paramsAndTypes,ServiceInterface.REMOVE_PROBLEM);
     }
 
     @Override
-    public Future<String> assignProblemToStudent(String paramsAndTypes) {
+    public CompletableFuture<String> assignProblemToStudent(String paramsAndTypes) {
         return processCommand(paramsAndTypes,ServiceInterface.ASSIGN_PROBLEM_TO_STUDENT);
     }
 
     @Override
-    public Future<String> showAllProblemsOfAStudent(String paramsAndTypes) {
+    public CompletableFuture<String> showAllProblemsOfAStudent(String paramsAndTypes) {
         return null;
     }
 
     @Override
-    public Future<String> showTheMostAssignedProblems(String paramsAndTypes) {
+    public CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes) {
         return null;
     }
 

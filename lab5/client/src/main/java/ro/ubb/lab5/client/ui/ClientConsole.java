@@ -48,12 +48,10 @@ public class ClientConsole {
             Future<String> res = null;
             switch (command) {
                 case "1":
-//                    res = addStudent();
                     addStudent();
                     break;
 
                 case "2":
-//                    res = printAllStudents();
                     printAllStudents();
                     break;
                 case "3":
@@ -146,12 +144,8 @@ public class ClientConsole {
         try {
             String received = readStudent();
             if (!received.equals("")) {
-                Future<String> s = helloService.addStudent(received);
-                if(s.isDone())
-                {
-                    String result = s.get();
-                    System.out.println(result);
-                }
+                CompletableFuture<String> s = helloService.addStudent(received);
+                handleResult(s);
             }
             else
             {
@@ -172,19 +166,10 @@ public class ClientConsole {
      */
 //    private  Future<String> printAllStudents() {
     private void printAllStudents() {
-        Future<String> students = helloService.printAllStudents("");
-       // System.out.println(students);
         try {
-            while (!students.isDone()) { //if- doesn't really work //also kind of blocking
-//            if (students.isDone()){
-                String result = students.get(); //kind of blocking
-                String[] args = result.split(";");
-                for (String row : args) {
-                    System.out.println(row);
-                }
-            }
-//           return students;
-        } catch (CancellationException | ExecutionException | InterruptedException ex)
+            CompletableFuture<String> result = helloService.printAllStudents("");
+            handleResult(result);
+        } catch (CancellationException ex)
         {
             System.out.println("Error serverside(or canceled):");
             ex.printStackTrace();
@@ -201,14 +186,10 @@ public class ClientConsole {
             if (!isLong(id)){
                 throw new InexistentEntityException("Invalid id!\n");
             }
-            Future<String> s = helloService.removeStudent(id);
-//            if(s.isDone())
-            {
-                String result = s.get(); //blocking also
-                System.out.println(result);
-            }
+            CompletableFuture<String> result = helloService.removeStudent(id);
+            handleResult(result);
         }
-        catch (InexistentEntityException|InterruptedException|ExecutionException se){
+        catch (InexistentEntityException se){
             System.out.println("Exception client-side: ");
             se.printStackTrace();
             myWait(1);
@@ -250,12 +231,8 @@ public class ClientConsole {
         try {
             String received = readProblem();
             if (!received.equals("")) {
-                Future<String> s = helloService.addProblem(received);
-//                if(s.isDone())
-                {
-                    String result = s.get(); //blocking
-                    System.out.println(result);
-                }
+                CompletableFuture<String> result = helloService.addProblem(received);
+                handleResult(result);
             }
             else
             {
@@ -278,33 +255,21 @@ public class ClientConsole {
             if (!isLong(id)){
                 throw new InexistentEntityException("Invalid id!\n");
             }
-            Future<String> s = helloService.removeProblem(id);
-//            if(s.isDone())
-            {
-                String result = s.get(); //blocking
-                System.out.println(result);
-            }
+            CompletableFuture<String> result = helloService.removeProblem(id);
+            handleResult(result);
         }
-        catch (InexistentEntityException|InterruptedException|ExecutionException|NullPointerException ex){
+        catch (InexistentEntityException ex){
             System.out.println("Exception client-side: ");
             ex.printStackTrace();
             myWait(1);
         }
     }
     private void printAllProblems() {
-        Future<String> students = helloService.printAllProblems("");
-        // System.out.println(students);
-        try {
-            while (!students.isDone()) { //if- doesn't really work //also kind of blocking
-//            if (students.isDone()){
-                String result = students.get(); //kind of blocking
-                String[] args = result.split(";");
-                for (String row : args) {
-                    System.out.println(row);
-                }
-            }
-//           return students;
-        } catch (CancellationException | ExecutionException | InterruptedException ex)
+        try{
+            CompletableFuture<String> result = helloService.printAllProblems("");
+            handleResult(result);
+
+        } catch (CancellationException ex)
         {
             System.out.println("Error serverside(or canceled):");
             ex.printStackTrace();
@@ -335,5 +300,17 @@ public class ClientConsole {
         }
     }
 
+    private void handleResult(CompletableFuture<String> result){
+        result.whenComplete((task,throwable)->{
+        if (throwable!=null)
+            System.err.println(throwable.getMessage());
+            try{
+                System.out.println(result.get());
+            } catch (InterruptedException|ExecutionException e) {
+                e.printStackTrace();
+                e.printStackTrace();
+            }
+        });
+    }
 
 }
