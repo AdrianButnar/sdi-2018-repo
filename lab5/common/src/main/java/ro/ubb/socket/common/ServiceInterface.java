@@ -19,10 +19,10 @@ public interface ServiceInterface {
     String SHOW_STUDENTS_BY_NAME_MATCH = "showStudentsByNameMatch";
 
     CompletableFuture<String> addStudent(Long studentId,String serialNumber,String name);
-    CompletableFuture<String> printAllStudents(String paramsAndTypes);
+    CompletableFuture<String> printAllStudents(String options);
     CompletableFuture<String> removeStudent(Long studentId);
-    CompletableFuture<String> addProblem(Long problemID,Integer number,String text);
-    CompletableFuture<String> printAllProblems(String paramsAndTypes);
+    CompletableFuture<String> addProblem(Long problemId,Integer number,String text);
+    CompletableFuture<String> printAllProblems(String options);
     CompletableFuture<String> removeProblem(Long problemId);
     CompletableFuture<String> assignProblemToStudent(Long assignmentId, Long studentId, Long problemId);
     CompletableFuture<String> showAllProblemsOfAStudent(Long studentId);
