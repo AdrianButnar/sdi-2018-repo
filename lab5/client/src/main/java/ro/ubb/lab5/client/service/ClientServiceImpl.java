@@ -88,10 +88,11 @@ public class ClientServiceImpl implements ServiceInterface {
     public CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes) {
         return processCommand(paramsAndTypes,ServiceInterface.SHOW_THE_MOST_ASSIGNED_PROBLEMS);
     }
-//    @Override
-//    public CompletableFuture<String> showStudentsByNameMatch(String paramsAndTypes) {
-//        return processCommand(paramsAndTypes,ServiceInterface.SHOW_STUDENTS_BY_NAME_MATCH);
-//    }
+
+    @Override
+    public CompletableFuture<String> showStudentsByNameMatch(String paramsAndTypes) {
+        return processCommand(paramsAndTypes,ServiceInterface.SHOW_STUDENTS_BY_NAME_MATCH);
+    }
 
 }
 

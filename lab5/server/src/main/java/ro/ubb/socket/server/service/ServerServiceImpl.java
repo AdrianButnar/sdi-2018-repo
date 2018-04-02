@@ -149,12 +149,24 @@ public class ServerServiceImpl implements ServiceInterface {
     }
 
     @Override
+    public CompletableFuture<String> showStudentsByNameMatch(String paramsAndTypes){
+        StringBuilder sb = new StringBuilder();
+//        boolean found=false;
+        for (Student s: studentService.getAllStudents()){
+            if(s.getName().toLowerCase().contains(paramsAndTypes)) {
+                sb.append(s.toString());
+                sb.append(";");
+//                found = true;
+            }
+        }
+        final String finalOut = sb.toString();
+//        System.out.println(sb.toString());
+        return CompletableFuture.supplyAsync(() -> finalOut,executorService);
+    }
+
+    @Override
     public CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes) {
         throw new NotImplementedException();
     }
 
-//    @Override
-//    public CompletableFuture<String> showStudentsByNameMatch(String paramsAndTypes){
-//        throw new NotImplementedException();
-//    }
 }

@@ -33,7 +33,6 @@ public class ServerApp {
         }
         catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            //return new Message(Message.ERROR, "");
             return Message.builder()
                     .header(Message.ERROR)
                     .build();
@@ -56,11 +55,9 @@ public class ServerApp {
         StudentService studentService = new StudentService(studentRepository);
         ProblemService problemService = new ProblemService(problemRepository);
         AssignmentDbService assignmentDbService = new AssignmentDbService(assignmentRepository);
-        //
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         TcpServer tcpServer = new TcpServer(executorService, ServiceInterface.SERVER_HOST, ServiceInterface.SERVER_PORT);
-        //ServiceInterface serverService = new ServerServiceImpl(executorService);
         ServiceInterface serverService = new ServerServiceImpl(executorService,studentService,problemService,assignmentDbService);
 
 
@@ -98,6 +95,10 @@ public class ServerApp {
         });
         tcpServer.addHandler(ServiceInterface.SHOW_ALL_PROBLEMS_OF_A_STUDENT, (request) -> {
             Future<String> res = serverService.showAllProblemsOfAStudent(request.getBody());
+            return process(res);
+        });
+        tcpServer.addHandler(ServiceInterface.SHOW_STUDENTS_BY_NAME_MATCH, (request) -> {
+            Future<String> res = serverService.showStudentsByNameMatch(request.getBody());
             return process(res);
         });
         tcpServer.addHandler(ServiceInterface.SHOW_THE_MOST_ASSIGNED_PROBLEMS, (request) -> {
