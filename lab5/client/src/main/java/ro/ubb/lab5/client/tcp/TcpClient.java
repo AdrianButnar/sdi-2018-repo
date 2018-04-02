@@ -1,6 +1,6 @@
 package ro.ubb.lab5.client.tcp;
 
-import ro.ubb.socket.common.HelloServiceException;
+import ro.ubb.socket.common.ServiceException;
 import ro.ubb.socket.common.Message;
 
 import java.io.IOException;
@@ -28,7 +28,6 @@ public class TcpClient {
             request.writeTo(os);
             System.out.println("client - sending request: " + request);
 
-//            Message response = new Message();
             Message response = Message.builder().build();
             response.readFrom(is);
             System.out.println("client - received response: " + response);
@@ -36,7 +35,7 @@ public class TcpClient {
             return response;
         } catch (IOException e) {
             e.printStackTrace();
-            throw new HelloServiceException(e);
+            throw new ServiceException(e);
         }
     }
 }

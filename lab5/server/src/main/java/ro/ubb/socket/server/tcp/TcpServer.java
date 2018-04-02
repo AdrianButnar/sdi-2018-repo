@@ -1,6 +1,6 @@
 package ro.ubb.socket.server.tcp;
 
-import ro.ubb.socket.common.HelloServiceException;
+import ro.ubb.socket.common.ServiceException;
 import ro.ubb.socket.common.Message;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class TcpServer {
 
         } catch (IOException e) {
             e.printStackTrace();
-            throw new HelloServiceException(e);
+            throw new ServiceException(e);
         }
     }
 
@@ -73,7 +73,7 @@ public class TcpServer {
 
             } catch (IOException e) {
                 e.printStackTrace();
-                throw new HelloServiceException(e);
+                throw new ServiceException(e);
             } finally {
                 if (socket != null) {
                     try {

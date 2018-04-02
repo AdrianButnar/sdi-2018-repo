@@ -88,7 +88,7 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
             ResultSet rs = stmt.executeQuery("SELECT * FROM \"Assigned\";");
 
             while (rs.next()) {
-                long id = Long.valueOf(rs.getInt("id"));
+                long id = (long) rs.getInt("id");
                 String studentId = rs.getString("studentId");
                 String problemId = rs.getString("problemId");
                 as = new Assignment(Long.parseLong(studentId),Long.parseLong(problemId));
@@ -122,7 +122,6 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
             throw new EntityPresentException("Entity already in list!\n");
         }
         validator.validate(entity);
-        Assignment as = null;
         try {
 
             Connection c = getConnection();
@@ -149,7 +148,7 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
             c.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+            //System.exit(0);
         }
 
         return Optional.ofNullable(entity);
@@ -202,7 +201,7 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
         return Optional.ofNullable(as);
     }
 
-    public Connection getConnection() {
+    private Connection getConnection() {
         Connection conn = null;
         try {
             String driver = "org.postgresql.Driver";

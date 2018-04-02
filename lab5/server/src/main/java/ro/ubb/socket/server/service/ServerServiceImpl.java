@@ -45,7 +45,6 @@ public class ServerServiceImpl implements ServiceInterface {
         try{
             Student s= new Student(args[1],args[2]);
             s.setId(Long.parseLong(args[0]));
-            //((StudentDbRepository)srepo).getValidator().validate(s);
             studentService.addStudent(s);
             return CompletableFuture.supplyAsync(() -> "Student was added successfully! ",executorService);
         }
@@ -117,7 +116,6 @@ public class ServerServiceImpl implements ServiceInterface {
 
     @Override
     public CompletableFuture<String> assignProblemToStudent(String paramsAndTypes) {
-    //nu am testat asta inca, am adaptat doar in functie de tiparul de completableFuture
         String[] args = paramsAndTypes.split(";");
         try{
             Assignment as = new Assignment(Long.parseLong(args[1]), Long.parseLong(args[2]));
@@ -135,9 +133,8 @@ public class ServerServiceImpl implements ServiceInterface {
     public CompletableFuture<String> showAllProblemsOfAStudent(String paramsAndTypes) {
         StringBuilder sb = new StringBuilder();
         //String[] args = paramsAndTypes.split(";");
-        String studentId = paramsAndTypes;
         for (Assignment as: assignmentDbService.getAllAssignments()){
-            if (as.getStudentID() == Long.parseLong(studentId)) {
+            if (as.getStudentID() == Long.parseLong(paramsAndTypes)) {
                 sb.append(as.toString());
                 sb.append(";");
             }

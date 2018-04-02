@@ -17,20 +17,6 @@ public class ClientServiceImpl implements ServiceInterface {
         this.tcpClient = tcpClient;
     }
 
-//    @Override
-//    public Future<String> sayHello(String name) {
-//        return executorService.submit(() -> {
-////            Message request = new Message(HelloService.SAY_HELLO, name);
-//            Message request = Message.builder()
-//                    .header(HelloService.SAY_HELLO)
-//                    .body(name)
-//                    .build();
-//            Message response = tcpClient.sendAndReceive(request);
-//            //!!!! err handling
-//            return response.getBody();
-//        });
-//
-//    }
 
     public CompletableFuture<String> processCommand(String paramsAndTypes,String header){
         return CompletableFuture.supplyAsync(()->{

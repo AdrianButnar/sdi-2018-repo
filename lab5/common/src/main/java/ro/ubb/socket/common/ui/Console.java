@@ -232,9 +232,35 @@ public class Console {
                 System.out.print("Enter a problem id: ");
                 String problemId = sc.nextLine();
 
-                Assignment as = new Assignment(Long.parseLong(studentId), Long.parseLong(problemId));
-                as.setId(Long.parseLong(assignmentId));
-                assignmentService.addAssignment(as);
+                Set<Student> students = this.studentService.getAllStudents();
+                Set<Problem> problems = this.problemService.getAllProblems();
+                boolean problemExists = false;
+                for (Problem pb : problems) {
+                    if (pb.getId() == Long.parseLong(problemId)) {
+                        problemExists = true;
+                    }
+                }
+                Assignment as = new Assignment();
+                if (problemExists) {
+                    boolean studentExists = false;
+                    for (Student s : students) {
+                        if (s.getId() == Long.parseLong(studentId)) {
+                            as = new Assignment(Long.parseLong(studentId), Long.parseLong(problemId));
+                            as.setId(Long.parseLong(assignmentId));
+                            studentExists = true;
+                        }
+                    }
+                    if (studentExists) {
+                        System.out.println("Problem " + problemId + " added to student " + studentId + ".");
+                        assignmentService.addAssignment(as);
+
+                    } else {
+                        throw new InexistentStudentException("Student with given id does not exist!");
+                    }
+                } else
+                    throw new InexistentProblemException("Problem with given id does not exist!");
+
+
             }
         }
         catch (InexistentEntityException | InexistentStudentException | InexistentProblemException | EntityPresentException ex) {

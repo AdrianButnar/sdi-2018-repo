@@ -12,10 +12,10 @@ import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class ClientConsole {
-    private ServiceInterface helloService;
+    private ServiceInterface serviceInterface;
 
     public ClientConsole(ServiceInterface helloService) {
-        this.helloService = helloService;
+        this.serviceInterface = serviceInterface;
     }
 
     private void printMenu(){
@@ -121,7 +121,7 @@ public class ClientConsole {
         try {
             String received = readStudent();
             if (!received.equals("")) {
-                CompletableFuture<String> s = helloService.addStudent(received);
+                CompletableFuture<String> s = serviceInterface.addStudent(received);
                 handleResult(s);
             }
             else
@@ -140,12 +140,10 @@ public class ClientConsole {
     /**
      * Prints to the standard output all the students in the repository
      */
-//    private  Future<String> printAllStudents() {
     private void printAllStudents() {
         try {
-            CompletableFuture<String> result = helloService.printAllStudents("");
+            CompletableFuture<String> result = serviceInterface.printAllStudents("");
             handleResult(result);
-            System.out.println("eu merg inainte");
         } catch (CancellationException ex)
         {
             System.out.println("Error serverside(or canceled):");
@@ -161,7 +159,7 @@ public class ClientConsole {
             if (!isLong(id)){
                 throw new InexistentEntityException("Invalid id!\n");
             }
-            CompletableFuture<String> result = helloService.removeStudent(id);
+            CompletableFuture<String> result = serviceInterface.removeStudent(id);
             handleResult(result);
         }
         catch (InexistentEntityException se){
@@ -207,7 +205,7 @@ public class ClientConsole {
         try {
             String received = readProblem();
             if (!received.equals("")) {
-                CompletableFuture<String> result = helloService.addProblem(received);
+                CompletableFuture<String> result = serviceInterface.addProblem(received);
                 handleResult(result);
             }
             else
@@ -231,7 +229,7 @@ public class ClientConsole {
             if (!isLong(id)){
                 throw new InexistentEntityException("Invalid id!\n");
             }
-            CompletableFuture<String> result = helloService.removeProblem(id);
+            CompletableFuture<String> result = serviceInterface.removeProblem(id);
             handleResult(result);
         }
         catch (InexistentEntityException ex){
@@ -242,7 +240,7 @@ public class ClientConsole {
     }
     private void printAllProblems() {
         try{
-            CompletableFuture<String> result = helloService.printAllProblems("");
+            CompletableFuture<String> result = serviceInterface.printAllProblems("");
             handleResult(result);
 
         } catch (CancellationException ex)
@@ -276,13 +274,13 @@ public class ClientConsole {
             String problemId = sc.nextLine();
 
             String returnString = assignmentId+";"+studentId+";"+problemId;
-////            String returnString = " "+";"+studentId+";"+problemId;
+////          String returnString = " "+";"+studentId+";"+problemId;
 //            Future<String> s = helloService.assignProblemToStudent(returnString);
 //            {
 //                String result = s.get(); //blocking
 //                System.out.println(result);
 //            }
-            CompletableFuture<String> result = helloService.assignProblemToStudent(returnString);
+            CompletableFuture<String> result = serviceInterface.assignProblemToStudent(returnString);
             handleResult(result);
 
 
@@ -302,7 +300,7 @@ public class ClientConsole {
                 throw new InexistentEntityException("Invalid id!\n");
             }
 //            Future<String> assignments = helloService.showAllProblemsOfAStudent(studentId);
-            CompletableFuture<String> result = helloService.showAllProblemsOfAStudent(studentId);
+            CompletableFuture<String> result = serviceInterface.showAllProblemsOfAStudent(studentId);
             handleResult(result);
 
 //            String result = assignments.get(); //kind of blocking

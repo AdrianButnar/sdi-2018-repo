@@ -12,8 +12,8 @@ public class ClientApp {
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         TcpClient tcpClient = new TcpClient(executorService, ServiceInterface.SERVER_HOST, ServiceInterface.SERVER_PORT);
-        ServiceInterface helloService = new ClientServiceImpl(executorService, tcpClient);
-        ClientConsole clientConsole = new ClientConsole(helloService);
+        ServiceInterface serviceInterface = new ClientServiceImpl(executorService, tcpClient);
+        ClientConsole clientConsole = new ClientConsole(serviceInterface);
         clientConsole.runConsole();
 
         executorService.shutdownNow();
