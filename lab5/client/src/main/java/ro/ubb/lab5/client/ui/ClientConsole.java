@@ -117,8 +117,12 @@ public class ClientConsole {
     private  void addStudent() {
         try {
             String received = readStudent();
+            String[] args = readStudent().split(";");
+            Long studentId = Long.parseLong(args[0]);
+            String serialNumber = args[1];
+            String name = args[2];
             if (!received.equals("")) {
-                CompletableFuture<String> s = serviceInterface.addStudent(received);
+                CompletableFuture<String> s = serviceInterface.addStudent(studentId,serialNumber,name);
                 handleResult(s);
             }
             else
@@ -157,7 +161,7 @@ public class ClientConsole {
             if (!isLong(id)){
                 throw new InexistentEntityException("Invalid id!\n");
             }
-            CompletableFuture<String> result = serviceInterface.removeStudent(id);
+            CompletableFuture<String> result = serviceInterface.removeStudent(Long.parseLong(id));
             handleResult(result);
         }
         catch (InexistentEntityException se){
@@ -202,8 +206,12 @@ public class ClientConsole {
     private void addProblem() {
         try {
             String received = readProblem();
+            String[] args = readStudent().split(";");
+            Long problemId = Long.parseLong(args[0]);
+            Integer number = Integer.parseInt(args[1]);
+            String text = args[2];
             if (!received.equals("")) {
-                CompletableFuture<String> result = serviceInterface.addProblem(received);
+                CompletableFuture<String> result = serviceInterface.addProblem(problemId,number,text);
                 handleResult(result);
             }
             else
@@ -227,7 +235,7 @@ public class ClientConsole {
             if (!isLong(id)){
                 throw new InexistentEntityException("Invalid id!\n");
             }
-            CompletableFuture<String> result = serviceInterface.removeProblem(id);
+            CompletableFuture<String> result = serviceInterface.removeProblem(Long.parseLong(id));
             handleResult(result);
         }
         catch (InexistentEntityException ex){
@@ -272,14 +280,13 @@ public class ClientConsole {
             System.out.print("Enter a problem id: ");
             String problemId = sc.nextLine();
 
-            String returnString = assignmentId+";"+studentId+";"+problemId;
 ////          String returnString = " "+";"+studentId+";"+problemId;
 //            Future<String> s = helloService.assignProblemToStudent(returnString);
 //            {
 //                String result = s.get(); //blocking
 //                System.out.println(result);
 //            }
-            CompletableFuture<String> result = serviceInterface.assignProblemToStudent(returnString);
+            CompletableFuture<String> result = serviceInterface.assignProblemToStudent(Long.parseLong(assignmentId),Long.parseLong(studentId),Long.parseLong(problemId));
             handleResult(result);
 
 
@@ -299,7 +306,7 @@ public class ClientConsole {
                 throw new InexistentEntityException("Invalid id!\n");
             }
 //            Future<String> assignments = helloService.showAllProblemsOfAStudent(studentId);
-            CompletableFuture<String> result = serviceInterface.showAllProblemsOfAStudent(studentId);
+            CompletableFuture<String> result = serviceInterface.showAllProblemsOfAStudent(Long.parseLong(studentId));
             handleResult(result);
 
 //            String result = assignments.get(); //kind of blocking
