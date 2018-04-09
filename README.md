@@ -26,3 +26,21 @@ Group: 922
 * Added the tests with gradle 
 * Improved the UI
 * Added more of the problem in the domain
+
+### Lab 4
+
+* Added all the features
+* Added XML functionality 
+* Added Postgresql functionality
+* (Later) Finished all the features such that lab 5 can begin
+
+
+### Lab 5
+
+* Added new settings to gradle
+* Split the application into a client and a server 
+* Now all the CRUD are happening only on the database
+
+### Lab 6
+
+* Getting started with Spring
