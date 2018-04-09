@@ -1,4 +1,4 @@
-package ro.ubb.socket.common.repository;
+package ro.ubb.socket.server.repository;
 
 import ro.ubb.socket.common.domain.Student;
 import ro.ubb.socket.common.domain.validators.EntityPresentException;
@@ -29,6 +29,10 @@ public class StudentDbRepository implements Repository<Long, Student> {
 
         this.url = url;
 
+    }
+
+    public Validator<Student> getValidator() {
+        return validator;
     }
 
     /**

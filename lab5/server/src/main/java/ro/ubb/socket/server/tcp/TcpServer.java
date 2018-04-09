@@ -1,6 +1,6 @@
 package ro.ubb.socket.server.tcp;
 
-import ro.ubb.socket.common.HelloServiceException;
+import ro.ubb.socket.common.ServiceException;
 import ro.ubb.socket.common.Message;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class TcpServer {
 
         } catch (IOException e) {
             e.printStackTrace();
-            throw new HelloServiceException(e);
+            throw new ServiceException(e);
         }
     }
 
@@ -64,16 +64,16 @@ public class TcpServer {
 
                 Message request = Message.builder().build();
                 request.readFrom(is);
-                System.out.println("server - received request: " + request);
+                System.out.println("Server - received request: " + request);
 
                 Message response = methodHandlers.get(request.getHeader()).apply(request);
-                System.out.println("server - computed response: " + response);
+                System.out.println("Server - computed response: " + response);
 
                 response.writeTo(os);
 
             } catch (IOException e) {
                 e.printStackTrace();
-                throw new HelloServiceException(e);
+                throw new ServiceException(e);
             } finally {
                 if (socket != null) {
                     try {

@@ -1,6 +1,6 @@
 package ro.ubb.lab5.client;
 
-import ro.ubb.lab5.client.service.ServiceClient;
+import ro.ubb.lab5.client.service.ClientServiceImpl;
 import ro.ubb.lab5.client.tcp.TcpClient;
 import ro.ubb.lab5.client.ui.ClientConsole;
 import ro.ubb.socket.common.ServiceInterface;
@@ -12,13 +12,13 @@ public class ClientApp {
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         TcpClient tcpClient = new TcpClient(executorService, ServiceInterface.SERVER_HOST, ServiceInterface.SERVER_PORT);
-        ServiceInterface helloService = new ServiceClient(executorService, tcpClient);
-        ClientConsole clientConsole = new ClientConsole(helloService);
+        ServiceInterface serviceInterface = new ClientServiceImpl(executorService, tcpClient);
+        ClientConsole clientConsole = new ClientConsole(serviceInterface);
         clientConsole.runConsole();
 
         executorService.shutdownNow();
 
-        System.out.println("bye - client");
+        System.out.println("Good bye!");
     }
 }
 

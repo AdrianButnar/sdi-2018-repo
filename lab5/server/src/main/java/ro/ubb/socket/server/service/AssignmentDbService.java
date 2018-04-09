@@ -1,10 +1,10 @@
-package ro.ubb.socket.common.service;
+package ro.ubb.socket.server.service;
 
 
 import ro.ubb.socket.common.domain.Assignment;
 import ro.ubb.socket.common.domain.validators.EntityCannotBeSavedException;
 import ro.ubb.socket.common.domain.validators.InexistentEntityException;
-import ro.ubb.socket.common.repository.Repository;
+import ro.ubb.socket.server.repository.Repository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,9 +17,9 @@ public class AssignmentDbService {
         this.repository = repository;
     }
 
-    public void addAssignment(Assignment ass) throws EntityCannotBeSavedException
+    public void addAssignment(Assignment as) throws EntityCannotBeSavedException
     {
-        repository.save(ass);
+        repository.save(as);
     }
 
     public void removeAssignment(Long id) throws InexistentEntityException {
