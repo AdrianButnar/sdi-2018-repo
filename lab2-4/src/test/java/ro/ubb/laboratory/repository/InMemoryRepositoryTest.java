@@ -31,6 +31,8 @@ import org.junit.Before;
 import org.junit.Test;
 import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.domain.validators.InexistentEntityException;
+import ro.ubb.laboratory.domain.validators.InexistentStudentException;
 import ro.ubb.laboratory.domain.validators.StudentValidator;
 import ro.ubb.laboratory.domain.validators.Validator;
 
@@ -43,14 +45,14 @@ public class InMemoryRepositoryTest {
     Validator<Student> studentValidator = new StudentValidator();
 
     private Repository<Long, Student> studentRepository = new InMemoryRepository<>(studentValidator);
-    //private Repository<Long, Problem> problemsRepository = new InMemoryRepository<>(studentValidator);
+    //private Repository<Long, ProblemFileRepository> problemsRepository = new InMemoryRepository<>(studentValidator);
 
     private Student student1;
     private Student student2;
     private Student student3;
-//    private Problem problem1;
-//    private Problem problem2;
-//    private Problem problem3;
+//    private ProblemFileRepository problem1;
+//    private ProblemFileRepository problem2;
+//    private ProblemFileRepository problem3;
 
 
     @Before
@@ -62,11 +64,11 @@ public class InMemoryRepositoryTest {
         student2.setId(34L);
         student3 = new Student("121314", "Ioana");
         student3.setId(55L);
-//        problem1 = new Problem(2, "Do 1 + 1!");
+//        problem1 = new ProblemFileRepository(2, "Do 1 + 1!");
 //        problem1.setId(1L);
-//        problem2 = new Problem(2, "Do 1 + 2!");
+//        problem2 = new ProblemFileRepository(2, "Do 1 + 2!");
 //        problem2.setId(2L);
-//        problem3 = new Problem(2, "Do 1 + 3!");
+//        problem3 = new ProblemFileRepository(2, "Do 1 + 3!");
 //        problem3.setId(3L);
 
         studentRepository.save(student1);
@@ -82,12 +84,22 @@ public class InMemoryRepositoryTest {
 
     }
 
+    @Test(expected = InexistentStudentException.class)
+    public void testInexistentStudent(){
+        studentRepository.remove(93L);
+    }
 
     @Test
     public void findOne() throws Exception {
       assertTrue("Something went wrong in the Repo Student finder", studentRepository.findOne(21L).isPresent() && student1.equals(studentRepository.findOne(21L).get()));
-//      assertTrue("Something went wrong in the Repo Problem finder", problemsRepository.findOne(1L).isPresent() && problem1.equals(problemsRepository.findOne(1L).get()));
+//      assertTrue("Something went wrong in the Repo ProblemFileRepository finder", problemsRepository.findOne(1L).isPresent() && problem1.equals(problemsRepository.findOne(1L).get()));
 
+    }
+
+    @Test(expected = InexistentEntityException.class)
+    public void testEntityNonExistentException()
+    {
+        studentRepository.remove(94L);
     }
 
     @Test
@@ -110,7 +122,7 @@ public class InMemoryRepositoryTest {
         studentRepository.save(student4);
 //        problemsRepository.save(problem4);
         assertTrue("Something went wrong in the Repo Student save", studentRepository.findOne(89L).isPresent() && student4.equals((studentRepository.findOne(89L).get())));
-//        assertTrue("Something went wrong in the Repo Problem save", problemsRepository.findOne(4L).isPresent() && problem4.equals((problemsRepository.findOne(4L).get())));
+//        assertTrue("Something went wrong in the Repo ProblemFileRepository save", problemsRepository.findOne(4L).isPresent() && problem4.equals((problemsRepository.findOne(4L).get())));
 
     }
 

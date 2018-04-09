@@ -26,17 +26,22 @@
 
 package ro.ubb.laboratory;
 
-import ro.ubb.laboratory.domain.BaseEntity;
+import ro.ubb.laboratory.domain.Assignment;
 import ro.ubb.laboratory.domain.Problem;
 import ro.ubb.laboratory.domain.Student;
+import ro.ubb.laboratory.domain.validators.AssignmentValidator;
+import ro.ubb.laboratory.domain.validators.ProblemValidator;
 import ro.ubb.laboratory.domain.validators.StudentValidator;
 import ro.ubb.laboratory.domain.validators.Validator;
 import ro.ubb.laboratory.repository.*;
+import ro.ubb.laboratory.service.AssignmentDbService;
 import ro.ubb.laboratory.service.ProblemService;
 import ro.ubb.laboratory.service.StudentService;
 import ro.ubb.laboratory.ui.Console;
 
 import java.io.File;
+import java.sql.*;
+import java.util.Scanner;
 import java.io.IOException;
 
 /**
@@ -72,33 +77,90 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args)
-    {
-
-//        In memory repository
-//        Repository<Long, Student> studentRepository = new InMemoryRepository<>();
+    public static void main(String[] args) throws Exception {
+        //xml-repo
+//        Validator<Student> studentValidator = new StudentValidator();
+//        Validator<Problem> problemValidator = new ProblemValidator();
+//        Repository<Long, Student> studentRepository =
+//                new StudentXmlRepository("./data/students.xml",studentValidator);
+//        Repository<Long, Problem> problemRepository =
+//                new ProblemXmlRepository("./data/problems.xml",problemValidator);
 //        StudentService studentService = new StudentService(studentRepository);
-//        Console console = new Console(studentService);
+//        ProblemService problemService = new ProblemService(problemRepository);
+//        Console console = new Console(studentService,problemService);
+//        console.runConsole();
+//
+      
+//        In memory repository
+//        Validator<Student> studentValidator = new StudentValidator();
+//        Validator<Problem> problemValidator = new ProblemValidator();
+//        Repository<Long, Student> studentRepository = new InMemoryRepository(studentValidator);
+//        Repository<Long, Problem> problemRepository = new InMemoryRepository(problemValidator);
+//        StudentService studentService = new StudentService(studentRepository);
+//        ProblemService problemService = new ProblemService(problemRepository);
+//        Console console = new Console(studentService, problemService);
 //        console.runConsole();
 //
 //        System.out.println("Hello world!");
 
 //       File Repository
-        try {
-            System.out.println(new File(".").getCanonicalPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //in file repo
+//        try {
+//            System.out.println(new File(".").getCanonicalPath());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        //in file repo
+
+//         Repository<Long, Student> studentRepository =
+//                 new StudentXmlRepository("./data/students.xml");
+//         StudentService studentService = new StudentService(studentRepository);
+//         Console console = new Console(studentService);
+//         console.runConsole();
+
+
+//        In memory repository
+//        Validator<Student> studentValidator = new StudentValidator();
+//        Validator<Problem> problemValidator = new ProblemValidator();
+//        Repository<Long, Student> studentRepository = new InMemoryRepository(studentValidator);
+//        Repository<Long, Problem> problemRepository = new InMemoryRepository(problemValidator);
+//        StudentService studentService = new StudentService(studentRepository);
+//        ProblemService problemService = new ProblemService(problemRepository);
+//        Console console = new Console(studentService, problemService);
+//        console.runConsole();
+//
+//        System.out.println("Hello world!");
+
+//       File Repository
+//        try {
+//            System.out.println(new File(".").getCanonicalPath());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+//        //in file repo
+//        Validator<Student> studentValidator = new StudentValidator();
+//        Validator<Problem> problemValidator = new ProblemValidator();
+//        Repository<Long, Student> studentRepository = new StudentFileRepository(studentValidator, ".\\data\\studentFile");
+//        Repository<Long, Problem> problemRepository = new ProblemFileRepository(problemValidator, ".\\data\\problemFile");
+//        StudentService studentService = new StudentService(studentRepository);
+//        ProblemService problemService = new ProblemService(problemRepository);
+//        Console console = new Console(studentService, problemService);
+//        console.runConsole();
+
+
+        //in database repo
         Validator<Student> studentValidator = new StudentValidator();
-        Repository<Long, Student> studentRepository = new FileRepository(studentValidator, ".\\data\\studentFile");
-        Repository<Long, Student> problemRepository = new FileRepository(studentValidator, ".\\data\\problemFile");
+        Validator<Problem> problemValidator = new ProblemValidator();
+        Validator<Assignment> assignmentValidator = new AssignmentValidator();
+        Repository<Long, Student> studentRepository = new StudentDbRepository(studentValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
+        Repository<Long, Problem> problemRepository = new ProblemDbRepository(problemValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
+        Repository<Long, Assignment> assignmentRepository = new AssignmentDbRepository(assignmentValidator, "jdbc:postgresql://localhost:5432/Mppdatabase");
+
         StudentService studentService = new StudentService(studentRepository);
-       // ProblemService problemService = new ProblemService(studentRepository);
-        Console console = new Console(studentService, problemService);
+        ProblemService problemService = new ProblemService(problemRepository);
+        AssignmentDbService assignmentDbService = new AssignmentDbService(assignmentRepository);
+        Console console = new Console(studentService, problemService,assignmentDbService);
         console.runConsole();
 
     }
-
-
 }

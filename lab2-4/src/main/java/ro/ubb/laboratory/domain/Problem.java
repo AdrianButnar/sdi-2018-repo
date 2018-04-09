@@ -3,8 +3,8 @@ package ro.ubb.laboratory.domain;
 import java.util.Objects;
 
 /**
- * <h2> Problem class </h2>
- * <p> Problem </p>
+ * <h2> ProblemFileRepository class </h2>
+ * <p> ProblemFileRepository </p>
  * @author Alexandru Buhai
  * @version 1.0.1
  */
@@ -13,9 +13,13 @@ public class Problem extends BaseEntity<Long>  {
     private String text;
     private int grade;
 
-    public Problem(int number, String text) {
+    public Problem(Integer number, String text) {
         this.number = number;
         this.text = text;
+    }
+    public Problem() {
+        this.number = 0;
+        this.text = "";
     }
 
     public int getGrade() {
@@ -59,9 +63,10 @@ public class Problem extends BaseEntity<Long>  {
 
     @Override
     public String toString() {
-        return "Problem{" +
-                "number=" + number +
-                ", text='" + text + '\'' +
+        return  "Problem {" +
+                "ID = " + this.getId() +
+                ", Number = '" + number + '\'' +
+                ", Text = '" + text + '\'' +
                 '}';
     }
 }

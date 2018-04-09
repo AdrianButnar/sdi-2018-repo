@@ -1,11 +1,8 @@
 package ro.ubb.laboratory.service;
 
 import ro.ubb.laboratory.domain.Problem;
-import ro.ubb.laboratory.domain.Student;
 import ro.ubb.laboratory.domain.validators.EntityCannotBeSavedException;
-import ro.ubb.laboratory.domain.validators.EntityNonExistentException;
-import ro.ubb.laboratory.domain.validators.InexistentStudentException;
-import ro.ubb.laboratory.domain.validators.StudentCannotBeSavedException;
+import ro.ubb.laboratory.domain.validators.InexistentEntityException;
 import ro.ubb.laboratory.repository.Repository;
 
 import java.util.Set;
@@ -28,7 +25,7 @@ public class ProblemService {
         repository.save(problem);
     }
 
-    public void removeProblem(Long id) throws EntityNonExistentException {
+    public void removeProblem(Long id) throws InexistentEntityException {
         repository.remove(id);
     }
 

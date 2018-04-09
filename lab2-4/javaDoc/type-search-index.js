@@ -1,1 +1,0 @@
-typeSearchIndex = [{"p":"ro.ubb.laboratory.domain","l":"BaseEntity"},{"p":"ro.ubb.laboratory.ui","l":"Console"},{"p":"ro.ubb.laboratory.repository","l":"InMemoryRepository"},{"p":"ro.ubb.laboratory","l":"Main"},{"p":"ro.ubb.laboratory.repository","l":"Repository"},{"p":"ro.ubb.laboratory.domain","l":"Student"},{"p":"ro.ubb.laboratory.service","l":"StudentService"}]

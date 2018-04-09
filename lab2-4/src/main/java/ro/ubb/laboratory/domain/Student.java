@@ -2,7 +2,6 @@ package ro.ubb.laboratory.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * <h2> Student class </h2>
@@ -13,7 +12,21 @@ import java.util.Optional;
 public class Student extends BaseEntity<Long> {
     private String serialNumber;
     private String name;
-    private List<Problem> problemList = new ArrayList<>();
+    private List<Integer> problemList = new ArrayList<>();
+
+    public List<Integer> getProblemList() {
+        return problemList;
+    }
+
+    public String getProblemListToString() {
+        String content="";
+        for ( Integer p : problemList){
+            content += String.valueOf(p) + ", ";
+        }
+        content = content.substring(0,content.length()-2)+".";
+        return content;
+    }
+
 
     public Student() {
 
@@ -24,12 +37,14 @@ public class Student extends BaseEntity<Long> {
         this.name = Name;
     }
 
+
     public String getSerialNumber() {
         return serialNumber;
     }
 
     /**
      * Sets a new serial number for this student
+     *
      * @param serialNumber - Serial number of the student
      */
     public void setSerialNumber(String serialNumber) {
@@ -42,6 +57,7 @@ public class Student extends BaseEntity<Long> {
 
     /**
      * Set the name of the student
+     *
      * @param name - Name of the student
      */
     public void setName(String name) {
@@ -50,22 +66,26 @@ public class Student extends BaseEntity<Long> {
 
     /**
      * Assigns a problem to this student.
-     * @param pb - pproblem to be added to the list
+     *
+     * @param no - ID of the problem to be added to the list
      */
-    public void addProblem(Problem pb) {
-        problemList.add(pb);
+    public void addProblem(Integer no) {
+        problemList.add(no);
     }
 
     /**
      * Gets the number of assigned problem this student has.
+     *
      * @return - the number of problems
      */
     public int getNumberOfProblems() {
         return problemList.size();
     }
 
+
     /**
      * Override the equals method of an Object
+     *
      * @param o - object to be compared to
      * @return True - if equals | False - otherwise
      */
@@ -98,11 +118,21 @@ public class Student extends BaseEntity<Long> {
         return result;
     }
 
+    public String printProblems() {
+        String pr = "";
+        for(Integer no : problemList)
+        {
+            pr += no.toString();
+            pr += " ";
+        }
+        return pr;
+    }
+
     @Override
     public String toString() {
         return "Student {" +
                 "ID = " + this.getId() +
-                ", 1SerialNumber = '" + serialNumber + '\'' +
+                ", SerialNumber = '" + serialNumber + '\'' +
                 ", Name = '" + name + '\'' +
                 '}';
     }

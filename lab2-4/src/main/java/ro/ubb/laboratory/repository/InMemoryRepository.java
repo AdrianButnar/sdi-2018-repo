@@ -32,7 +32,6 @@ import ro.ubb.laboratory.domain.validators.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class InMemoryRepository<ID, T extends BaseEntity<ID>> implements Repository<ID, T> {
@@ -63,19 +62,19 @@ public class InMemoryRepository<ID, T extends BaseEntity<ID>> implements Reposit
 
     @Override
     public Optional<T> save(T entity) throws EntityPresentException {
-//        if (entity == null) {
-//            throw new IllegalArgumentException("Id cannot be null");
-//        }
-        //validator.validate(entity);
+        if (entity == null) {
+            throw new IllegalArgumentException("Id cannot be null");
+        }
+        validator.validate(entity);
         if (findOne(entity.getId()).isPresent())
-            throw new EntityPresentException("Student already in list!\n");
+            throw new EntityPresentException("Entity already in list!\n");
         return Optional.ofNullable(entities.putIfAbsent(entity.getId(), entity));
     }
 
     @Override
-    public Optional<T> remove(ID id) throws EntityNonExistentException {
+    public Optional<T> remove(ID id) throws InexistentEntityException {
         if (!findOne(id).isPresent())
-            throw new EntityNonExistentException("Entity does not exist in list!\n");
+            throw new InexistentEntityException("Entity does not exist in list!\n");
         return Optional.ofNullable(entities.remove(id));
     }
 
