@@ -1,0 +1,5 @@
+rootProject.name = 'lab6A'
+include 'common'
+include 'server'
+include 'client'
+include 'https://maven.apache.org/'
