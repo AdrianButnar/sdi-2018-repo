@@ -1,0 +1,20 @@
+﻿<Properties StartupConfiguration="{530D3D99-2364-4219-9A0F-9F6A2BE3D3EE}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Tasks/TaskProgram.cs">
+    <Files>
+      <File FileName="Tasks/TaskProgram.cs" Line="19" Column="52" />
+      <File FileName="Tasks/repository/DBUtils.cs" Line="24" Column="76" />
+      <File FileName="DbUtils/ConnectionFactory.cs" Line="4" Column="34" />
+      <File FileName="DbUtils/SqliteConnectionFactory.cs" Line="15" Column="33" />
+      <File FileName="DbUtils/MySqlConnectionFactory.cs" Line="16" Column="6" />
+      <File FileName="Tasks/app.config" Line="19" Column="17" />
+      <File FileName="Tasks/repository/ICrudRepository.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Tasks PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>
