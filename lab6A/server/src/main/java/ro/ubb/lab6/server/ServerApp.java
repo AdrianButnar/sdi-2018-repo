@@ -8,10 +8,8 @@ public class ServerApp {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext("ro.ubb.lab6.server.config");
 
-        ServiceInterface studentService=context.getBean(ServiceInterface.class);
+        ServiceInterface serviceInterface=context.getBean(ServiceInterface.class);
 //        studentService.findAll().forEach(System.out::println);
-
-
 
         System.out.println("bye - server");
     }

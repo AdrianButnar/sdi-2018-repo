@@ -27,6 +27,7 @@
 package ro.ubb.lab6.server.service;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.ubb.lab6.common.domain.Student;
 import ro.ubb.lab6.common.domain.validators.InexistentStudentException;
@@ -39,6 +40,8 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class StudentService {
+
+    @Autowired
     private Repository<Long, Student> repository;
 
     public StudentService(Repository<Long, Student> repository) {

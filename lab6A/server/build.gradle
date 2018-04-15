@@ -30,7 +30,7 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-lab6', version: '2.0.8'
     compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework:spring-jdbc")
-    compile 'postgresql:postgresql:42.1.1'
+    compile("org.postgresql:postgresql:9.2-1003-jdbc4")
 
     //  compile("com.h2database:h2")
     compile project(':common')

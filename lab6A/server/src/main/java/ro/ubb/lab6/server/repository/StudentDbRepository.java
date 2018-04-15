@@ -55,12 +55,13 @@ public class StudentDbRepository implements Repository<Long, Student> {
      *             if the given id is null.
      */
     @Override
-    public Student findOne(Long id) { //Not sure?
+    public Optional<Student> findOne(Long id) { //Not sure?
         if(id == null){
             throw new IllegalArgumentException("Id cannot be null");
         }
         String query = "SELECT * FROM \"Students\" WHERE id=" + id + ";";
-        return jdbcTemplate.queryForObject(query, Student.class);
+        Student st = jdbcTemplate.queryForObject(query, Student.class);
+        return Optional.ofNullable(st);
     }
 
     /**

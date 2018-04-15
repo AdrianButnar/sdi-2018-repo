@@ -1,5 +1,8 @@
 package ro.ubb.lab6.server.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.task.support.ExecutorServiceAdapter;
 import org.springframework.stereotype.Service;
 import ro.ubb.lab6.common.ServiceInterface;
 import ro.ubb.lab6.common.domain.Assignment;
@@ -11,19 +14,25 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 
 @Service
 public class ServerService implements ServiceInterface {
 
+    @Autowired
     private ExecutorService executorService;
 
+    @Autowired
     private StudentService studentService;
+
+    @Autowired
     private ProblemService problemService;
+
+    @Autowired
     private AssignmentDbService assignmentDbService;
 
-
-    public ServerService(ExecutorService executorService, StudentService studentService, ProblemService problemService, AssignmentDbService assignmentDbService) {
+    public ServerService(ExecutorService executorService,StudentService studentService, ProblemService problemService, AssignmentDbService assignmentDbService) {
         this.executorService = executorService;
         this.studentService = studentService;
         this.problemService = problemService;
@@ -46,7 +55,7 @@ public class ServerService implements ServiceInterface {
             Student s= new Student(serialNumber,name);
             s.setId(studentId);
             studentService.addStudent(s);
-            return CompletableFuture.supplyAsync(() -> "Student was added successfully! ",executorService);
+            return CompletableFuture.supplyAsync(() -> "Student was added successfully! ", executorService);
         }
         catch (Exception ex){
             return CompletableFuture.supplyAsync(() -> "Student data was invalid! ",executorService);
