@@ -21,7 +21,16 @@ repositories {
 }
 
 dependencies {
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework:spring-jdbc")
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-web-services')
+    compile('org.springframework.boot:spring-boot-spring-plugin-core')
+    compile('org.springframework.boot:spring-boot-spring-hateoas')
 
 
     compile group: 'org.springframework', name: 'spring-context', version: '5.0.4.RELEASE'
@@ -30,7 +39,11 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-lab6', version: '2.0.8'
     compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework:spring-jdbc")
+
     compile("org.postgresql:postgresql:9.2-1003-jdbc4")
+
+    //https://mvnrepository.com/artifact/org.postgresql/postgresql
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
 
     //  compile("com.h2database:h2")
     compile project(':common')

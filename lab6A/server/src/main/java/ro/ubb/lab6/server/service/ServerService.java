@@ -1,15 +1,13 @@
 package ro.ubb.lab6.server.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.task.support.ExecutorServiceAdapter;
+import ro.ubb.lab6.common.ServiceInterface;
 import org.springframework.stereotype.Service;
 import ro.ubb.lab6.common.ServiceInterface;
 import ro.ubb.lab6.common.domain.Assignment;
 import ro.ubb.lab6.common.domain.Problem;
 import ro.ubb.lab6.common.domain.Student;
 import ro.ubb.lab6.server.repository.Repository;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +30,7 @@ public class ServerService implements ServiceInterface {
     @Autowired
     private AssignmentDbService assignmentDbService;
 
-    public ServerService(ExecutorService executorService,StudentService studentService, ProblemService problemService, AssignmentDbService assignmentDbService) {
+    public ServerService(ExecutorService executorService, StudentService studentService, ProblemService problemService, AssignmentDbService assignmentDbService) {
         this.executorService = executorService;
         this.studentService = studentService;
         this.problemService = problemService;
@@ -47,7 +45,6 @@ public class ServerService implements ServiceInterface {
 //                new Student("caie2", "Cena")
 //        );
 //    }
-
     @Override
     public CompletableFuture<String> addStudent(Long studentId,String serialNumber,String name) {
         // String[] args=paramsAndTypes.split(";");
@@ -169,6 +166,6 @@ public class ServerService implements ServiceInterface {
 
     @Override
     public CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes) {
-        throw new NotImplementedException();
+        throw new RuntimeException("Not yet implemented");
     }
 }

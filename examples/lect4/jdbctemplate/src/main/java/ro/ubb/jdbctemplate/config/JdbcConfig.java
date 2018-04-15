@@ -22,8 +22,8 @@ public class JdbcConfig {
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName(Driver.class.getName());
         ds.setUrl("jdbc:postgresql://localhost:5432/jdbctemplate");
-        ds.setUsername(System.getProperty("username"));
-        ds.setPassword(System.getProperty("password"));
+        ds.setUsername(System.getProperty("dbUsername"));
+        ds.setPassword(System.getProperty("dbPassword"));
         ds.setInitialSize(2);
         return ds;
     }

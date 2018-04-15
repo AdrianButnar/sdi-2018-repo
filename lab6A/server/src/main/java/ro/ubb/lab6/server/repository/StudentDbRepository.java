@@ -1,6 +1,9 @@
 package ro.ubb.lab6.server.repository;
 
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import ro.ubb.lab6.common.domain.Student;
 import ro.ubb.lab6.common.domain.validators.EntityPresentException;
 import ro.ubb.lab6.common.domain.validators.InexistentEntityException;
@@ -41,6 +44,11 @@ public class StudentDbRepository implements Repository<Long, Student> {
 
     }
 
+    public StudentDbRepository( String url) {
+        this.url = url;
+
+    }
+
     public Validator<Student> getValidator() {
         return validator;
     }
@@ -55,12 +63,34 @@ public class StudentDbRepository implements Repository<Long, Student> {
      *             if the given id is null.
      */
     @Override
-    public Optional<Student> findOne(Long id) { //Not sure?
+
+    public Optional<Student> findOne(Long id) {
         if(id == null){
             throw new IllegalArgumentException("Id cannot be null");
         }
-        String query = "SELECT * FROM \"Students\" WHERE id=" + id + ";";
-        Student st = jdbcTemplate.queryForObject(query, Student.class);
+        Student st = null;
+        try {
+            SimpleDriverDataSource dataSource = getDataSource();
+
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+            String studentId = id.toString();
+            List<Student> students = jdbcTemplate.query(
+                    "SELECT * FROM \"Students\" WHERE id= ?", new Object[] { studentId },
+                    (rs, rowNum) -> new Student ( rs.getLong("id"), rs.getString("code"), rs.getString("name")));
+
+            for(Student student : students)
+            {
+                if(student.getId().equals(id))
+                {
+                    st = student;
+                }
+            }
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+
         return Optional.ofNullable(st);
     }
 
@@ -73,24 +103,13 @@ public class StudentDbRepository implements Repository<Long, Student> {
     {
         List<Student> students = new ArrayList<>();
         try {
-            Connection c = getConnection();
-            Statement stmt = null;
-            Class.forName("org.postgresql.Driver");
+            SimpleDriverDataSource dataSource = getDataSource();
 
-            stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM \"Students\";" );
-            while ( rs.next() ) {
-                long id = Long.valueOf( rs.getInt("id") );
-                String  name = rs.getString("name");
-                String  code = rs.getString("code");
-                Student st = new Student(code, name);
-                st.setId(id);
-                students.add(st);
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-            }
-            rs.close();
-            stmt.close();
-            c.close();
+            students= jdbcTemplate.query(
+                    "SELECT * FROM \"Students\"", (rs, rowNum) -> new Student ( rs.getLong("id"), rs.getString("code"), rs.getString("name")));
+
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
@@ -114,25 +133,12 @@ public class StudentDbRepository implements Repository<Long, Student> {
         }
         validator.validate(entity);
         try {
-            Connection c = getConnection();
-            Statement stmt = null;
-            Class.forName("org.postgresql.Driver");
-            c.setAutoCommit(false);
-            stmt = c.createStatement();
+            SimpleDriverDataSource dataSource = getDataSource();
 
-            String name = entity.getName();
-            String studentCode = entity.getSerialNumber();
-            Long studentId = entity.getId();
-            String sql = "INSERT INTO \"Students\" (name, code, id) " +
-                    "VALUES('" +
-                    name + "','" +
-                    studentCode + "'," + studentId +  ");";
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-            stmt.executeUpdate(sql);
-            c.commit();
-            entity = null;
-            stmt.close();
-            c.close();
+            jdbcTemplate.update("INSERT INTO \"Students\"(id, code, name) VALUES (?,?,?)", entity.getId(), entity.getSerialNumber(), entity.getName());
+
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
@@ -157,50 +163,52 @@ public class StudentDbRepository implements Repository<Long, Student> {
         }
         Student st = null;
         try {
-            Connection c = getConnection();
-            Statement stmt = null;
-            Class.forName("org.postgresql.Driver");
-            c.setAutoCommit(false);
-            stmt = c.createStatement();
-            String sql = "SELECT * FROM \"Students\" WHERE id=" + id + ";";
 
-            ResultSet rs = stmt.executeQuery( sql );
+            SimpleDriverDataSource dataSource = getDataSource();
 
-            while ( rs.next() ) {
-                String name = rs.getString("name");
-                String code = rs.getString("code");
-                st = new Student(code, name);
-                st.setId(id);
-            }
-            String sql2 = "DELETE FROM \"Students\" WHERE id=" + id +";";
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-            stmt.executeUpdate(sql2);
-            c.commit();
-            stmt.close();
-            c.close();
+            int result = jdbcTemplate.update("DELETE FROM \"Students\" WHERE id=?", id.toString());
+//            if(result != 0)
+//            {
+//                st = new Student("Prov", "Prov")
+//            }
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
         }
 
+
         return Optional.ofNullable(st);
     }
 
-    public Connection getConnection() {
-        Connection conn = null;
-        try{
-            String driver = "org.postgresql.Driver";
-            Class.forName(driver);
+//    public Connection getConnection() {
+//        Connection conn = null;
+//        try{
+//            String driver = "org.postgresql.Driver";
+//            Class.forName(driver);
+//
+//            conn = DriverManager.getConnection(this.url, System.getProperty("dbUsername"), System.getProperty("dbPassword"));
+//        }
+//        catch (Exception ex)
+//        {
+//            System.out.println("My exception in StudentDbRepository.");
+//            ex.printStackTrace();
+//        }
+//        return conn;
+//    }
 
-            conn = DriverManager.getConnection(this.url, System.getProperty("dbUsername"), System.getProperty("dbPassword"));
-        }
-        catch (Exception ex)
-        {
-            System.out.println("My exception in StudentDbRepository.");
-            ex.printStackTrace();
-        }
-        return conn;
+
+    public SimpleDriverDataSource getDataSource()
+    {
+        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+        dataSource.setDriverClass(org.postgresql.Driver.class); //org.postgresql.Driver.class
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/Mppdatabase");
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("parola12");
+        return dataSource;
     }
+
 
 }
 /*

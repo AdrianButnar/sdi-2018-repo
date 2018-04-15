@@ -39,6 +39,11 @@ public class Student extends BaseEntity<Long> implements Serializable {
         this.name = Name;
     }
 
+    public Student(Long id, String serialNumber, String Name) {
+        this.serialNumber = serialNumber;
+        this.name = Name;
+        this.setId(id);
+    }
 
     public String getSerialNumber() {
         return serialNumber;

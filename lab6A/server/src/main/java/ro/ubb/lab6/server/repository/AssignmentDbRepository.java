@@ -28,6 +28,11 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
 
     }
 
+    public AssignmentDbRepository( String url) {
+        this.url = url;
+
+    }
+
     //id studentId problemId
 
     /**

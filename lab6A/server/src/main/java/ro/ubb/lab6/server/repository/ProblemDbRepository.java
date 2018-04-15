@@ -27,7 +27,11 @@ public class ProblemDbRepository implements Repository<Long, Problem> {
         this.url = url;
 
     }
+    public ProblemDbRepository( String url) {
 
+        this.url = url;
+
+    }
 
     /**
      * Find the entity with the given {@code id}.
