@@ -1,5 +1,6 @@
 package ro.ubb.lab6.server.repository;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import ro.ubb.lab6.common.domain.Student;
 import ro.ubb.lab6.common.domain.validators.EntityPresentException;
 import ro.ubb.lab6.common.domain.validators.InexistentEntityException;
@@ -24,6 +25,15 @@ public class StudentDbRepository implements Repository<Long, Student> {
     private String url;
 
 
+    //JdbcTemplate
+    private JdbcTemplate jdbcTemplate;
+
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+
     public StudentDbRepository(Validator<Student> studentValidator, String url) {
         this.validator = studentValidator;
 
@@ -45,37 +55,12 @@ public class StudentDbRepository implements Repository<Long, Student> {
      *             if the given id is null.
      */
     @Override
-    public Optional<Student> findOne(Long id) {
+    public Student findOne(Long id) { //Not sure?
         if(id == null){
             throw new IllegalArgumentException("Id cannot be null");
         }
-        Student st = null;
-        try {
-            Connection c = getConnection();
-            Statement stmt = null;
-            Class.forName("org.postgresql.Driver");
-            c.setAutoCommit(false);
-            stmt = c.createStatement();
-
-            String studentId = id.toString();
-            String sql = "SELECT * FROM \"Students\" WHERE id=" + studentId + ";";
-
-            ResultSet rs = stmt.executeQuery( sql );
-
-            while ( rs.next() ) {
-                String name = rs.getString("name");
-                String code = rs.getString("code");
-                st = new Student(code, name);
-                st.setId(id);
-            }
-            stmt.close();
-            c.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
-            System.exit(0);
-        }
-
-        return Optional.ofNullable(st);
+        String query = "SELECT * FROM \"Students\" WHERE id=" + id + ";";
+        return jdbcTemplate.queryForObject(query, Student.class);
     }
 
     /**
@@ -217,3 +202,38 @@ public class StudentDbRepository implements Repository<Long, Student> {
     }
 
 }
+/*
+ @Override
+    public Optional<Student> findOne(Long id) {
+        if(id == null){
+            throw new IllegalArgumentException("Id cannot be null");
+        }
+        Student st = null;
+        try {
+            Connection c = getConnection();
+            Statement stmt = null;
+            Class.forName("org.postgresql.Driver");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+
+            String studentId = id.toString();
+            String sql = "SELECT * FROM \"Students\" WHERE id=" + studentId + ";";
+
+            ResultSet rs = stmt.executeQuery( sql );
+
+            while ( rs.next() ) {
+                String name = rs.getString("name");
+                String code = rs.getString("code");
+                st = new Student(code, name);
+                st.setId(id);
+            }
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+
+        return Optional.ofNullable(st);
+    }
+ */

@@ -1,4 +1,4 @@
-package ro.ubb.lab6.common;
+package ro.ubb.lab6.common.domain.validators;
 
 public class ServiceException extends RuntimeException {
     public ServiceException(String message) {
