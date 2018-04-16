@@ -1,5 +1,6 @@
 package ro.ubb.lab6.common.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Objects;
  * @author Alexandru Buhai
  * @version 1.0.1
  */
-public class Problem extends BaseEntity<Long>  {
+public class Problem extends BaseEntity<Long> implements Serializable {
     private int number;
     private String text;
     private int grade;
