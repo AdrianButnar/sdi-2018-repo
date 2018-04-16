@@ -148,7 +148,12 @@ public class ClientConsole {
      * Prints to the standard output all the students in the repository
      */
     private void printAllStudents() {
-        serviceInterface.printAllStudents("").forEach(System.out::println);
+//        serviceInterface.printAllStudents("").forEach(System.out::println);
+        List<Student> students = serviceInterface.printAllStudents("");
+        for(Student st:students)
+        {
+            System.out.println(st);
+        }
     }
 
 

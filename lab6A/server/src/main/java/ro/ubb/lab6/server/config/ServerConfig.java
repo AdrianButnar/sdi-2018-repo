@@ -21,60 +21,66 @@ import java.util.concurrent.Executors;
 @Configuration
 public class ServerConfig {
 
-    @Autowired
-    private StudentDbRepository studentDbRepository;
+//    @Autowired
+//    private StudentDbRepository studentDbRepository;
 
     @Bean
-    public StudentDbRepository studentDbRepository()
-    {
+    public StudentDbRepository studentDbRepository() {
         return new StudentDbRepository("jdbc:postgresql://localhost:5432/Mppdatabase");
     }
-    @Autowired
-    private ProblemDbRepository problemDbRepository = new ProblemDbRepository("jdbc:postgresql://localhost:5432/Mppdatabase");
+
+//    @Autowired
+//    private ProblemDbRepository problemDbRepository = new ProblemDbRepository("jdbc:postgresql://localhost:5432/Mppdatabase");
+
     @Bean
-    public ProblemDbRepository problemDbRepository()
-    {
+    public ProblemDbRepository problemDbRepository() {
         return new ProblemDbRepository("jdbc:postgresql://localhost:5432/Mppdatabase");
     }
-    private AssignmentDbRepository assignmentDbRepository = new AssignmentDbRepository("jdbc:postgresql://localhost:5432/Mppdatabase");
+    @Bean
+    public AssignmentDbRepository assignmentDbRepository() {
+        return new AssignmentDbRepository("jdbc:postgresql://localhost:5432/Mppdatabase");
+    }
 
-    @Autowired
-    private StudentService studentService;
-
-    @Autowired
-    private ProblemService problemService;
-
-    @Autowired
-    private AssignmentDbService assignmentDbService;
-
-    @Autowired
-    private ExecutorService executorService;
+//    @Autowired
+//    private StudentService studentService;
+//
+//    @Autowired
+//private ProblemService problemService;
+//
+//    @Autowired
+//       private AssignmentDbService assignmentDbService;
+//
+//    @Autowired
+//        private ExecutorService executorService;
 
     @Bean
     public ServiceInterface serviceInterface() {
-        return new ServerService(executorService ,studentService,problemService,assignmentDbService);
+        return new ServerService(executorService(), studentService(), problemService(), assignmentDbService());
     }
 
     @Bean
-    public StudentService studentService(){
-        return new StudentService(studentDbRepository);
+    public StudentService studentService() {
+        return new StudentService(studentDbRepository());
     }
+
     @Bean
-    public ProblemService problemService(){
-        return new ProblemService(problemDbRepository);
+    public ProblemService problemService() {
+        return new ProblemService(problemDbRepository());
     }
+
     @Bean
-    public AssignmentDbService assignmentDbService(){
-        return new AssignmentDbService(assignmentDbRepository);
+    public AssignmentDbService assignmentDbService() {
+        return new AssignmentDbService(assignmentDbRepository());
     }
+
     @Bean
-    public ExecutorService executorService(){
+    public ExecutorService executorService() {
         return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
     @Bean
-    RmiServiceExporter rmiServiceExporter(){
-        RmiServiceExporter exporter =new RmiServiceExporter();
+    RmiServiceExporter rmiServiceExporter() {
+        RmiServiceExporter exporter = new RmiServiceExporter();
         exporter.setServiceName("ServiceInterface");
         exporter.setServiceInterface(ServiceInterface.class);
         exporter.setService(serviceInterface());

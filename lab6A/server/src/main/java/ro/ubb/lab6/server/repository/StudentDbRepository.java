@@ -131,7 +131,6 @@ public class StudentDbRepository implements Repository<Long, Student> {
         if (findOne(entity.getId()).isPresent()) {
             throw new EntityPresentException("Entity already in list!\n");
         }
-        validator.validate(entity);
         try {
             String sql = "INSERT INTO \"Students\" (id, \"code\", \"name\") values (?,?,?)";
             jdbcOperations.update(sql, entity.getId(), entity.getSerialNumber(), entity.getName());
