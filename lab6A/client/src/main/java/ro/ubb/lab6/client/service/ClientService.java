@@ -2,7 +2,9 @@ package ro.ubb.lab6.client.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ro.ubb.lab6.common.ServiceInterface;
+import ro.ubb.lab6.common.domain.Assignment;
 import ro.ubb.lab6.common.domain.Problem;
+import ro.ubb.lab6.common.domain.Student;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +29,13 @@ public class ClientService implements ServiceInterface {
     }
 
     @Override
-    public CompletableFuture<String> printAllStudents(String options) {
-        return null;
-//        return processCommand(options,ServiceInterface.PRINT_ALL_STUDENTS);
+    public List<Student> printAllStudents(String options) {
+        return service.printAllStudents(options);
     }
 
     @Override
-    public CompletableFuture<String> removeStudent(Long studentId) {
-        return null;
+    public void removeStudent(Long studentId) {
+        service.removeStudent(studentId);
     }
 
     @Override
@@ -60,22 +61,22 @@ public class ClientService implements ServiceInterface {
     }
 
     @Override
-    public CompletableFuture<String> assignProblemToStudent(Long assignmentId, Long studentId, Long problemId) {
-        return null;
+    public void assignProblemToStudent(Long assignmentId, Long studentId, Long problemId) {
+        service.assignProblemToStudent(assignmentId, studentId, problemId);
     }
 
     @Override
-    public CompletableFuture<String> showAllProblemsOfAStudent(Long studentId) {
-        return null;
+    public  List<Assignment> showAllProblemsOfAStudent(Long studentId) {
+        return service.showAllProblemsOfAStudent(studentId);
     }
 
-    @Override
-    public CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes) {
-        return null;
-    }
+//    @Override
+//    public List<String> showTheMostAssignedProblems(String paramsAndTypes) {
+//        return null;
+//    }
 
     @Override
-    public CompletableFuture<String> showStudentsByNameMatch(String name) {
-        return null;
+    public List<Student> showStudentsByNameMatch(String name) {
+        return service.showStudentsByNameMatch(name);
     }
 }

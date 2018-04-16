@@ -155,21 +155,7 @@ public class ProblemDbRepository implements Repository<Long, Problem> {
         return Optional.ofNullable(pb);
     }
 
-    public Connection getConnection() throws Exception {
-        Connection conn = null;
-        try {
-            String driver = "org.postgresql.Driver";
-            Class.forName(driver);
 
-            conn = DriverManager.getConnection(this.url, System.getProperty("dbUsername"), System.getProperty("dbPassword"));
-            System.out.println("Connected");
-
-        } catch (Exception ex) {
-            System.out.println("My exception in problemDbRepository ");
-            ex.printStackTrace();
-        }
-        return conn;
-    }
 }
 
 
