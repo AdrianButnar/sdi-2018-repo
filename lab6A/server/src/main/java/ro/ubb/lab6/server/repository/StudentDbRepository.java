@@ -32,13 +32,6 @@ public class StudentDbRepository implements Repository<Long, Student> {
 
     @Autowired
     private JdbcOperations jdbcOperations;
-    //JdbcTemplate
-    private JdbcTemplate jdbcTemplate;
-
-
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
 
     public StudentDbRepository(Validator<Student> studentValidator, String url) {
@@ -75,10 +68,10 @@ public class StudentDbRepository implements Repository<Long, Student> {
         }
         Student st = null;
         try {
-            String sql = "SELECT * FROM \"Problems\" WHERE id=" + id.toString();
+            String sql = "SELECT * FROM \"Students\" WHERE id=" + id.toString();
             List<Student> students = jdbcOperations.query(sql, (rs, i) -> {
                 String name = rs.getString("name");
-                String serialNumber = rs.getString("serialNumber");
+                String serialNumber = rs.getString("code");
                 int Id = rs.getInt("id");
                 return new Student(Long.valueOf(id), serialNumber, name);
             });
@@ -109,10 +102,10 @@ public class StudentDbRepository implements Repository<Long, Student> {
     {
         List<Student> students = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM \"Problems\"";
+            String sql = "SELECT * FROM \"Students\"";
             return jdbcOperations.query(sql, (rs, i) -> {
                 String name = rs.getString("name");
-                String serialNumber = rs.getString("serialNumber");
+                String serialNumber = rs.getString("code");
                 int id = rs.getInt("id");
                 return new Student(Long.valueOf(id), serialNumber, name);
 

@@ -34,14 +34,6 @@ public class ServerService implements ServiceInterface {
         this.assignmentDbService = assignmentDbService;
     }
 
-//
-//    @Override
-//    public List<Student> findAll() {
-//        return Arrays.asList(
-//                new Student("baie2", "John"),
-//                new Student("caie2", "Cena")
-//        );
-//    }
     @Override
     public void addStudent(Long studentId, String serialNumber, String name) {
         // String[] args=paramsAndTypes.split(";");
@@ -49,76 +41,56 @@ public class ServerService implements ServiceInterface {
             Student s= new Student(serialNumber,name);
             s.setId(studentId);
             studentService.addStudent(s);
-            //return CompletableFuture.supplyAsync(() -> "Student was added successfully! ", executorService);
         }
         catch (Exception ex){
-            //return CompletableFuture.supplyAsync(() -> "Student data was invalid! ",executorService);
+            System.out.println("Exception Server");
+            ex.printStackTrace();
         }
     }
 
     @Override
-    public CompletableFuture<String> printAllStudents(String options) {
-        StringBuilder sb = new StringBuilder();
-        for (Student s: studentService.getAllStudents()){
-            sb.append(s.toString());
-            sb.append(";");
-        }
-        final String finalOut = sb.toString();
-        System.out.println(sb.toString());
-        return CompletableFuture.supplyAsync(() -> finalOut,executorService);
+    public List<Student> printAllStudents(String options) {
+        return new ArrayList<>(studentService.getAllStudents());
+
     }
 
     @Override
-    public CompletableFuture<String> removeStudent(Long studentId) {
+    public void removeStudent(Long studentId) {
         try{
             studentService.removeStudent(studentId);
-            return CompletableFuture.supplyAsync(() -> "Student was removed! ",executorService);
         }
         catch (Exception ex){
-            return CompletableFuture.supplyAsync(() -> "Student id is invalid! ",executorService);
+            System.out.println("Exception Server");
+            ex.printStackTrace();
         }
     }
 
     @Override
     public void addProblem(Long problemId,Integer number,String text) {
-        //String[] args=paramsAndTypes.split(";");
         try{
             Problem pb= new Problem(number, text);
             pb.setId(problemId);
             problemService.addProblem(pb);
-           // return CompletableFuture.supplyAsync(() -> "Problem was added successfully! ",executorService);
         }
         catch (Exception ex){
             System.out.println("Exception server service");
             ex.printStackTrace();
 
-           // return CompletableFuture.supplyAsync(() -> "Problem data was invalid!",executorService);
         }
     }
 
     @Override
     public List<Problem> printAllProblems(String options) {
-        List<Problem> problems = new ArrayList<>(problemService.getAllProblems());
+        return new ArrayList<>(problemService.getAllProblems());
 //        for(Problem pb : problems)
 //        {
 //            System.out.println(pb.toString());
 //        }
-        return problems;
+
     }
-//  @Override
-//    public CompletableFuture<String> printAllProblems(String options) {
-//        StringBuilder sb = new StringBuilder();
-//        for (Problem s: problemService.getAllProblems()){
-//            sb.append(s.toString());
-//            sb.append(";");
-//        }
-//        final String finalOut = sb.toString();
-//        System.out.println(sb.toString());
-//        return CompletableFuture.supplyAsync(() -> finalOut,executorService);
-//    }
 
     @Override
-    public void  removeProblem(Long problemId) {
+    public void removeProblem(Long problemId) {
         try{
             problemService.removeProblem(problemId);
            // return CompletableFuture.supplyAsync(() -> "Problem removed successfully! ",executorService);
@@ -132,51 +104,47 @@ public class ServerService implements ServiceInterface {
 
 
     @Override
-    public CompletableFuture<String> assignProblemToStudent(Long assignmentId, Long studentId, Long problemId) {
+    public void assignProblemToStudent(Long assignmentId, Long studentId, Long problemId) {
         //String[] args = paramsAndTypes.split(";");
         try{
             Assignment as = new Assignment(studentId, problemId);
             as.setId(assignmentId);
             assignmentDbService.addAssignment(as);
-            return CompletableFuture.supplyAsync(() -> "Assignment was added successfully! ",executorService);
         }
         catch (Exception ex){
-            return CompletableFuture.supplyAsync(()->"Assignment data was invalid!",executorService);
+            System.out.println("Server Service");
+            ex.printStackTrace();
         }
     }
 
 
     @Override
-    public CompletableFuture<String> showAllProblemsOfAStudent(Long studentId) {
-        StringBuilder sb = new StringBuilder();
-        //String[] args = paramsAndTypes.split(";");
-        for (Assignment as: assignmentDbService.getAllAssignments()){
-            if (as.getStudentID() == studentId) {
-                sb.append(as.toString());
-                sb.append(";");
-            }
-
-        }
-        final String finalOut = sb.toString();
-        System.out.println(sb.toString());
-        return CompletableFuture.supplyAsync(()->finalOut,executorService);
+    public List<Assignment> showAllProblemsOfAStudent(Long studentId) {
+       List<Assignment> as = new ArrayList<>(assignmentDbService.getAllAssignments());
+       List<Assignment> newAs = new ArrayList<>();
+       for(Assignment a : as)
+       {
+           if(a.getStudentID().equals(studentId))
+           {
+               newAs.add(a);
+           }
+       }
+       return newAs;
     }
 
     @Override
-    public CompletableFuture<String> showStudentsByNameMatch(String name){
-        StringBuilder sb = new StringBuilder();
+    public List<Student> showStudentsByNameMatch(String name){
+        List<Student> newStudents = new ArrayList<>();
         for (Student s: studentService.getAllStudents()){
             if(s.getName().toLowerCase().contains(name)) {
-                sb.append(s.toString());
-                sb.append(";");
+                newStudents.add(s);
             }
         }
-        final String finalOut = sb.toString();
-        return CompletableFuture.supplyAsync(() -> finalOut,executorService);
+        return newStudents;
     }
 
-    @Override
-    public CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes) {
-        throw new RuntimeException("Not yet implemented");
-    }
+//    @Override
+//    public void showTheMostAssignedProblems(String paramsAndTypes) {
+//        throw new RuntimeException("Not yet implemented");
+//    }
 }

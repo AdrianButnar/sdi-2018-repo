@@ -38,6 +38,13 @@ public class Assignment extends BaseEntity<Long> implements Serializable {
         this.problemID = problemID;
     }
 
+    public Assignment(Long id, Long studentID, Long problemID)
+    {
+        this.studentID = studentID;
+        this.problemID = problemID;
+        this.setId(id);
+    }
+
     public Assignment() {
         this.studentID = 0L;
         this.problemID = 0L;

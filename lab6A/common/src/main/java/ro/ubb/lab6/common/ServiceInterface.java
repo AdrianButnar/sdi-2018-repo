@@ -1,7 +1,9 @@
 package ro.ubb.lab6.common;
 
+import ro.ubb.lab6.common.domain.Assignment;
 import ro.ubb.lab6.common.domain.Problem;
 import ro.ubb.lab6.common.domain.Student;
+
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -21,13 +23,13 @@ public interface ServiceInterface {
 
     void addStudent(Long studentId, String serialNumber, String name);
     List<Student> printAllStudents(String options);
-    CompletableFuture<String> removeStudent(Long studentId);
+    void removeStudent(Long studentId);
     void addProblem(Long problemId,Integer number,String text);
     List<Problem> printAllProblems(String options);
     void removeProblem(Long problemId);
-    CompletableFuture<String> assignProblemToStudent(Long assignmentId, Long studentId, Long problemId);
-    CompletableFuture<String> showAllProblemsOfAStudent(Long studentId);
-    CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes);
-    CompletableFuture<String> showStudentsByNameMatch(String name);
+    void assignProblemToStudent(Long assignmentId, Long studentId, Long problemId);
+    List<Assignment> showAllProblemsOfAStudent(Long studentId);
+//    void showTheMostAssignedProblems(String paramsAndTypes);
+    List<Student> showStudentsByNameMatch(String name);
 
 }
