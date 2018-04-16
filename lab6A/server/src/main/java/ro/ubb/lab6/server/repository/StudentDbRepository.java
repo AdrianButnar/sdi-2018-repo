@@ -1,5 +1,7 @@
 package ro.ubb.lab6.server.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,6 +30,8 @@ public class StudentDbRepository implements Repository<Long, Student> {
     private String url;
 
 
+    @Autowired
+    private JdbcOperations jdbcOperations;
     //JdbcTemplate
     private JdbcTemplate jdbcTemplate;
 
@@ -41,8 +45,7 @@ public class StudentDbRepository implements Repository<Long, Student> {
         this.validator = studentValidator;
 
         this.url = url;
-        int i = 3;
-        long l=Long.valueOf(1l);
+
 
     }
 
@@ -72,20 +75,19 @@ public class StudentDbRepository implements Repository<Long, Student> {
         }
         Student st = null;
         try {
-            SimpleDriverDataSource dataSource = getDataSource();
+            String sql = "SELECT * FROM \"Problems\" WHERE id=" + id.toString();
+            List<Student> students = jdbcOperations.query(sql, (rs, i) -> {
+                String name = rs.getString("name");
+                String serialNumber = rs.getString("serialNumber");
+                int Id = rs.getInt("id");
+                return new Student(Long.valueOf(id), serialNumber, name);
+            });
 
-            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-            String studentId = id.toString();
-            List<Student> students = jdbcTemplate.query(
-                    "SELECT * FROM \"Students\" WHERE id= ?", new Object[] { Integer.parseInt(studentId) },
-                    (rs, rowNum) -> new Student ( rs.getLong("id"), rs.getString("code"), rs.getString("name")));
-
-            for(Student student : students)
+            for(Student s : students)
             {
-                if(student.getId().equals(id))
+                if(s.getId().equals(id))
                 {
-                    st = student;
-                    System.out.println(st.toString());
+                    st = s;
                 }
             }
 
@@ -97,6 +99,7 @@ public class StudentDbRepository implements Repository<Long, Student> {
         return Optional.ofNullable(st);
     }
 
+
     /**
      *
      * @return all Student entities
@@ -106,13 +109,14 @@ public class StudentDbRepository implements Repository<Long, Student> {
     {
         List<Student> students = new ArrayList<>();
         try {
-            SimpleDriverDataSource dataSource = getDataSource();
+            String sql = "SELECT * FROM \"Problems\"";
+            return jdbcOperations.query(sql, (rs, i) -> {
+                String name = rs.getString("name");
+                String serialNumber = rs.getString("serialNumber");
+                int id = rs.getInt("id");
+                return new Student(Long.valueOf(id), serialNumber, name);
 
-            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-
-            students= jdbcTemplate.query(
-                    "SELECT * FROM \"Students\"", (rs, rowNum) -> new Student ( rs.getLong("id"), rs.getString("code"), rs.getString("name")));
-
+            });
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
@@ -136,11 +140,8 @@ public class StudentDbRepository implements Repository<Long, Student> {
         }
         validator.validate(entity);
         try {
-            SimpleDriverDataSource dataSource = getDataSource();
-
-            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-
-            jdbcTemplate.update("INSERT INTO \"Students\"(id, code, name) VALUES (?,?,?)", entity.getId(), entity.getSerialNumber(), entity.getName());
+            String sql = "INSERT INTO \"Students\" (id, \"code\", \"name\") values (?,?,?)";
+            jdbcOperations.update(sql, entity.getId(), entity.getSerialNumber(), entity.getName());
 
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
@@ -167,15 +168,9 @@ public class StudentDbRepository implements Repository<Long, Student> {
         Student st = null;
         try {
 
-            SimpleDriverDataSource dataSource = getDataSource();
+            String sql = "DELETE FROM \"Students\" WHERE id= ?";
+            jdbcOperations.update(sql, toIntExact(id));
 
-            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-
-            int result = jdbcTemplate.update("DELETE FROM \"Students\" WHERE id=?", toIntExact(id));
-//            if(result != 0)
-//            {
-//                st = new Student("Prov", "Prov")
-//            }
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);

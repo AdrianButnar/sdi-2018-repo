@@ -2,6 +2,7 @@ package ro.ubb.lab6.client.ui;
 
 import ro.ubb.lab6.common.ServiceInterface;
 import ro.ubb.lab6.common.domain.Problem;
+import ro.ubb.lab6.common.domain.Student;
 import ro.ubb.lab6.common.domain.validators.IllegalIdException;
 import ro.ubb.lab6.common.domain.validators.InexistentEntityException;
 import ro.ubb.lab6.common.domain.validators.ValidatorException;
@@ -127,8 +128,7 @@ public class ClientConsole {
             String serialNumber = args[1];
             String name = args[2];
             if (!received.equals("")) {
-                //CompletableFuture<String> s = serviceInterface.addStudent(studentId,serialNumber,name);
-                //handleResult(s);
+
                 serviceInterface.addStudent(studentId,serialNumber,name);
             }
             else
@@ -148,8 +148,7 @@ public class ClientConsole {
      * Prints to the standard output all the students in the repository
      */
     private void printAllStudents() {
-        CompletableFuture<String> result =  serviceInterface.printAllStudents("");
-        handleResult(result);
+        serviceInterface.printAllStudents("").forEach(System.out::println);
     }
 
 
@@ -161,8 +160,8 @@ public class ClientConsole {
             if (!isLong(id)){
                 throw new InexistentEntityException("Invalid id!\n");
             }
-            CompletableFuture<String> result = serviceInterface.removeStudent(Long.parseLong(id));
-            handleResult(result);
+            serviceInterface.removeStudent(Long.parseLong(id));
+
         }
         catch (InexistentEntityException se){
             System.out.println("Exception client-side: ");
@@ -297,9 +296,7 @@ public class ClientConsole {
 //                String result = s.get(); //blocking
 //                System.out.println(result);
 //            }
-            CompletableFuture<String> result = serviceInterface.assignProblemToStudent(Long.parseLong(assignmentId),Long.parseLong(studentId),Long.parseLong(problemId));
-            handleResult(result);
-
+            serviceInterface.assignProblemToStudent(Long.parseLong(assignmentId),Long.parseLong(studentId),Long.parseLong(problemId));
 
         } catch (Exception ex) {
             System.out.println("Exception client-side: ");
@@ -317,14 +314,8 @@ public class ClientConsole {
                 throw new InexistentEntityException("Invalid id!\n");
             }
 //            Future<String> assignments = helloService.showAllProblemsOfAStudent(studentId);
-            CompletableFuture<String> result = serviceInterface.showAllProblemsOfAStudent(Long.parseLong(studentId));
-            handleResult(result);
+            serviceInterface.showAllProblemsOfAStudent(Long.parseLong(studentId));
 
-//            String result = assignments.get(); //kind of blocking
-//            String[] args = result.split(";");
-//            for (String row : args) {
-//                System.out.println(row);
-//            }
         } catch (Exception ex) {
             ex.printStackTrace();
             myWait(1);
@@ -337,8 +328,7 @@ public class ClientConsole {
             System.out.print("Enter a name or part of the name: ");
             Scanner sc = new Scanner(System.in);
             String name = sc.nextLine();
-            CompletableFuture<String> result = serviceInterface.showStudentsByNameMatch(name);
-            handleResult(result);
+            serviceInterface.showStudentsByNameMatch(name);
 
         }
         catch (InexistentEntityException e){
@@ -370,16 +360,5 @@ public class ClientConsole {
         }
     }
 
-    private void handleResult(CompletableFuture<String> result){
-        result.whenComplete((task,throwable)->{
-        if (throwable!=null)
-            System.err.println(throwable.getMessage());
-        try{
-            System.out.println(result.get().replace(";","\n"));
-        } catch (InterruptedException|ExecutionException e) {
-            e.printStackTrace();
-        }
-        });
-    }
 
 }

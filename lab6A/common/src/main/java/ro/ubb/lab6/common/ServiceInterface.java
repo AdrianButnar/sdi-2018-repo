@@ -1,6 +1,7 @@
 package ro.ubb.lab6.common;
 
 import ro.ubb.lab6.common.domain.Problem;
+import ro.ubb.lab6.common.domain.Student;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -19,7 +20,7 @@ public interface ServiceInterface {
     String SHOW_STUDENTS_BY_NAME_MATCH = "showStudentsByNameMatch";
 
     void addStudent(Long studentId, String serialNumber, String name);
-    CompletableFuture<String> printAllStudents(String options);
+    List<Student> printAllStudents(String options);
     CompletableFuture<String> removeStudent(Long studentId);
     void addProblem(Long problemId,Integer number,String text);
     List<Problem> printAllProblems(String options);
