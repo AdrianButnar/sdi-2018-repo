@@ -91,17 +91,17 @@ public class AssignmentDbRepository implements Repository<Long, Assignment> {
     public Iterable<Assignment> findAll() {
         List<Assignment> assignmentList = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM \"Assigned\"";
+            String sql = "SELECT * FROM \"Assigned\";";
             return jdbcOperations.query(sql, (rs, i) -> {
-                long problemId = rs.getInt("problemId");
-                long studentId = rs.getInt("studentId");
-                long Id = rs.getInt("id");
-                return new Assignment(Id, studentId, problemId);
+                int problemId = rs.getInt("problemId");
+                int studentId = rs.getInt("studentId");
+                int Id = rs.getInt("id");
+                return new Assignment(Long.valueOf(Id), Long.valueOf(studentId), Long.valueOf(problemId));
 
             });
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+           // System.exit(0);
         }
         return assignmentList;
     }
