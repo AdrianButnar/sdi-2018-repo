@@ -7,6 +7,8 @@ import ro.ubb.lab6.common.domain.Assignment;
 import ro.ubb.lab6.common.domain.Problem;
 import ro.ubb.lab6.common.domain.Student;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 
@@ -92,16 +94,21 @@ public class ServerService implements ServiceInterface {
     }
 
     @Override
-    public CompletableFuture<String> printAllProblems(String options) {
-        StringBuilder sb = new StringBuilder();
-        for (Problem s: problemService.getAllProblems()){
-            sb.append(s.toString());
-            sb.append(";");
-        }
-        final String finalOut = sb.toString();
-        System.out.println(sb.toString());
-        return CompletableFuture.supplyAsync(() -> finalOut,executorService);
+    public List<Problem> printAllProblems(String options) {
+        List<Problem> problems = new ArrayList<>(problemService.getAllProblems());
+        return problems;
     }
+//  @Override
+//    public CompletableFuture<String> printAllProblems(String options) {
+//        StringBuilder sb = new StringBuilder();
+//        for (Problem s: problemService.getAllProblems()){
+//            sb.append(s.toString());
+//            sb.append(";");
+//        }
+//        final String finalOut = sb.toString();
+//        System.out.println(sb.toString());
+//        return CompletableFuture.supplyAsync(() -> finalOut,executorService);
+//    }
 
     @Override
     public CompletableFuture<String> removeProblem(Long problemId) {

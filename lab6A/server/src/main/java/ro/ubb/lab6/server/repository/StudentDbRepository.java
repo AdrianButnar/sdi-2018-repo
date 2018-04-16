@@ -17,7 +17,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import static java.lang.Math.toIntExact;
 /**
  * @author Alexandru Buhai
  */
@@ -75,7 +75,7 @@ public class StudentDbRepository implements Repository<Long, Student> {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
             String studentId = id.toString();
             List<Student> students = jdbcTemplate.query(
-                    "SELECT * FROM \"Students\" WHERE id= ?", new Object[] { studentId },
+                    "SELECT * FROM \"Students\" WHERE id= ?", new Object[] { Integer.parseInt(studentId) },
                     (rs, rowNum) -> new Student ( rs.getLong("id"), rs.getString("code"), rs.getString("name")));
 
             for(Student student : students)
@@ -83,6 +83,7 @@ public class StudentDbRepository implements Repository<Long, Student> {
                 if(student.getId().equals(id))
                 {
                     st = student;
+                    System.out.println(st.toString());
                 }
             }
 
@@ -168,7 +169,7 @@ public class StudentDbRepository implements Repository<Long, Student> {
 
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-            int result = jdbcTemplate.update("DELETE FROM \"Students\" WHERE id=?", id.toString());
+            int result = jdbcTemplate.update("DELETE FROM \"Students\" WHERE id=?", toIntExact(id));
 //            if(result != 0)
 //            {
 //                st = new Student("Prov", "Prov")

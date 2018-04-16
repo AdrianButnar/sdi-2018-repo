@@ -29,8 +29,13 @@ public class ServerConfig {
     {
         return new StudentDbRepository("jdbc:postgresql://localhost:5432/Mppdatabase");
     }
-
+    @Autowired
     private ProblemDbRepository problemDbRepository = new ProblemDbRepository("jdbc:postgresql://localhost:5432/Mppdatabase");
+    @Bean
+    public ProblemDbRepository problemDbRepository()
+    {
+        return new ProblemDbRepository("jdbc:postgresql://localhost:5432/Mppdatabase");
+    }
     private AssignmentDbRepository assignmentDbRepository = new AssignmentDbRepository("jdbc:postgresql://localhost:5432/Mppdatabase");
 
     @Autowired

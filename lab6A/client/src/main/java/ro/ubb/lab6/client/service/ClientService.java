@@ -2,12 +2,15 @@ package ro.ubb.lab6.client.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ro.ubb.lab6.common.ServiceInterface;
+import ro.ubb.lab6.common.domain.Problem;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class ClientService implements ServiceInterface {
 
-    //Completely lost here
+
+
     @Autowired
     private ServiceInterface service;
 //
@@ -25,6 +28,7 @@ public class ClientService implements ServiceInterface {
     @Override
     public CompletableFuture<String> printAllStudents(String options) {
         return null;
+//        return processCommand(options,ServiceInterface.PRINT_ALL_STUDENTS);
     }
 
     @Override
@@ -38,8 +42,8 @@ public class ClientService implements ServiceInterface {
     }
 
     @Override
-    public CompletableFuture<String> printAllProblems(String options) {
-        return null;
+    public List<Problem> printAllProblems(String options) {
+        return service.printAllProblems("");
     }
 
     @Override

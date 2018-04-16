@@ -1,5 +1,7 @@
 package ro.ubb.lab6.server.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcOperations;
 import ro.ubb.lab6.common.domain.Problem;
 import ro.ubb.lab6.common.domain.validators.EntityPresentException;
 import ro.ubb.lab6.common.domain.validators.InexistentEntityException;
@@ -21,6 +23,9 @@ import java.util.Optional;
 public class ProblemDbRepository implements Repository<Long, Problem> {
     private Validator<Problem> validator;
     private String url;
+
+    @Autowired
+    private JdbcOperations jdbcOperations;
 
     public ProblemDbRepository(Validator<Problem> problemValidator, String url) {
         this.validator = problemValidator;
@@ -84,28 +89,15 @@ public class ProblemDbRepository implements Repository<Long, Problem> {
     public Iterable<Problem> findAll() {
         List<Problem> problems = new ArrayList<>();
         try {
-            Connection c = getConnection();
-            Statement stmt = null;
-            Class.forName("org.postgresql.Driver");
-            stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM \"Problems\";");
-
-            while (rs.next()) {
-                long id = Long.valueOf(rs.getInt("id"));
-                String text = rs.getString("text");
-                String number = rs.getString("number");
-
-                Problem pb = new Problem(Integer.parseInt(number), text);
-                pb.setId(id);
-                validator.validate(pb);
-
-                problems.add(pb);
-
-            }
-
-            rs.close();
-            stmt.close();
-            c.close();
+            String sql = "SELECT * FROM \"Problems\"";
+            return jdbcOperations.query(sql, (rs, i) -> {
+                        String text = rs.getString("text");
+                        int number = rs.getInt("number");
+                        int id = rs.getInt("id");
+                        Problem pb = new Problem(number, text);
+                        pb.setId(Long.valueOf(id));
+                        return pb;
+                    });
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);

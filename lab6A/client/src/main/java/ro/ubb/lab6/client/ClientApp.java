@@ -10,7 +10,9 @@ public class ClientApp {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext("ro.ubb.lab6.client.config");
 
+
         ServiceInterface serviceInterface = (ServiceInterface) context.getBean("clientService");
+        //ServiceInterface serviceInterface = context.getBean(ServiceInterface.class);
         ClientConsole console = new ClientConsole(serviceInterface);
         console.runConsole();
 

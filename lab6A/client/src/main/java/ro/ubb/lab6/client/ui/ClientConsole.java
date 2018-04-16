@@ -1,10 +1,12 @@
 package ro.ubb.lab6.client.ui;
 
 import ro.ubb.lab6.common.ServiceInterface;
+import ro.ubb.lab6.common.domain.Problem;
 import ro.ubb.lab6.common.domain.validators.IllegalIdException;
 import ro.ubb.lab6.common.domain.validators.InexistentEntityException;
 import ro.ubb.lab6.common.domain.validators.ValidatorException;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
@@ -52,27 +54,27 @@ public class ClientConsole {
                 case "2":
                     printAllStudents();
                     break;
-//                case "3":
-//                    removeStudent();
-//                    break;
-//                case "4":
-//                    addProblem();
-//                    break;
-//                case "5":
-//                    printAllProblems();
-//                    break;
-//                case "6":
-//                    removeProblem();
-//                    break;
-//                case "7":
-//                    assignProblemToStudent();
-//                    break;
-//                case "8":
-//                    showAllProblemsOfAStudent();
-//                    break;
-//                case "9":
-//                    showStudentsByNameMatch();
-//                    break;
+                case "3":
+                    removeStudent();
+                    break;
+                case "4":
+                    addProblem();
+                    break;
+                case "5":
+                    printAllProblems();
+                    break;
+                case "6":
+                    removeProblem();
+                    break;
+                case "7":
+                    assignProblemToStudent();
+                    break;
+                case "8":
+                    showAllProblemsOfAStudent();
+                    break;
+                case "9":
+                    showStudentsByNameMatch();
+                    break;
                 case "10":
                     System.out.println("Not yet implemented");
                     break;
@@ -146,7 +148,8 @@ public class ClientConsole {
      * Prints to the standard output all the students in the repository
      */
     private void printAllStudents() {
-        //serviceInterface.findAll().forEach(System.out::println);
+        CompletableFuture<String> result =  serviceInterface.printAllStudents("");
+        handleResult(result);
     }
 
 
@@ -242,11 +245,11 @@ public class ClientConsole {
         }
     }
     private void printAllProblems() {
-        try{
-            CompletableFuture<String> result = serviceInterface.printAllProblems("");
-            handleResult(result);
-
-        } catch (CancellationException ex)
+//        try{
+//         //   CompletableFuture<String> result = serviceInterface.printAllProblems("");
+//         //   handleResult(result);
+//
+//        } catch (CancellationException ex)
 
 //        Future<String> students = serviceInterface.printAllProblems("");
 //        try {
@@ -259,6 +262,15 @@ public class ClientConsole {
 //                }
 //            }
 //        } catch (CancellationException | ExecutionException | InterruptedException ex)
+        try
+        {
+            List<Problem> pbs = serviceInterface.printAllProblems("");
+            for(Problem pb:pbs)
+            {
+                System.out.println(pb);
+            }
+        }
+        catch (Exception  ex)
         {
             System.out.println("Error serverside(or canceled):");
             ex.printStackTrace();
