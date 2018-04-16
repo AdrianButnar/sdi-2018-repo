@@ -3,16 +3,11 @@ package ro.ubb.lab6.server.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import ro.ubb.lab6.common.ServiceInterface;
 import org.springframework.stereotype.Service;
-import ro.ubb.lab6.common.ServiceInterface;
 import ro.ubb.lab6.common.domain.Assignment;
 import ro.ubb.lab6.common.domain.Problem;
 import ro.ubb.lab6.common.domain.Student;
-import ro.ubb.lab6.server.repository.Repository;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 
 @Service
@@ -46,16 +41,16 @@ public class ServerService implements ServiceInterface {
 //        );
 //    }
     @Override
-    public CompletableFuture<String> addStudent(Long studentId,String serialNumber,String name) {
+    public void addStudent(Long studentId, String serialNumber, String name) {
         // String[] args=paramsAndTypes.split(";");
         try{
             Student s= new Student(serialNumber,name);
             s.setId(studentId);
             studentService.addStudent(s);
-            return CompletableFuture.supplyAsync(() -> "Student was added successfully! ", executorService);
+            //return CompletableFuture.supplyAsync(() -> "Student was added successfully! ", executorService);
         }
         catch (Exception ex){
-            return CompletableFuture.supplyAsync(() -> "Student data was invalid! ",executorService);
+            //return CompletableFuture.supplyAsync(() -> "Student data was invalid! ",executorService);
         }
     }
 

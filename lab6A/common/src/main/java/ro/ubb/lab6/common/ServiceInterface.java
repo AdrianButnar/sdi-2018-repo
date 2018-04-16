@@ -1,7 +1,5 @@
 package ro.ubb.lab6.common;
 
-import ro.ubb.lab6.common.domain.Student;
-
 import java.util.concurrent.CompletableFuture;
 
 public interface ServiceInterface {
@@ -17,7 +15,7 @@ public interface ServiceInterface {
     String SHOW_THE_MOST_ASSIGNED_PROBLEMS = "showTheMostAssignedProblems";
     String SHOW_STUDENTS_BY_NAME_MATCH = "showStudentsByNameMatch";
 
-    CompletableFuture<String> addStudent(Long studentId, String serialNumber, String name);
+    void addStudent(Long studentId, String serialNumber, String name);
     CompletableFuture<String> printAllStudents(String options);
     CompletableFuture<String> removeStudent(Long studentId);
     CompletableFuture<String> addProblem(Long problemId,Integer number,String text);

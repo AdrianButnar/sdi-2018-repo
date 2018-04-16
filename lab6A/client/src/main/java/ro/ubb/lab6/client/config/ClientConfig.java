@@ -9,9 +9,11 @@ import ro.ubb.lab6.client.service.ClientService;
 @Configuration
 public class ClientConfig {
     @Bean
-    ServiceInterface studentServiceClient(){
+    ServiceInterface clientService(){
         return new ClientService();
     }
+
+
 
     @Bean
     RmiProxyFactoryBean rmiProxyFactoryBean(){

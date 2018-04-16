@@ -46,9 +46,9 @@ public class ClientConsole {
             String command = sc.nextLine();
 
             switch (command) {
-//                case "1":
-//                    addStudent();
-//                    break;
+                case "1":
+                    addStudent();
+                    break;
                 case "2":
                     printAllStudents();
                     break;
@@ -125,8 +125,9 @@ public class ClientConsole {
             String serialNumber = args[1];
             String name = args[2];
             if (!received.equals("")) {
-//                CompletableFuture<String> s = serviceInterface.addStudent(studentId,serialNumber,name);
-//                handleResult(s);
+                //CompletableFuture<String> s = serviceInterface.addStudent(studentId,serialNumber,name);
+                //handleResult(s);
+                serviceInterface.addStudent(studentId,serialNumber,name);
             }
             else
             {
