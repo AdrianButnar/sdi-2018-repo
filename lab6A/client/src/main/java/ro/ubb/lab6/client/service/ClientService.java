@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ro.ubb.lab6.common.ServiceInterface;
 import ro.ubb.lab6.common.domain.Problem;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -37,18 +38,25 @@ public class ClientService implements ServiceInterface {
     }
 
     @Override
-    public CompletableFuture<String> addProblem(Long problemId, Integer number, String text) {
-        return null;
+    public void addProblem(Long problemId, Integer number, String text) {
+        service.addProblem(problemId, number, text);
     }
 
     @Override
     public List<Problem> printAllProblems(String options) {
-        return service.printAllProblems("");
+        List<Problem> problems = service.printAllProblems("");
+        System.out.println("In service: ");
+        for(Problem pb : problems)
+        {
+            System.out.println(pb);
+        }
+        System.out.println("");
+        return problems;
     }
 
     @Override
-    public CompletableFuture<String> removeProblem(Long problemId) {
-        return null;
+    public void removeProblem(Long problemId) {
+        service.removeProblem(problemId);
     }
 
     @Override

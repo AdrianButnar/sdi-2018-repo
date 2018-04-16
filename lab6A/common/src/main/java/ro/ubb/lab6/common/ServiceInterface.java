@@ -21,9 +21,9 @@ public interface ServiceInterface {
     void addStudent(Long studentId, String serialNumber, String name);
     CompletableFuture<String> printAllStudents(String options);
     CompletableFuture<String> removeStudent(Long studentId);
-    CompletableFuture<String> addProblem(Long problemId,Integer number,String text);
+    void addProblem(Long problemId,Integer number,String text);
     List<Problem> printAllProblems(String options);
-    CompletableFuture<String> removeProblem(Long problemId);
+    void removeProblem(Long problemId);
     CompletableFuture<String> assignProblemToStudent(Long assignmentId, Long studentId, Long problemId);
     CompletableFuture<String> showAllProblemsOfAStudent(Long studentId);
     CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes);

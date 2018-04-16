@@ -80,22 +80,29 @@ public class ServerService implements ServiceInterface {
     }
 
     @Override
-    public CompletableFuture<String> addProblem(Long problemId,Integer number,String text) {
+    public void addProblem(Long problemId,Integer number,String text) {
         //String[] args=paramsAndTypes.split(";");
         try{
             Problem pb= new Problem(number, text);
             pb.setId(problemId);
             problemService.addProblem(pb);
-            return CompletableFuture.supplyAsync(() -> "Problem was added successfully! ",executorService);
+           // return CompletableFuture.supplyAsync(() -> "Problem was added successfully! ",executorService);
         }
         catch (Exception ex){
-            return CompletableFuture.supplyAsync(() -> "Problem data was invalid!",executorService);
+            System.out.println("Exception server service");
+            ex.printStackTrace();
+
+           // return CompletableFuture.supplyAsync(() -> "Problem data was invalid!",executorService);
         }
     }
 
     @Override
     public List<Problem> printAllProblems(String options) {
         List<Problem> problems = new ArrayList<>(problemService.getAllProblems());
+//        for(Problem pb : problems)
+//        {
+//            System.out.println(pb.toString());
+//        }
         return problems;
     }
 //  @Override
@@ -111,13 +118,15 @@ public class ServerService implements ServiceInterface {
 //    }
 
     @Override
-    public CompletableFuture<String> removeProblem(Long problemId) {
+    public void  removeProblem(Long problemId) {
         try{
             problemService.removeProblem(problemId);
-            return CompletableFuture.supplyAsync(() -> "Problem removed successfully! ",executorService);
+           // return CompletableFuture.supplyAsync(() -> "Problem removed successfully! ",executorService);
         }
         catch (Exception ex){
-            return CompletableFuture.supplyAsync(() -> "Problem id is invalid!",executorService);
+            System.out.println("Exception server service");
+            ex.printStackTrace();
+           // return CompletableFuture.supplyAsync(() -> "Problem id is invalid!",executorService);
         }
     }
 

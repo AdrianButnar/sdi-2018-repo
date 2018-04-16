@@ -211,8 +211,9 @@ public class ClientConsole {
             Integer number = Integer.parseInt(args[1]);
             String text = args[2];
             if (!received.equals("")) {
-                CompletableFuture<String> result = serviceInterface.addProblem(problemId,number,text);
-                handleResult(result);
+              //  CompletableFuture<String> result = serviceInterface.addProblem(problemId,number,text);
+                serviceInterface.addProblem(problemId,number,text);
+                //handleResult(result);
             }
             else
             {
@@ -235,8 +236,9 @@ public class ClientConsole {
             if (!isLong(id)){
                 throw new InexistentEntityException("Invalid id!\n");
             }
-            CompletableFuture<String> result = serviceInterface.removeProblem(Long.parseLong(id));
-            handleResult(result);
+            serviceInterface.removeProblem(Long.parseLong(id));
+//            CompletableFuture<String> result = serviceInterface.removeProblem(Long.parseLong(id));
+//            handleResult(result);
         }
         catch (InexistentEntityException ex){
             System.out.println("Exception client-side: ");

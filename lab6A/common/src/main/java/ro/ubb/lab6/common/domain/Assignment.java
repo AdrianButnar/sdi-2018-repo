@@ -26,7 +26,9 @@
 
 package ro.ubb.lab6.common.domain;
 
-public class Assignment extends BaseEntity<Long>{
+import java.io.Serializable;
+
+public class Assignment extends BaseEntity<Long> implements Serializable {
 
     private Long studentID;
     private Long problemID;

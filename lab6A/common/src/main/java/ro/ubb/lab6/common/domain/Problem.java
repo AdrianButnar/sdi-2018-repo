@@ -18,6 +18,13 @@ public class Problem extends BaseEntity<Long> implements Serializable {
         this.number = number;
         this.text = text;
     }
+    public Problem(Long id, Integer number, String text)
+    {
+        this.number = number;
+        this.text = text;
+        this.setId(id);
+    }
+
     public Problem() {
         this.number = 0;
         this.text = "";

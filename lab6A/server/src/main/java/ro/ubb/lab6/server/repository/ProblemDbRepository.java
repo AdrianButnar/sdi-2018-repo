@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import static java.lang.Math.toIntExact;
 
 /**
  * @author Alexandru Buhai
@@ -94,9 +95,8 @@ public class ProblemDbRepository implements Repository<Long, Problem> {
                         String text = rs.getString("text");
                         int number = rs.getInt("number");
                         int id = rs.getInt("id");
-                        Problem pb = new Problem(number, text);
-                        pb.setId(Long.valueOf(id));
-                        return pb;
+                        return new Problem(Long.valueOf(id), number, text);
+
                     });
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -117,27 +117,12 @@ public class ProblemDbRepository implements Repository<Long, Problem> {
         if (findOne(entity.getId()).isPresent()) {
             throw new EntityPresentException("Entity already in list!\n");
         }
-        validator.validate(entity);
+        System.out.println(entity);
+       // validator.validate(entity); //TODO Add validator
         try {
-            Connection c = getConnection();
-            Statement stmt = null;
-            Class.forName("org.postgresql.Driver");
-            c.setAutoCommit(false);
-            stmt = c.createStatement();
+            String sql = "INSERT INTO \"Problems\" (id, \"number\", text) values (?,?,?)";
+            jdbcOperations.update(sql, entity.getId(), entity.getNumber(), entity.getText());
 
-            String text = entity.getText();
-            int number = entity.getNumber();
-            Long problemId = entity.getId();
-            String sql = "INSERT INTO \"Problems\" (id, \"number\", text)" +
-                    "VALUES(" +
-                    problemId + "," +
-                    number + ",'" + text + "');";
-
-            stmt.executeUpdate(sql);
-            c.commit();
-            entity = null;
-            stmt.close();
-            c.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
@@ -160,29 +145,9 @@ public class ProblemDbRepository implements Repository<Long, Problem> {
         }
         Problem pb = null;
         try {
-            Connection c = getConnection();
-            Statement stmt = null;
-            Class.forName("org.postgresql.Driver");
-            c.setAutoCommit(false);
-            stmt = c.createStatement();
-            String sql = "SELECT * FROM \"Problems\" WHERE id=" + id + ";";
+            String sql = "DELETE FROM \"Problems\" WHERE id= ?";
+            jdbcOperations.update(sql, toIntExact(id));
 
-            ResultSet rs = stmt.executeQuery( sql );
-
-            while ( rs.next() ) {
-                String text = rs.getString("text");
-                String number = rs.getString("number");
-                pb = new Problem(Integer.parseInt(number), text);
-                pb.setId(id);
-                validator.validate(pb);
-
-            }
-
-            String sql2 = "DELETE FROM \"Problems\" WHERE id=" + id + ";";
-            stmt.executeUpdate(sql2);
-            c.commit();
-            stmt.close();
-            c.close();
 
         } catch (Exception e) {
 
