@@ -45,12 +45,12 @@ public class ClientService implements ServiceInterface {
     @Override
     public List<Problem> printAllProblems(String options) {
         List<Problem> problems = service.printAllProblems("");
-        System.out.println("In service: ");
-        for(Problem pb : problems)
-        {
-            System.out.println(pb);
-        }
-        System.out.println("");
+//        System.out.println("In service: ");
+//        for(Problem pb : problems)
+//        {
+//            System.out.println(pb);
+//        }
+//        System.out.println("");
         return problems;
     }
 

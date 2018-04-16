@@ -41,6 +41,8 @@ public class StudentDbRepository implements Repository<Long, Student> {
         this.validator = studentValidator;
 
         this.url = url;
+        int i = 3;
+        long l=Long.valueOf(1l);
 
     }
 

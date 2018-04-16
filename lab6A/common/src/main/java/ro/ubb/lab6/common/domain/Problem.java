@@ -14,6 +14,7 @@ public class Problem extends BaseEntity<Long> implements Serializable {
     private String text;
     private int grade;
 
+
     public Problem(Integer number, String text) {
         this.number = number;
         this.text = text;

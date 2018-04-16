@@ -55,26 +55,23 @@ public class ProblemDbRepository implements Repository<Long, Problem> {
         }
         Problem pb = null;
         try {
-            Connection c = getConnection();
-            Statement stmt = null;
-            Class.forName("org.postgresql.Driver");
-            c.setAutoCommit(false);
-            stmt = c.createStatement();
 
-            String problemId = id.toString();
-            String sql = "SELECT * FROM \"Problems\" WHERE id=" + problemId + ";";
-
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
+            String sql = "SELECT * FROM \"Problems\" WHERE id=" + id.toString();
+            List<Problem> pbs = jdbcOperations.query(sql, (rs, i) -> {
                 String text = rs.getString("text");
-                String number = rs.getString("number");
-                pb = new Problem(Integer.parseInt(number), text);
-                pb.setId(id);
-                validator.validate(pb);
+                int number = rs.getInt("number");
+                int Id = rs.getInt("id");
+                return new Problem(Long.valueOf(id), number, text);
+                });
+
+            for(Problem p : pbs)
+            {
+                if(p.getId().equals(id))
+                {
+                    pb = p;
+                }
             }
 
-            stmt.close();
-            c.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);

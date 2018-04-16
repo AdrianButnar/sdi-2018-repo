@@ -33,11 +33,11 @@ public class ProblemService {
         Iterable<Problem> problems = repository.findAll();
 
         Set<Problem> problemSet = StreamSupport.stream(problems.spliterator(), false).collect(Collectors.toSet());
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        for(Problem pb : problemSet)
-        {
-            System.out.println(pb.toString());
-        }
+//        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//        for(Problem pb : problemSet)
+//        {
+//            System.out.println(pb.toString());
+//        }
         return problemSet;
     }
 

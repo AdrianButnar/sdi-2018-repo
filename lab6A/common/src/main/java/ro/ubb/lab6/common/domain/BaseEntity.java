@@ -1,11 +1,13 @@
 package ro.ubb.lab6.common.domain;
 
+import java.io.Serializable;
+
 /**
  * @author Alexandru Buhai
  * @param <ID> Base entity
  */
 
-public class BaseEntity<ID> {
+public class BaseEntity<ID> implements Serializable{
     private ID id;
 
     /**
