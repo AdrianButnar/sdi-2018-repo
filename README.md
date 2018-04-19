@@ -4,10 +4,15 @@
 ![alt text](./gitHub_pictures/logo_ubb_albastru.png "Logo Title Text 1")
 
 Repository for SDI course at UBB 2018, under professor Gaceanu Radu.
-
-
 Team: Gandaceii  
 Group: 922  
+
+[Lab requirements](https://docs.google.com/document/d/1xQ2NjbyepsuXOmJ6321jM1VNukzI8qlBMZLfIXxjwV4/edit?usp=drive_web&ouid=101359917012351863431)  
+
+[Google Drive](https://drive.google.com/drive/folders/1rS-bL4xl3fQh4LdyHxpLyoCR-Y6JVZxR)  
+
+[Google group](https://groups.google.com/forum/#!forum/sdi_2018)  
+
 
 ### Lab 1
 
@@ -44,3 +49,9 @@ Group: 922
 ### Lab 6
 
 * Getting started with Spring
+* ##### Not working for him
+* Gradle setting still left to be done 
+
+### Lab 7
+
+* Spring and Hibernate
