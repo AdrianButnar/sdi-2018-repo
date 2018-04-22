@@ -1,7 +1,6 @@
 package ro.ubb.lab6.server;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ro.ubb.lab6.common.ServiceInterface;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
