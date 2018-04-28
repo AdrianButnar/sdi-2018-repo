@@ -3,7 +3,7 @@
 
 ![alt text](./gitHub_pictures/logo_ubb_albastru.png "Logo Title Text 1")
 
-Repository for SDI course at UBB 2018, under professor Gaceanu Radu.
+&nbsp;&nbsp;&nbsp;&nbsp;Repository for SDI course at UBB 2018, under professor Gaceanu Radu.
 Team: Gandaceii  
 Group: 922  
 
