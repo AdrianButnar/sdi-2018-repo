@@ -1,9 +1,11 @@
 package ro.ubb.lab7.core.service;
 
-import ro.ubb.laboratory.domain.Problem;
-import ro.ubb.laboratory.domain.validators.EntityCannotBeSavedException;
-import ro.ubb.laboratory.domain.validators.InexistentEntityException;
-import ro.ubb.laboratory.repository.Repository;
+
+
+import ro.ubb.lab7.core.model.Problem;
+import ro.ubb.lab7.core.model.validators.EntityCannotBeSavedException;
+import ro.ubb.lab7.core.model.validators.InexistentEntityException;
+import ro.ubb.lab7.core.repository.Repository;
 
 import java.util.Set;
 import java.util.stream.Collectors;

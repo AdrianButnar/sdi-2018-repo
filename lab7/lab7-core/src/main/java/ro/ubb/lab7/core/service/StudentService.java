@@ -26,10 +26,12 @@
 
 package ro.ubb.lab7.core.service;
 
-import ro.ubb.laboratory.domain.Student;
-import ro.ubb.laboratory.domain.validators.InexistentStudentException;
-import ro.ubb.laboratory.domain.validators.StudentCannotBeSavedException;
-import ro.ubb.laboratory.repository.Repository;
+
+
+import ro.ubb.lab7.core.model.Student;
+import ro.ubb.lab7.core.model.validators.InexistentStudentException;
+import ro.ubb.lab7.core.model.validators.StudentCannotBeSavedException;
+import ro.ubb.lab7.core.repository.Repository;
 
 import java.util.Set;
 import java.util.stream.Collectors;

@@ -26,8 +26,10 @@
 
 package ro.ubb.lab7.core.repository;
 
-import ro.ubb.laboratory.domain.BaseEntity;
-import ro.ubb.laboratory.domain.validators.*;
+import ro.ubb.lab7.core.model.BaseEntity;
+import ro.ubb.lab7.core.model.validators.EntityPresentException;
+import ro.ubb.lab7.core.model.validators.InexistentEntityException;
+import ro.ubb.lab7.core.model.validators.Validator;
 
 import java.util.HashMap;
 import java.util.Map;

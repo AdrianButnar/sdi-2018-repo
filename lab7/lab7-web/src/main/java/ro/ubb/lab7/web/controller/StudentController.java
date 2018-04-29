@@ -6,21 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ro.ubb.catalog.core.model.Student;
-import ro.ubb.catalog.core.service.StudentService;
-import ro.ubb.catalog.web.converter.StudentConverter;
-import ro.ubb.catalog.web.dto.EmptyJsonResponse;
-import ro.ubb.catalog.web.dto.StudentDto;
-import ro.ubb.catalog.web.dto.StudentsDto;
+import ro.ubb.lab7.core.model.Student;
+import ro.ubb.lab7.core.service.StudentService;
+import ro.ubb.lab7.web.converter.StudentConverter;
+import ro.ubb.lab7.web.dto.StudentDto;
+import ro.ubb.lab7.web.dto.StudentsDto;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-/**
- * Created by radu.
- */
 
 @RestController
 public class StudentController {
@@ -46,24 +41,24 @@ public class StudentController {
     }
 
 
-    @RequestMapping(value = "/students/{studentId}", method = RequestMethod.PUT)
-    public StudentDto updateStudent(
-            @PathVariable final Long studentId,
-            @RequestBody final StudentDto studentDto) {
-        log.trace("updateStudent: studentId={}, studentDtoMap={}", studentId, studentDto);
-
-        Optional<Student> studentOptional = studentService.updateStudent(studentId,
-                studentDto.getName(), studentDto.getGrade());
-
-        Map<String, StudentDto> result = new HashMap<>();
-        studentOptional.ifPresent(
-                student -> result.put("student", studentConverter.convertModelToDto(student)));
-                //() -> result.put("student", studentConverter.convertModelToDto(new Student())));
-
-        log.trace("updateStudent: result={}", result);
-
-        return result.get("student");
-    }
+//    @RequestMapping(value = "/students/{studentId}", method = RequestMethod.PUT)
+//    public StudentDto updateStudent(
+//            @PathVariable final Long studentId,
+//            @RequestBody final StudentDto studentDto) {
+//        log.trace("updateStudent: studentId={}, studentDtoMap={}", studentId, studentDto);
+//
+//        Optional<Student> studentOptional = studentService.updateStudent(studentId,
+//                studentDto.getName(), studentDto.getGrade());
+//
+//        Map<String, StudentDto> result = new HashMap<>();
+//        studentOptional.ifPresent(
+//                student -> result.put("student", studentConverter.convertModelToDto(student)));
+//                //() -> result.put("student", studentConverter.convertModelToDto(new Student())));
+//
+//        log.trace("updateStudent: result={}", result);
+//
+//        return result.get("student");
+//    }
 
 
     @RequestMapping(value = "/students", method = RequestMethod.POST)

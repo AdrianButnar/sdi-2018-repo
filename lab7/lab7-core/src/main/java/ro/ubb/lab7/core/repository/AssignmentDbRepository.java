@@ -1,10 +1,11 @@
 package ro.ubb.lab7.core.repository;
 
-import ro.ubb.laboratory.domain.Assignment;
-import ro.ubb.laboratory.domain.validators.EntityPresentException;
-import ro.ubb.laboratory.domain.validators.InexistentEntityException;
-import ro.ubb.laboratory.domain.validators.Validator;
-import ro.ubb.laboratory.domain.validators.ValidatorException;
+
+import ro.ubb.lab7.core.model.Assignment;
+import ro.ubb.lab7.core.model.validators.EntityPresentException;
+import ro.ubb.lab7.core.model.validators.InexistentEntityException;
+import ro.ubb.lab7.core.model.validators.Validator;
+import ro.ubb.lab7.core.model.validators.ValidatorException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
