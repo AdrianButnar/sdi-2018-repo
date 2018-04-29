@@ -1,11 +1,13 @@
 package ro.ubb.lab7.core.model;
 
+import java.io.Serializable;
+
 /**
  * @author Alexandru Buhai
  * @param <ID> Base entity
  */
 
-public class BaseEntity<ID> {
+public class BaseEntity<ID extends Serializable> {
     private ID id;
 
     /**

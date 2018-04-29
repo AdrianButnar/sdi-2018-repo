@@ -1,6 +1,6 @@
 package ro.ubb.lab7.core.model.validators;
 
-import ro.ubb.laboratory.domain.Assignment;
+import ro.ubb.lab7.core.model.Assignment;
 
 public class AssignmentValidator implements Validator<Assignment> {
 

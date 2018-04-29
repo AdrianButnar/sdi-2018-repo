@@ -1,7 +1,8 @@
 package ro.ubb.lab7.web.converter;
 
-import ro.ubb.catalog.core.model.BaseEntity;
-import ro.ubb.catalog.web.dto.BaseDto;
+
+import ro.ubb.lab7.core.model.BaseEntity;
+import ro.ubb.lab7.web.dto.BaseDto;
 
 /**
  * Created by radu.

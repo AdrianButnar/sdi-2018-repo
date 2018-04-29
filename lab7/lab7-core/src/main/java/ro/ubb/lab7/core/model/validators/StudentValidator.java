@@ -1,6 +1,7 @@
 package ro.ubb.lab7.core.model.validators;
 
-import ro.ubb.laboratory.domain.Student;
+import ro.ubb.lab7.core.model.Student;
+
 
 public class StudentValidator implements Validator<Student> {
 
