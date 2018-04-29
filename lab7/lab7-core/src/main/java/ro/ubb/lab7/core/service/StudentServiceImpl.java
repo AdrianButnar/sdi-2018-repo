@@ -34,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
     public Student createStudent(String serialNumber,String name) {
         log.trace("saveStudent: serialNumber ={}, name={} ", serialNumber,name);
 
-        Student student = studentRepository.save(new Student(serialNumber,name));
+        Student student = (Student) studentRepository.save(new Student(serialNumber,name)); //TODO This seems bad, just to solve conflict
 
         log.trace("saveStudent: student={}", student);
 

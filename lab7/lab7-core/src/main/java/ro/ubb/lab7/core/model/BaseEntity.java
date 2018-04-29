@@ -1,14 +1,21 @@
 package ro.ubb.lab7.core.model;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 /**
  * @author Alexandru Buhai
  * @param <ID> Base entity
  */
-
+@MappedSuperclass
 public class BaseEntity<ID extends Serializable> {
 
+    @Id
+    @GeneratedValue
+    @Column(unique = true, nullable = false)
     private ID id;
 
     /**

@@ -10,6 +10,7 @@ import ro.ubb.lab7.core.model.Student;
 import ro.ubb.lab7.core.service.StudentService;
 import ro.ubb.lab7.web.converter.StudentConverter;
 import ro.ubb.lab7.web.dto.EmptyJsonResponse;
+import ro.ubb.lab7.web.dto.StudentDto;
 import ro.ubb.lab7.web.dto.StudentsDto;
 
 import java.util.List;
@@ -58,42 +59,41 @@ public class StudentController {
 //    }
 
 
-<<<<<<< HEAD
-    @RequestMapping(value = "/students", method = RequestMethod.POST)
-    public StudentDto createStudent(
-            @RequestBody final StudentDto studentDto) {
-        log.trace("createStudent: studentDtoMap={}", studentDto);
-
-        Student student = studentService.createStudent(
-                studentDto.getName(), studentDto.getGrade());
-
-        StudentDto result = studentConverter.convertModelToDto(student);
-
-        log.trace("createStudent: result={}", result);
-        return result;
-    }
-=======
+//<<<<<<< HEAD I left this here just before doing some builds.
 //    @RequestMapping(value = "/students", method = RequestMethod.POST)
 //    public StudentDto createStudent(
 //            @RequestBody final StudentDto studentDto) {
 //        log.trace("createStudent: studentDtoMap={}", studentDto);
 //
 //        Student student = studentService.createStudent(
-//                studentDto.getSerialNumber(), studentDto.getName());
+//                studentDto.getName(), studentDto.getGrade());
 //
 //        StudentDto result = studentConverter.convertModelToDto(student);
 //
 //        log.trace("createStudent: result={}", result);
 //        return result;
 //    }
->>>>>>> 7a362c31dd2028f8cf8a91201c887f53b558466f
+
+    @RequestMapping(value = "/students", method = RequestMethod.POST)
+    public StudentDto createStudent(
+            @RequestBody final StudentDto studentDto) {
+        log.trace("createStudent: studentDtoMap={}", studentDto);
+
+        Student student = studentService.createStudent(
+                studentDto.getSerialNumber(), studentDto.getName());
+
+        StudentDto result = studentConverter.convertModelToDto(student);
+
+        log.trace("createStudent: result={}", result);
+        return result;
+    }
 
 
     @RequestMapping(value = "students/{studentId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteStudent(@PathVariable final Long studentId) {
         log.trace("deleteStudent: studentId={}", studentId);
 
-        studentService.removeStudent(studentId);
+        studentService.deleteStudent(studentId);
 
         log.trace("deleteStudent - method end");
 
