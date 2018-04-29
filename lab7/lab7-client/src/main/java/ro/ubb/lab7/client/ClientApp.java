@@ -22,12 +22,12 @@ public class ClientApp {
 
         StudentDto student = restTemplate
                 .postForObject("http://localhost:8080/api/students",
-                        new StudentDto("s1", 10),
+                        new StudentDto("baie","Birgil"),
                         StudentDto.class);
         System.out.println(student);
 
 
-        student.setGrade(student.getGrade() + 1);
+        //student.setGrade(student.getGrade() + 1);
         restTemplate
                 .put("http://localhost:8080/api/students/{studentId}",
                         student, student.getId());

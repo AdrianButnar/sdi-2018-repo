@@ -1,6 +1,5 @@
 package ro.ubb.lab7.core.model.validators;
 
-
 import ro.ubb.lab7.core.model.Problem;
 
 public class ProblemValidator implements Validator<Problem> {

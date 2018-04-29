@@ -7,7 +7,8 @@ import java.io.Serializable;
  * @param <ID> Base entity
  */
 
-public class BaseEntity<ID> implements Serializable {
+public class BaseEntity<ID extends Serializable> {
+
     private ID id;
 
     /**

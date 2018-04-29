@@ -11,14 +11,14 @@ import lombok.*;
 @Getter
 @Setter
 public class StudentDto extends BaseDto {
+    public String serialNumber;
     private String name;
-    private int grade;
 
     @Override
     public String toString() {
         return "StudentDto{" +
                 "name='" + name + '\'' +
-                ", grade=" + grade +
+                ", serial number=" + serialNumber +
                 "} " + super.toString();
     }
 }
