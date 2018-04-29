@@ -9,9 +9,16 @@ import java.io.Serializable;
  */
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @ToString
 public class BaseDto implements Serializable {
     private Long id;
+
+    public void setId(Long Id) //Lombok has problems
+    {
+        id = Id;
+    }
+    public Long getId()
+    {
+        return id;
+    }
 }

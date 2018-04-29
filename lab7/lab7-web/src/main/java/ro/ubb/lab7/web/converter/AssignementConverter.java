@@ -18,7 +18,7 @@ public class AssignementConverter  extends BaseConverter<Assignment, AssignmentD
 
     @Override
     public AssignmentDto convertModelToDto(Assignment assignment) {
-        AssignmentDto assignmentDto = new AssignmentDto(assignmentDto.getStudentID(), assignmentDto.getProblemId());
+        AssignmentDto assignmentDto = new AssignmentDto(assignment.getStudentID(), assignment.getProblemID());
         assignmentDto.setId(assignment.getId());
         return assignmentDto;
     }

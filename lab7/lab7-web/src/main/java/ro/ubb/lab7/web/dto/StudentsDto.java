@@ -7,9 +7,7 @@ import lombok.Setter;
 
 import java.util.Set;
 
-/**
- * Created by radu.
- */
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
