@@ -77,25 +77,25 @@ public class StudentController {
     @RequestMapping(value = "/students", method = RequestMethod.POST)
     public StudentDto createStudent(
             @RequestBody final StudentDto studentDto) {
-        log.trace("createStudent: studentDtoMap={}", studentDto);
+        log.trace("create Student: studentDtoMap={}", studentDto);
 
         Student student = studentService.createStudent(
                 studentDto.getSerialNumber(), studentDto.getName());
 
         StudentDto result = studentConverter.convertModelToDto(student);
 
-        log.trace("createStudent: result={}", result);
+        log.trace("create Student: result={}", result);
         return result;
     }
 
 
     @RequestMapping(value = "students/{studentId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteStudent(@PathVariable final Long studentId) {
-        log.trace("deleteStudent: studentId={}", studentId);
+        log.trace("delete Student: studentId={}", studentId);
 
         studentService.deleteStudent(studentId);
 
-        log.trace("deleteStudent - method end");
+        log.trace("delete Student - method end");
 
         return new ResponseEntity(new EmptyJsonResponse(), HttpStatus.OK);
     }

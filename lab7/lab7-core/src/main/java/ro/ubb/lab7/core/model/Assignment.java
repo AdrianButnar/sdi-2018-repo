@@ -28,40 +28,40 @@ package ro.ubb.lab7.core.model;
 
 public class Assignment extends BaseEntity<Long>{
 
-    private Long studentID;
-    private Long problemID;
+    private Long studentId;
+    private Long problemId;
 
     public Assignment(Long studentID, Long problemID) {
-        this.studentID = studentID;
-        this.problemID = problemID;
+        this.studentId = studentID;
+        this.problemId = problemID;
     }
 
     public Assignment() {
-        this.studentID = 0L;
-        this.problemID = 0L;
+        this.studentId = 0L;
+        this.problemId = 0L;
     }
 
-    public Long getStudentID() {
-        return studentID;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setStudentID(Long studentID) {
-        this.studentID = studentID;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
-    public Long getProblemID() {
-        return problemID;
+    public Long getProblemId() {
+        return problemId;
     }
 
-    public void setProblemID(Long problemID) {
-        this.problemID = problemID;
+    public void setProblemId(Long problemId) {
+        this.problemId = problemId;
     }
 
     @Override
     public String toString() {
         return "Assignment {" +
-                " studentID =" + studentID +
-                ", problemID =" + problemID +
+                " studentId =" + studentId +
+                ", problemId =" + problemId +
                 " }";
     }
 }

@@ -3,11 +3,9 @@ package ro.ubb.lab7.web.converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ro.ubb.lab7.core.model.Assignment;
-import ro.ubb.lab7.core.model.Student;
 import ro.ubb.lab7.web.dto.AssignmentDto;
-import ro.ubb.lab7.web.dto.StudentDto;
 
-public class AssignementConverter  extends BaseConverter<Assignment, AssignmentDto> {
+public class AssignmentConverter extends BaseConverter<Assignment, AssignmentDto> {
 
     private static final Logger log = LoggerFactory.getLogger(StudentConverter.class);
 
@@ -18,7 +16,7 @@ public class AssignementConverter  extends BaseConverter<Assignment, AssignmentD
 
     @Override
     public AssignmentDto convertModelToDto(Assignment assignment) {
-        AssignmentDto assignmentDto = new AssignmentDto(assignment.getStudentID(), assignment.getProblemID());
+        AssignmentDto assignmentDto = new AssignmentDto(assignment.getStudentId(), assignment.getProblemId());
         assignmentDto.setId(assignment.getId());
         return assignmentDto;
     }

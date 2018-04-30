@@ -12,10 +12,10 @@ public class AssignmentValidator implements Validator<Assignment> {
         if (ass.getId() < 0)
             message = message + "Assignment cannot have a negative id!\n";
 
-        if (ass.getProblemID() < 0)
+        if (ass.getProblemId() < 0)
             message = message + "Assignment cannot have a negative problem id!\n";
 
-        if (ass.getStudentID() < 0)
+        if (ass.getStudentId() < 0)
             message = message + "Assignment cannot have a negative student id!\n";
 
         if (!(message.equals("")))

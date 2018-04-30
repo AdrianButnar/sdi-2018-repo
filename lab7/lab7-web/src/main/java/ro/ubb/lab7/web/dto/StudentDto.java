@@ -2,12 +2,7 @@ package ro.ubb.lab7.web.dto;
 
 import lombok.*;
 
-/**
- * Created by radu.
- */
-
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class StudentDto extends BaseDto {
@@ -19,6 +14,15 @@ public class StudentDto extends BaseDto {
         this.serialNumber = serialNumber1;
         this.name = name1;
 
+    }
+
+    public String getSerialNumber()
+    {
+        return serialNumber;
+    }
+    public String getName()
+    {
+        return name;
     }
 
 

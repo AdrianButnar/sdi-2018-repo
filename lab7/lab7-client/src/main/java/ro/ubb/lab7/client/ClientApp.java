@@ -5,13 +5,12 @@ import org.springframework.web.client.RestTemplate;
 import ro.ubb.lab7.web.dto.StudentDto;
 import ro.ubb.lab7.web.dto.StudentsDto;
 
-/**
- * Created by radu.
- */
+
+
 public class ClientApp {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext("ro.ubb.catalog.client.config");
+                new AnnotationConfigApplicationContext("ro.ubb.lab7.client.config");
         RestTemplate restTemplate = context.getBean(RestTemplate.class);
 
         StudentsDto studentsDto = restTemplate
