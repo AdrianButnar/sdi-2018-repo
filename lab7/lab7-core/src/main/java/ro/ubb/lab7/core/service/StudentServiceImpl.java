@@ -41,23 +41,24 @@ public class StudentServiceImpl implements StudentService {
         return student;
     }
 
-    @Override
-    @Transactional
-    public Optional<Student> updateStudent(Long studentId, String serialNumber,String name) {
-        log.trace("updateStudent: studentId={}, serialNumber={},  name={}", studentId, serialNumber,name);
-
-        Optional<Student> optionalStudent = studentRepository.findById(studentId);
-
-        optionalStudent.ifPresent(st -> {
-            st.setSerialNumber(serialNumber);
-            st.setName(name);
-            //st.setGrade(grade);
-        });
-
-        log.trace("updateStudent: optionalStudent={}", optionalStudent);
-
-        return optionalStudent;
-    }
+//    @Override
+//    @Transactional
+//    public Optional<Student> updateStudent(Long studentId, String serialNumber,String name) {
+//        log.trace("updateStudent: studentId={}, serialNumber={},  name={}", studentId, serialNumber,name);
+//
+//        Optional<Student> optionalStudent = studentRepository.findById(studentId);
+//
+//        optionalStudent.ifPresent(st -> {
+//            st.setSerialNumber(serialNumber);
+//            st.setName(name);
+//            //st.setGrade(grade);
+//        });
+//
+//        log.trace("updateStudent: optionalStudent={}", optionalStudent);
+//
+//        return optionalStudent;
+//    }
+// --noi nu avem asa ceva!!!!!!!!!
 
     @Override
     public void deleteStudent(Long id) {

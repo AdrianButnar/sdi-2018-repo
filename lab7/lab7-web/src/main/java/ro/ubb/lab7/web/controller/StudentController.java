@@ -91,11 +91,11 @@ public class StudentController {
 
     @RequestMapping(value = "students/{studentId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteStudent(@PathVariable final Long studentId) {
-        log.trace("delete Student: studentId={}", studentId);
+        log.trace("deleteStudent: studentId={}", studentId);
 
         studentService.deleteStudent(studentId);
 
-        log.trace("delete Student - method end");
+        log.trace("deleteStudent - method end");
 
         return new ResponseEntity(new EmptyJsonResponse(), HttpStatus.OK);
     }

@@ -1,14 +1,10 @@
 package ro.ubb.lab7.core.model;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * <h2> ProblemFileRepository class </h2>
- * <p> ProblemFileRepository </p>
- * @author Alexandru Buhai
- * @version 1.0.1
- */
+@Entity
 public class Problem extends BaseEntity<Long> implements Serializable, Comparable<Long> {
     private int number;
     private String text;

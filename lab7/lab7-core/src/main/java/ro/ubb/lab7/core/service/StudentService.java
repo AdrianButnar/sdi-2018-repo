@@ -11,7 +11,7 @@ public interface StudentService {
 
     Student createStudent(String serialNumber, String name);
 
-    Optional<Student> updateStudent(Long studentId,String serialNumber, String name);
+    //Optional<Student> updateStudent(Long studentId,String serialNumber, String name); - noi nu avem asa ceva
 
     void deleteStudent(Long id);
 }

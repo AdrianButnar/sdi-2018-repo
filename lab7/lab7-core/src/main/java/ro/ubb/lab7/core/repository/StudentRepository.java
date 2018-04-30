@@ -8,7 +8,5 @@ import ro.ubb.lab7.core.model.Student;
 
 import java.io.Serializable;
 
-@NoRepositoryBean
-@Transactional
 public interface StudentRepository extends MainRepository<Student, Long> {
 }

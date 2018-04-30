@@ -26,6 +26,9 @@
 
 package ro.ubb.lab7.core.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Assignment extends BaseEntity<Long>{
 
     private Long studentId;

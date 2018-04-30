@@ -1,32 +1,16 @@
 package ro.ubb.lab7.core.model;
 
+import lombok.Getter;
+
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * <h2> Student class </h2>
- * <p> Student </p>
- * @version 1.0.0
- */
-
+@Getter
+@Entity
 public class Student extends BaseEntity<Long> {
     private String serialNumber;
     private String name;
-    private List<Integer> problemList = new ArrayList<>();
-
-    public List<Integer> getProblemList() {
-        return problemList;
-    }
-
-    public String getProblemListToString() {
-        String content="";
-        for ( Integer p : problemList){
-            content += String.valueOf(p) + ", ";
-        }
-        content = content.substring(0,content.length()-2)+".";
-        return content;
-    }
-
 
     public Student() {
 
@@ -38,9 +22,9 @@ public class Student extends BaseEntity<Long> {
     }
 
 
-    public String getSerialNumber() {
-        return serialNumber;
-    }
+    //public String getSerialNumber() {
+    //    return serialNumber;
+    //}
 
     /**
      * Sets a new serial number for this student
@@ -51,9 +35,9 @@ public class Student extends BaseEntity<Long> {
         this.serialNumber = serialNumber;
     }
 
-    public String getName() {
-        return name;
-    }
+    //public String getName() {
+    //    return name;
+    //}
 
     /**
      * Set the name of the student
@@ -64,31 +48,7 @@ public class Student extends BaseEntity<Long> {
         this.name = name;
     }
 
-    /**
-     * Assigns a problem to this student.
-     *
-     * @param no - ID of the problem to be added to the list
-     */
-    public void addProblem(Integer no) {
-        problemList.add(no);
-    }
 
-    /**
-     * Gets the number of assigned problem this student has.
-     *
-     * @return - the number of problems
-     */
-    public int getNumberOfProblems() {
-        return problemList.size();
-    }
-
-
-    /**
-     * Override the equals method of an Object
-     *
-     * @param o - object to be compared to
-     * @return True - if equals | False - otherwise
-     */
     @Override
     public boolean equals(Object o) {
         //can we use ifs here?
@@ -111,22 +71,7 @@ public class Student extends BaseEntity<Long> {
 
     }
 
-    @Override
-    public int hashCode() {
-        int result = serialNumber != null ? serialNumber.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
-    }
 
-    public String printProblems() {
-        String pr = "";
-        for(Integer no : problemList)
-        {
-            pr += no.toString();
-            pr += " ";
-        }
-        return pr;
-    }
 
     @Override
     public String toString() {
