@@ -2,7 +2,10 @@ package ro.ubb.lab7.client.ui;
 
 
 import org.springframework.web.client.RestTemplate;
+import ro.ubb.lab7.core.model.Problem;
 import ro.ubb.lab7.core.model.Student;
+import ro.ubb.lab7.web.dto.ProblemDto;
+import ro.ubb.lab7.web.dto.ProblemsDto;
 import ro.ubb.lab7.web.dto.StudentDto;
 import ro.ubb.lab7.web.dto.StudentsDto;
 
@@ -55,10 +58,10 @@ public class ClientConsole {
                     removeStudent();
                     break;
                 case "4":
-                    System.out.println("Not yet implemented");
+                    addProblem();
                     break;
                 case "5":
-                    System.out.println("Not yet implemented");
+                    printAllProblems();
                     break;
                 case "6":
                     System.out.println("Not yet implemented");
@@ -136,58 +139,38 @@ public class ClientConsole {
      * Reads a new problem from the standard input
      * @return The read problem as a string or null string otherwise
      */
-//    private String readProblem() {
-//
-//        try {
-//            Scanner sc = new Scanner(System.in);
-//            System.out.print("Enter problem id: ");
-//            String id = sc.nextLine();
-//            System.out.print("Enter problem number: ");
-//            String number = sc.nextLine();
-//            System.out.print("Enter text: ");
-//            String text = sc.nextLine();
-//            String returnString = id+";"+number+";"+text;
-//
-//            if (!isLong(id)) {
-//                throw new IllegalIdException("Invalid id\n");
-//            }
-//
-//            return returnString;
-//        }
-//        catch (IllegalIdException | ValidatorException ex) {
-//            System.out.println("Exception client-side: ");
-//            ex.printStackTrace();
-//            myWait(1);
-//
-//        }
-//        return "";
-//    }
-//
-//
-//    private void addProblem() {
-//        try {
-//            String received = readProblem();
-//            String[] args = received.split(";");
-//            Long problemId = Long.parseLong(args[0]);
-//            Integer number = Integer.parseInt(args[1]);
-//            String text = args[2];
-//            if (!received.equals("")) {
-//              //  CompletableFuture<String> result = serviceInterface.addProblem(problemId,number,text);
-//                serviceInterface.addProblem(problemId,number,text);
-//                //handleResult(result);
-//            }
-//            else
-//            {
-//                System.out.println("Please try again, something is not right client-side");
-//            }
-//        }
-//        catch (Exception ex)
-//        {
-//            System.out.println("Exception client-side: ");
-//            ex.printStackTrace();
-//            myWait(1);
-//        }
-//    }
+    private Problem readProblem() {
+
+        try {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Enter problem number: ");
+            String number = sc.nextLine();
+            System.out.print("Enter text: ");
+            String text = sc.nextLine();
+            return new Problem(Integer.parseInt(number), text);
+
+        } catch (Exception ex) {
+            System.out.println("Is this what you call a valid problem number? Really? ");
+            ex.printStackTrace();
+            //myWait(1);
+            return null;
+        }
+    }
+
+
+    private void addProblem() {
+
+            Problem received = readProblem();
+            ProblemDto problem = restTemplate
+                    .postForObject("http://localhost:8080/api/students",
+                            new ProblemDto(received.getNumber(),received.getText()),
+                            ProblemDto.class);
+            restTemplate
+                    .put("http://localhost:8080/api/problems/{problemId}",
+                            problem, problem.getId());
+
+
+    }
 //
 //    private void removeProblem(){
 //        try {
@@ -207,38 +190,12 @@ public class ClientConsole {
 //            myWait(1);
 //        }
 //    }
-//    private void printAllProblems() {
-////        try{
-////         //   CompletableFuture<String> result = serviceInterface.printAllProblems("");
-////         //   handleResult(result);
-////
-////        } catch (CancellationException ex)
-//
-////        Future<String> students = serviceInterface.printAllProblems("");
-////        try {
-////            while (!students.isDone()) { //if- doesn't really work //also kind of blocking
-////            if (students.isDone()){
-////                String result = students.get(); //kind of blocking
-////                String[] args = result.split(";");
-////                for (String row : args) {
-////                    System.out.println(row);
-////                }
-////            }
-////        } catch (CancellationException | ExecutionException | InterruptedException ex)
-//        try
-//        {
-//            List<Problem> pbs = serviceInterface.printAllProblems("");
-//            for(Problem pb:pbs)
-//            {
-//                System.out.println(pb);
-//            }
-//        }
-//        catch (Exception  ex)
-//        {
-//            System.out.println("Error serverside(or canceled):");
-//            ex.printStackTrace();
-//        }
-//    }
+    private void printAllProblems() {
+        ProblemsDto problemsDto = restTemplate
+                .getForObject("http://localhost:8080/api/problems", ProblemsDto.class);
+        problemsDto.getProblems()
+                .forEach(System.out::println);
+    }
 //    private void assignProblemToStudent(){
 //        try {
 //            Scanner sc = new Scanner(System.in);
