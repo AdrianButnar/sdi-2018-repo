@@ -4,11 +4,19 @@ import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Setter
 public class StudentDto extends BaseDto {
-    public String name;
     public String serialNumber;
+    public String name;
+
+    public String getSerialNumber()
+    {
+        return serialNumber;
+    }
+    public String getName()
+    {
+        return name;
+    }
 
 
     @Override
