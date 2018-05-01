@@ -6,8 +6,8 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 public class StudentDto extends BaseDto {
-    public String serialNumber;
     public String name;
+    public String serialNumber;
 
     public String getSerialNumber()
     {
