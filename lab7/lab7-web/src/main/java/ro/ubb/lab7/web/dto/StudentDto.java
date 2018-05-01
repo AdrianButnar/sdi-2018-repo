@@ -7,8 +7,9 @@ import lombok.*;
 @Getter
 @Setter
 public class StudentDto extends BaseDto {
-    public String serialNumber;
     public String name;
+    public String serialNumber;
+
 
     @Override
     public String toString() {

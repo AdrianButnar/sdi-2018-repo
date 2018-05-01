@@ -20,7 +20,7 @@ public class ProblemConverter extends BaseConverter<Problem, ProblemDto> {
 
     @Override
     public ProblemDto convertModelToDto(Problem problem) {
-        ProblemDto problemDto = new ProblemDto();
+        ProblemDto problemDto = new ProblemDto(problem.getNumber(),problem.getText(), 10);
         problemDto.setId(problem.getId());
         return problemDto;
     }

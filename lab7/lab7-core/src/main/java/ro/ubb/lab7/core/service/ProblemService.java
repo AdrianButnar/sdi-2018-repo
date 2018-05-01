@@ -12,7 +12,7 @@ public interface ProblemService {
 
     Problem createProblem(int number, String text);
 
-    Optional<Problem> updateProblem(Long problemId, int number, String text);
+   // Optional<Problem> updateProblem(Long problemId, int number, String text);
 
     void deleteProblem(Long id);
 }

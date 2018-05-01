@@ -21,17 +21,21 @@ public class ClientApp {
 
         StudentDto student = restTemplate
                 .postForObject("http://localhost:8080/api/students",
-                        new StudentDto("baie","Birgil"),
+                        new StudentDto("Mihai","miie2019"),
                         StudentDto.class);
         System.out.println(student);
 
-
-        //student.setGrade(student.getGrade() + 1);
+        String newSerialNumber = student.getSerialNumber() + "1";
+        System.out.println(newSerialNumber+"\n");
+        student.setSerialNumber(newSerialNumber);
         restTemplate
                 .put("http://localhost:8080/api/students/{studentId}",
                         student, student.getId());
 
-
+        System.out.println("New print:");
+        studentsDto.getStudents()
+                .forEach(System.out::println);
+//
 //        restTemplate
 //                .delete("http://localhost:8080/api/students/{studentId}",
 //                        student.getId());

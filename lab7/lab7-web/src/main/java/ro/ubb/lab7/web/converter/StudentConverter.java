@@ -22,7 +22,7 @@ public class StudentConverter extends BaseConverter<Student, StudentDto> {
 
     @Override
     public StudentDto convertModelToDto(Student student) {
-        StudentDto studentDto = new StudentDto(student.getSerialNumber(),student.getName());
+        StudentDto studentDto = new StudentDto(student.getName(),student.getSerialNumber());
         studentDto.setId(student.getId());
         return studentDto;
     }

@@ -20,9 +20,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-/**
- * Created by radu.
- */
 
 @Configuration
 @EnableJpaRepositories({"ro.ubb.lab7.core.repository"})

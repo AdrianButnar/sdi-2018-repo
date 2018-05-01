@@ -6,6 +6,15 @@ import javax.persistence.Entity;
 public class Student extends BaseEntity<Long> {
     private String name;
     private int grade;
+    private int car;
+
+    public void setCar(int car) {
+        this.car = car;
+    }
+
+    public int getCar() {
+        return car;
+    }
 
     public Student() {
     }

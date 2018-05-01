@@ -1,12 +1,7 @@
 package ro.ubb.lab7.core.model;
 
-import lombok.Getter;
-
 import javax.persistence.Entity;
-import java.util.ArrayList;
-import java.util.List;
 
-@Getter
 @Entity
 public class Student extends BaseEntity<Long> {
     private String serialNumber;
@@ -22,9 +17,9 @@ public class Student extends BaseEntity<Long> {
     }
 
 
-    //public String getSerialNumber() {
-    //    return serialNumber;
-    //}
+    public String getSerialNumber() {
+        return serialNumber;
+    }
 
     /**
      * Sets a new serial number for this student
@@ -35,9 +30,9 @@ public class Student extends BaseEntity<Long> {
         this.serialNumber = serialNumber;
     }
 
-    //public String getName() {
-    //    return name;
-    //}
+    public String getName() {
+        return name;
+    }
 
     /**
      * Set the name of the student
