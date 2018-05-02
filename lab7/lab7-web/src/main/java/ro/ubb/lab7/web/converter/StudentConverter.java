@@ -6,10 +6,6 @@ import org.springframework.stereotype.Component;
 import ro.ubb.lab7.core.model.Student;
 import ro.ubb.lab7.web.dto.StudentDto;
 
-/**
- * Created by radu.
- */
-
 @Component
 public class StudentConverter extends BaseConverter<Student, StudentDto> {
 

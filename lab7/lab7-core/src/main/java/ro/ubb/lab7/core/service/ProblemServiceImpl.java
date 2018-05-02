@@ -33,7 +33,7 @@ public class ProblemServiceImpl implements ProblemService {
     public Problem createProblem(int number,String text) {
         log.trace("saveProblem: number ={}, text={} ", number,text);
 
-        Problem pb = (Problem) problemRepository.save(new Problem(number,text));
+        Problem pb = problemRepository.save(new Problem(number,text));
         log.trace("saveProblem: problem={}", pb);
 
         return pb;
@@ -56,7 +56,6 @@ public class ProblemServiceImpl implements ProblemService {
 
         return optionalProblem;
     }
-//// --noi nu avem asa ceva!!!!!!!!!
 
     @Override
     public void deleteProblem(Long id) {

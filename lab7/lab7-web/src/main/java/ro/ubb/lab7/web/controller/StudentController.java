@@ -33,6 +33,8 @@ public class StudentController {
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public StudentsDto getStudents() {
         log.trace("getStudents");
+        log.warn("getStudents");
+        log.info("Hello");
 
         List<Student> students = studentService.getAllStudents();
 
@@ -47,7 +49,6 @@ public class StudentController {
             @PathVariable final Long studentId,
             @RequestBody final StudentDto studentDto) {
         log.trace("updateStudent: studentId={}, studentDtoMap={}", studentId, studentDto);
-
         Optional<Student> studentOptional = studentService.updateStudent(studentId, studentDto.getName(),
                 studentDto.getSerialNumber());
 

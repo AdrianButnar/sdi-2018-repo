@@ -13,5 +13,5 @@ import java.util.Set;
 @Getter
 @Setter
 public class AssignmentsDto{
-    private Set<AssignmentDto> assignements;
+    private Set<AssignmentDto> assignments;
 }

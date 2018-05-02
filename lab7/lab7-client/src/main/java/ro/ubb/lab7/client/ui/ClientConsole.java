@@ -2,15 +2,14 @@ package ro.ubb.lab7.client.ui;
 
 
 import org.springframework.web.client.RestTemplate;
+import ro.ubb.lab7.core.model.Assignment;
 import ro.ubb.lab7.core.model.Problem;
 import ro.ubb.lab7.core.model.Student;
-import ro.ubb.lab7.web.dto.ProblemDto;
-import ro.ubb.lab7.web.dto.ProblemsDto;
-import ro.ubb.lab7.web.dto.StudentDto;
-import ro.ubb.lab7.web.dto.StudentsDto;
+import ro.ubb.lab7.web.dto.*;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class ClientConsole {
@@ -32,7 +31,6 @@ public class ClientConsole {
                         "7.  Assign problem from repository to a student\n"+
                         "8.  Show problems assigned to a student\n"+
                         "9.  Find a student by name(supports partial match)\n"+
-                        "10. Show the most assigned problems\n"+
                         "0.  Exit\n\n"+
                         "Choose one of the commands above:\n "+
                         "----------------------------------------------------");
@@ -66,16 +64,13 @@ public class ClientConsole {
                     removeProblem();
                     break;
                 case "7":
-                    System.out.println("Not yet implemented");
+                    assignProblemToStudent();
                     break;
                 case "8":
-                    System.out.println("Not yet implemented");
+                    showAllProblemsOfAStudent();
                     break;
                 case "9":
-                    System.out.println("Not yet implemented");
-                    break;
-                case "10":
-                    System.out.println("Not yet implemented");
+                    showStudentsByNameMatch();
                     break;
                 case "0":
                     System.exit(0);
@@ -121,7 +116,7 @@ public class ClientConsole {
         StudentsDto studentsDto = restTemplate
                 .getForObject("http://localhost:8080/api/students", StudentsDto.class);
         studentsDto.getStudents()
-                .forEach(System.out::println); //asta e print
+                .forEach(System.out::println); //asta e print - :))
     }
 
 
@@ -185,88 +180,89 @@ public class ClientConsole {
         problemsDto.getProblems()
                 .forEach(System.out::println);
     }
-//    private void assignProblemToStudent(){
-//        try {
-//            Scanner sc = new Scanner(System.in);
-//
+
+    private void assignProblemToStudent(){
+        try {
+            Scanner sc = new Scanner(System.in);
+
 //            System.out.print("Enter an assignment id: ");
 //            String assignmentId = sc.nextLine();
-//
-//            System.out.print("Enter a student id: ");
-//            String studentId = sc.nextLine();
-//
-//            System.out.print("Enter a problem id: ");
-//            String problemId = sc.nextLine();
-//
-//////          String returnString = " "+";"+studentId+";"+problemId;
-////            Future<String> s = helloService.assignProblemToStudent(returnString);
-////            {
-////                String result = s.get(); //blocking
-////                System.out.println(result);
-////            }
-//            serviceInterface.assignProblemToStudent(Long.parseLong(assignmentId),Long.parseLong(studentId),Long.parseLong(problemId));
-//
-//        } catch (Exception ex) {
-//            System.out.println("Exception client-side: ");
-//            ex.printStackTrace();
-//            myWait(1);
-//        }
-//    }
-//
-//    private void showAllProblemsOfAStudent() {
-//        try {
-//            System.out.print("Enter a student id: ");
-//            Scanner sc = new Scanner(System.in);
-//            String studentId = sc.nextLine();
-//            if (!isLong(studentId)) {
-//                throw new InexistentEntityException("Invalid id!\n");
-//            }
-////            Future<String> assignments = helloService.showAllProblemsOfAStudent(studentId);
-//            serviceInterface.showAllProblemsOfAStudent(Long.parseLong(studentId));
-//
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//            myWait(1);
-//        }
-//    }
-//
-//    private void showStudentsByNameMatch() {
-//
-//        try{
-//            System.out.print("Enter a name or part of the name: ");
-//            Scanner sc = new Scanner(System.in);
-//            String name = sc.nextLine();
-//            serviceInterface.showStudentsByNameMatch(name);
-//
-//        }
-//        catch (InexistentEntityException e){
-//            e.printStackTrace();
-//            myWait(1);
-//        }
-//    }
-//
-//
-//    private boolean isLong(String id){
-//        try{
-//            Long id1 = Long.parseLong(id);
-//            return true;
-//        }
-//        catch (Exception ex){
-//            return false;
-//        }
-//    }
-//
-//    /**
-//     * Displays all the students from the laboratory.domain.repository
-//     */
-//    private void myWait(long f){
-//        try {
-//            TimeUnit.SECONDS.sleep(f);
-//        }
-//        catch (Exception ex){
-//            ex.printStackTrace();
-//        }
-//    }
-//
+
+            System.out.print("Enter a student id: ");
+            String studentId = sc.nextLine();
+
+            System.out.print("Enter a problem id: ");
+            String problemId = sc.nextLine();
+
+            Assignment as = new Assignment(Long.parseLong(studentId), Long.parseLong(problemId));
+            AssignmentDto assignmentDto = restTemplate
+                    .postForObject("http://localhost:8080/api/assignments",
+                            new AssignmentDto(as.getStudentId(),as.getProblemId()),
+                            AssignmentDto.class);
+            restTemplate
+                    .put("http://localhost:8080/api/assignments/{assignmentId}",
+                            assignmentDto, assignmentDto.getId());
+
+        } catch (Exception ex) {
+            System.out.println("Exception client-side: ");
+            ex.printStackTrace();
+        }
+    }
+
+    private void showAllProblemsOfAStudent() {
+        try {
+            System.out.print("Enter a student id: ");
+            Scanner sc = new Scanner(System.in);
+            String studentId = sc.nextLine();
+            AssignmentsDto assignmentsDto = restTemplate
+                    .getForObject("http://localhost:8080/api/assignments", AssignmentsDto.class);
+            Set<AssignmentDto> assignments = assignmentsDto.getAssignments();
+            String problems="";
+            for(AssignmentDto a : assignments)
+            {
+                if (a.getStudentId() == Long.parseLong(studentId)) {
+                    problems += a.getProblemId()+" ";
+                }
+            }
+            if (!problems.equals("")){
+                System.out.println("Student " + studentId + " has the following problems assigned: " + problems);
+            }
+            else
+                throw new Exception("This student has no assigned problems!");
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void showStudentsByNameMatch() {
+
+        try{
+            System.out.print("Enter a name: ");
+            Scanner sc = new Scanner(System.in);
+            String name = sc.nextLine();
+            StudentsDto studentsDto = restTemplate
+                    .getForObject("http://localhost:8080/api/students", StudentsDto.class);
+
+            Set<StudentDto> students =  studentsDto.getStudents();
+            boolean found=false;
+            for (StudentDto s:students){
+                if (s.getName().toLowerCase().contains(name)){
+                    System.out.println(s);
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new Exception("No student matches this name!");
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
 
 }

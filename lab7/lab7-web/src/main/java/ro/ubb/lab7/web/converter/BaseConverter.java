@@ -7,9 +7,6 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * Created by radu.
- */
 
 public abstract class BaseConverter<Model extends BaseEntity<Long>, Dto extends BaseDto>
         implements Converter<Model, Dto> {

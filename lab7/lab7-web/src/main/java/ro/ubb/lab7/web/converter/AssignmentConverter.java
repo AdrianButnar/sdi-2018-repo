@@ -2,9 +2,11 @@ package ro.ubb.lab7.web.converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import ro.ubb.lab7.core.model.Assignment;
 import ro.ubb.lab7.web.dto.AssignmentDto;
 
+@Component
 public class AssignmentConverter extends BaseConverter<Assignment, AssignmentDto> {
 
     private static final Logger log = LoggerFactory.getLogger(StudentConverter.class);
