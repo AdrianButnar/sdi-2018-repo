@@ -3,6 +3,7 @@ package ro.ubb.lab7.core.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ro.ubb.lab7.core.model.Problem;
 import ro.ubb.lab7.core.repository.ProblemRepository;
@@ -10,6 +11,7 @@ import ro.ubb.lab7.core.repository.ProblemRepository;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ProblemServiceImpl implements ProblemService {
     private static final Logger log = LoggerFactory.getLogger(ProblemServiceImpl.class);
 

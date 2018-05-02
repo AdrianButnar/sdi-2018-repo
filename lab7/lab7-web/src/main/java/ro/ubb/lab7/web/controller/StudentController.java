@@ -62,20 +62,6 @@ public class StudentController {
     }
 
 
-//<<<<<<< HEAD I left this here just before doing some builds.
-//    @RequestMapping(value = "/students", method = RequestMethod.POST)
-//    public StudentDto createStudent(
-//            @RequestBody final StudentDto studentDto) {
-//        log.trace("createStudent: studentDtoMap={}", studentDto);
-//
-//        Student student = studentService.createStudent(
-//                studentDto.getName(), studentDto.getGrade());
-//
-//        StudentDto result = studentConverter.convertModelToDto(student);
-//
-//        log.trace("createStudent: result={}", result);
-//        return result;
-//    }
 
     @RequestMapping(value = "/students", method = RequestMethod.POST)
     public StudentDto createStudent(

@@ -19,7 +19,7 @@ public class ProblemDto  extends BaseDto{
         return "ProblemDto{" +
                 "number=" + number +
                 ", text='" + text + '\'' +
-                '}';
+                '}'+ super.toString();
     }
 }
 

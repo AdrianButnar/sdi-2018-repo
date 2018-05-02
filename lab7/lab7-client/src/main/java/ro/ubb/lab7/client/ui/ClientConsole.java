@@ -44,7 +44,6 @@ public class ClientConsole {
             printMenu();
             Scanner sc = new Scanner(System.in);
             System.out.println("Input command: ");
-
             String command = sc.nextLine();
 
             switch (command) {
@@ -64,7 +63,7 @@ public class ClientConsole {
                     printAllProblems();
                     break;
                 case "6":
-                    System.out.println("Not yet implemented");
+                    removeProblem();
                     break;
                 case "7":
                     System.out.println("Not yet implemented");
@@ -160,36 +159,26 @@ public class ClientConsole {
 
     private void addProblem() {
 
-            Problem received = readProblem();
-            ProblemDto problem = restTemplate
-                    .postForObject("http://localhost:8080/api/students",
-                            new ProblemDto(received.getNumber(),received.getText()),
-                            ProblemDto.class);
-            restTemplate
-                    .put("http://localhost:8080/api/problems/{problemId}",
-                            problem, problem.getId());
+        Problem received = readProblem();
+        ProblemDto problem = restTemplate
+                .postForObject("http://localhost:8080/api/problems",
+                        new ProblemDto(received.getNumber(),received.getText()),
+                        ProblemDto.class);
+        restTemplate
+                .put("http://localhost:8080/api/problems/{problemId}",
+                        problem, problem.getId());
 
 
     }
-//
-//    private void removeProblem(){
-//        try {
-//            System.out.print("Enter id: ");
-//            Scanner sc = new Scanner(System.in);
-//            String id = sc.nextLine();
-//            if (!isLong(id)){
-//                throw new InexistentEntityException("Invalid id!\n");
-//            }
-//            serviceInterface.removeProblem(Long.parseLong(id));
-////            CompletableFuture<String> result = serviceInterface.removeProblem(Long.parseLong(id));
-////            handleResult(result);
-//        }
-//        catch (InexistentEntityException ex){
-//            System.out.println("Exception client-side: ");
-//            ex.printStackTrace();
-//            myWait(1);
-//        }
-//    }
+
+    private void removeProblem(){
+        System.out.println("Enter problem id:");
+        Scanner sc = new Scanner(System.in);
+        Long id = Long.valueOf(sc.nextLine());
+        restTemplate
+                .delete("http://localhost:8080/api/problems/{problemId}",
+                        id);
+    }
     private void printAllProblems() {
         ProblemsDto problemsDto = restTemplate
                 .getForObject("http://localhost:8080/api/problems", ProblemsDto.class);
