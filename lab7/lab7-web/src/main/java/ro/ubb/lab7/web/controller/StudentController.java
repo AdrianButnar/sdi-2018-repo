@@ -48,6 +48,8 @@ public class StudentController {
     public StudentDto updateStudent(
             @PathVariable final Long studentId,
             @RequestBody final StudentDto studentDto) {
+        log.info("Hello");
+
         log.trace("updateStudent: studentId={}, studentDtoMap={}", studentId, studentDto);
         Optional<Student> studentOptional = studentService.updateStudent(studentId, studentDto.getName(),
                 studentDto.getSerialNumber());
