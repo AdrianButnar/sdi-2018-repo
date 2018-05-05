@@ -49,9 +49,16 @@ Group: 922
 ### Lab 6
 
 * Getting started with Spring
-* ##### Not working for him
-* Gradle setting still left to be done 
+* ~~Gradle setting still left to be done~~
+* Solved the gradle settings
 
 ### Lab 7
 
 * Spring and Hibernate
+* Created the Converters and Controllers for the classes
+* Added the log file (not logging in file apparently)
+* Added all console functionality
+
+### Lab 8
+ 
+* Started lab 8 from scratch
