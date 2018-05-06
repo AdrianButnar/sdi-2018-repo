@@ -20,7 +20,7 @@ public class StudentServiceImpl implements StudentService {
     private StudentRepository studentRepository;
 
     @Override
-    public List<Student> getAllStudents() {
+    public List<Student> findAll() {
         log.trace("getAllStudents --- method entered");
 
         List<Student> students = studentRepository.findAll();

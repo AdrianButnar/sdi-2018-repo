@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 
-import {HttpClient} from '@angular/common/http';
+import {HttpClient} from "@angular/common/http";
 
-import {Student} from './student.model';
+import {Student} from "./student.model";
 
-import { Observable, of } from 'rxjs';
-
-import { map } from 'rxjs/operators';
+import {Observable} from "rxjs";
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 
 
 @Injectable()
@@ -21,8 +21,9 @@ export class StudentService {
       .get<Array<Student>>(this.studentsUrl);
   }
 
-  getStudent(id: number): Observable<any> {
-    return this.getStudents().map(students => students.find(student => student.id === id));
+  getStudent(id: number): Observable<Student> {
+    return this.getStudents()
+      .map(students => students.find(student => student.id === id));
   }
 
   update(student): Observable<Student> {

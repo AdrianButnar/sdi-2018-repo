@@ -1,0 +1,18 @@
+<div *ngIf="selectedProblem">
+  <h2>
+    Problem number {{selectedProblem.number}} was selected
+  </h2>
+  <button (click)="gotoDetails()">View details</button>
+</div>
+
+
+  <h2>Problems</h2>
+  <ol class="problems">
+    <li *ngFor="let problem of problems"
+        [class.selected]="problem === selectedProblem"
+        (click)="onSelect(problem)">
+      {{problem.number}}
+      <!--aici am pus number dar poate fi orice de la o problema, ei aveau name-->
+    </li>
+  </ol>
+

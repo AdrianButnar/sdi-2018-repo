@@ -11,10 +11,7 @@ import ro.ubb.lab8.core.service.ProblemService;
 import ro.ubb.lab8.web.converter.ProblemConverter;
 import ro.ubb.lab8.web.dto.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class ProblemController {
@@ -29,14 +26,14 @@ public class ProblemController {
 
 
     @RequestMapping(value = "/problems", method = RequestMethod.GET)
-    public ProblemsDto getProblems() {
+    public List<ProblemDto> getProblems() {
         log.trace("getProblems");
 
         List<Problem> problems = problemService.getAllProblems();
 
         log.trace("getProblems: problems={}", problems);
 
-        return new ProblemsDto(problemConverter.convertModelsToDtos(problems));
+        return new ArrayList<>(problemConverter.convertModelsToDtos(problems));
     }
 
     @RequestMapping(value = "/problems", method = RequestMethod.POST)

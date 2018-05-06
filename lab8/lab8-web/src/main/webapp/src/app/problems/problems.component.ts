@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from "@angular/core";
 
 @Component({
-  selector: 'app-problems',
+  moduleId: module.id,
+  selector: 'ubb-problems',
   templateUrl: './problems.component.html',
-  styleUrls: ['./problems.component.css']
+  styleUrls: ['./problems.component.css'],
 })
-export class ProblemsComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+export class ProblemsComponent {
 
 }

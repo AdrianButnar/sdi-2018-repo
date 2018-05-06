@@ -1,13 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {StudentService} from './../student.service';
-import {ActivatedRoute, Params} from '@angular/router';
+import {StudentService} from "../shared/student.service";
+import {ActivatedRoute, Params} from "@angular/router";
 import {Location} from '@angular/common';
-import {Student} from './../student.model';
+import {Student} from "../shared/student.model";
 
-import { switchMap } from 'rxjs/operators';
+import 'rxjs/add/operator/switchMap';
+
 
 @Component({
-    selector: 'app-ubb-student-detail',
+    selector: 'ubb-student-detail',
     templateUrl: './student-detail.component.html',
     styleUrls: ['./student-detail.component.css'],
 })
@@ -22,8 +23,9 @@ export class StudentDetailComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.route.params.pipe(switchMap((params: Params) => this.studentService.getStudent(+params['id']))
-          .subscribe(student => this.student = student));
+        this.route.params
+            .switchMap((params: Params) => this.studentService.getStudent(+params['id']))
+            .subscribe(student => this.student = student);
     }
 
     goBack(): void {
@@ -35,4 +37,3 @@ export class StudentDetailComponent implements OnInit {
             .subscribe(_ => this.goBack());
     }
 }
-

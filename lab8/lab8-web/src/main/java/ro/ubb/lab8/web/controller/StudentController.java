@@ -13,10 +13,7 @@ import ro.ubb.lab8.web.dto.EmptyJsonResponse;
 import ro.ubb.lab8.web.dto.StudentDto;
 import ro.ubb.lab8.web.dto.StudentsDto;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class StudentController {
@@ -31,16 +28,16 @@ public class StudentController {
 
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
-    public StudentsDto getStudents() {
+    public List<StudentDto> getStudents() {
         log.trace("getStudents");
-        log.warn("getStudents");
-        log.info("Hello");
+        //log.warn("getStudents");
+        //log.info("Hello");
 
-        List<Student> students = studentService.getAllStudents();
+        List<Student> students = studentService.findAll();
 
         log.trace("getStudents: students={}", students);
 
-        return new StudentsDto(studentConverter.convertModelsToDtos(students));
+        return new ArrayList<>(studentConverter.convertModelsToDtos(students)); //AICI ERA PROBLEMA! TU RETURNAI UN SET, EL RETURNA UN ARRAYLIST
     }
 
 

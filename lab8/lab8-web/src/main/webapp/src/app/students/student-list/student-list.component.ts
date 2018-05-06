@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Student} from './../student.model';
-import {StudentService} from './../student.service';
-import {Router} from '@angular/router';
+import {Student} from "../shared/student.model";
+import {StudentService} from "../shared/student.service";
+import {Router} from "@angular/router";
 
 
 @Component({
-  // moduleId: module.id,
-  selector: 'app-ubb-student-list',
+  moduleId: module.id,
+  selector: 'ubb-student-list',
   templateUrl: './student-list.component.html',
   styleUrls: ['./student-list.component.css'],
 })
