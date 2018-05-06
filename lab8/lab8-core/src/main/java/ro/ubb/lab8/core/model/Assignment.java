@@ -26,9 +26,12 @@
 
 package ro.ubb.lab8.core.model;
 
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.Entity;
 
 @Entity
+@EqualsAndHashCode
 public class Assignment extends BaseEntity<Long>{
 
     private Long studentId;

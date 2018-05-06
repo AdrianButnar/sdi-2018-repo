@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -22,7 +26,7 @@ import javax.sql.DataSource;
 
 
 @Configuration
-@EnableJpaRepositories({"ro.ubb.lab7.core.repository"})
+@EnableJpaRepositories({"ro.ubb.lab8.core.repository"})
 @EnableTransactionManagement
 @EnableCaching
 public class JPAConfig {
@@ -50,10 +54,10 @@ public class JPAConfig {
         config.setJdbcUrl(jdbcUrl);
         config.setUsername(username);
         config.setPassword(password);
-        config.setDriverClassName(Driver.class.getName());
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.setDriverClassName("org.postgresql.Driver");
         HikariDataSource dataSource = new HikariDataSource(config);
         return dataSource;
     }
@@ -67,7 +71,7 @@ public class JPAConfig {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("ro.ubb.lab7.core.model");
+        factory.setPackagesToScan("ro.ubb.lab8.core.model");
         factory.setDataSource(dataSource());
         factory.afterPropertiesSet();
         return factory.getObject();

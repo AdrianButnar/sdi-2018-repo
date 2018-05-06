@@ -1,14 +1,18 @@
 package ro.ubb.lab8.core.model;
 
 
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+
 @Entity
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Student extends BaseEntity<Long> {
     private String serialNumber;
     private String name;
 
-    public Student() {
-
-    }
 
     public Student(String serialNumber, String Name) {
         this.serialNumber = serialNumber;
@@ -44,17 +48,18 @@ public class Student extends BaseEntity<Long> {
 
 
     @Override
+    public String toString() {
+        return "Student {" +
+                "ID = " + this.getId() +
+                ", SerialNumber = '" + serialNumber + '\'' +
+                ", Name = '" + name + '\'' +
+                '}';
+    }
+}
+/*
+    @Override
     public boolean equals(Object o) {
-        //can we use ifs here?
-        /*
-        boolean result1 = this == o;
-        boolean result2 = !(o == null || getClass() != o.getClass());
-
-        Student student = (Student) o;
-        boolean result3 = serialNumber.equals(student.getName()) && name.equals(student.getName());
-        return result3 || result2 || result1;
-        */
-        if (this == o) return true;
+              if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Student student = (Student) o;
@@ -65,14 +70,4 @@ public class Student extends BaseEntity<Long> {
 
     }
 
-
-
-    @Override
-    public String toString() {
-        return "Student {" +
-                "ID = " + this.getId() +
-                ", SerialNumber = '" + serialNumber + '\'' +
-                ", Name = '" + name + '\'' +
-                '}';
-    }
-}
+ */

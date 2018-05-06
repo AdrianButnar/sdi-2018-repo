@@ -1,0 +1,4 @@
+rootProject.name = 'lab8-clona-lab7'
+include 'lab8-web'
+include 'lab8-core'
+

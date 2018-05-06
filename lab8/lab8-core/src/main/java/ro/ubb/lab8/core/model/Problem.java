@@ -1,10 +1,15 @@
 package ro.ubb.lab8.core.model;
 
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Problem extends BaseEntity<Long> implements Serializable, Comparable<Long> {
     private int number;
     private String text;
@@ -12,10 +17,6 @@ public class Problem extends BaseEntity<Long> implements Serializable, Comparabl
     public Problem(Integer number, String text) {
         this.number = number;
         this.text = text;
-    }
-    public Problem() {
-        this.number = 0;
-        this.text = "";
     }
 
 //    public int getGrade() {
@@ -43,6 +44,22 @@ public class Problem extends BaseEntity<Long> implements Serializable, Comparabl
     }
 
     @Override
+    public String toString() {
+        return  "Problem {" +
+                "ID = " + this.getId() +
+                ", Number = '" + number + '\'' +
+                ", Text = '" + text + '\'' +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Long o) {
+        return 0;
+    }
+}
+/*
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -57,17 +74,4 @@ public class Problem extends BaseEntity<Long> implements Serializable, Comparabl
         return Objects.hash(number, text);
     }
 
-    @Override
-    public String toString() {
-        return  "Problem {" +
-                "ID = " + this.getId() +
-                ", Number = '" + number + '\'' +
-                ", Text = '" + text + '\'' +
-                '}';
-    }
-
-    @Override
-    public int compareTo(Long o) {
-        return 0;
-    }
-}
+ */
