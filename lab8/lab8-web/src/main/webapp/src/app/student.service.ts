@@ -21,8 +21,8 @@ export class StudentService {
       .get<Array<Student>>(this.studentsUrl);
   }
 
-  getStudent(id: number): Observable<any> {
-    return this.getStudents().map(students => students.find(student => student.id === id));
+  getStudent(id: number): Observable<Student> {
+    return this.getStudents().pipe(map(students => students.find(student => student.id === id)));
   }
 
   update(student): Observable<Student> {
