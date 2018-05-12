@@ -1,0 +1,15 @@
+
+<div *ngIf="problem">
+ 
+    <h2>{{ problem.text | uppercase }} Details</h2>
+    <div><span>id: </span>{{problem.id}}</div>
+    <div>
+      <label>number:
+        <input [(ngModel)]="problem.num" placeholder="num">
+      </label>
+      <label>text:
+              <input [(ngModel)]="problem.text" placeholder="text">
+      </label>
+    </div>
+   
+  </div>

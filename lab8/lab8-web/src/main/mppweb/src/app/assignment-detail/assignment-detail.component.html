@@ -1,0 +1,15 @@
+
+<div *ngIf="assignment">
+ 
+    <h2>{{ assignment.id }} Details</h2>
+    <div><span>id: </span>{{assignment.id}}</div>
+    <div>
+      <label>studentId:
+        <input [(ngModel)]="assignment.studentId" placeholder="studentId">
+      </label>
+      <label>problemId:
+              <input [(ngModel)]="assignment.problemId" placeholder="problemId">
+      </label>
+    </div>
+   
+  </div>

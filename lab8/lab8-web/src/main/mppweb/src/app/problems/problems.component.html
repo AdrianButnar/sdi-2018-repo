@@ -1,0 +1,9 @@
+<h2>My Problems</h2>
+<ul class="heroes">
+  <li  *ngFor="let problem1 of prbs" 
+    [class.selected]="problem1 === selectedProblem"
+    (click)="onSelect(problem1)">
+    <span class="badge">{{problem1.id}}</span> Number:{{problem1.num}} &nbsp; &nbsp; Text: {{problem1.text}}
+  </li>
+</ul>
+<app-problem-detail [problem]="selectedProblem"></app-problem-detail>

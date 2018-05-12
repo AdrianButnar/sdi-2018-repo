@@ -1,0 +1,9 @@
+<h2>My Assignments</h2>
+<ul class="heroes">
+  <li  *ngFor="let assignment of assignments"
+    [class.selected]="assignment === selectedAssignment"
+    (click)="onSelect(assignment)">
+    <span class="badge">{{assignment.id}}</span> StId:{{assignment.studentId}} &nbsp;&nbsp; PbId: {{assignment.problemId}}
+  </li>
+</ul>
+<app-assignment-detail [assignment]="selectedAssignment"></app-assignment-detail>
