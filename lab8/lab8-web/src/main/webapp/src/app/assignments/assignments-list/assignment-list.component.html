@@ -1,0 +1,17 @@
+<div *ngIf="selectedAssignment">
+  <h2>
+    Assignment number {{selectedAssignment.id}} was selected
+  </h2>
+  <button (click)="gotoDetails()">View details</button>
+</div>
+
+  <h2>Assignments</h2>
+  <ol class="assignments">
+    <li *ngFor="let assignment of assignments"
+        [class.selected]="assignment === selectedAssignment"
+        (click)="onSelect(assignment)">
+      {{assignment.id}}
+      <!--aici am pus number dar poate fi orice de la o assignmenta, ei aveau name-->
+    </li>
+  </ol>
+

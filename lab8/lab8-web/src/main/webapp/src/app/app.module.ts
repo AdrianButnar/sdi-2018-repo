@@ -13,6 +13,11 @@ import {ProblemsComponent} from "./problems/problems.component";
 import {ProblemListComponent} from "./problems/problems-list/problem-list.component";
 import {ProblemDetailComponent} from "./problems/problem-detail/problem-detail.component";
 import {ProblemService} from "./problems/shared/problem.service";
+//aici vine partea de assignments(in caz ca crapa, dar speram ca nu)
+import {AssignmentsComponent} from "./assignments/assignments.component";
+import {AssignmentListComponent} from "./assignments/assignments-list/assignment-list.component";
+import {AssignmentDetailComponent} from "./assignments/assignment-detail/assignment-detail.component";
+import {AssignmentService} from "./assignments/shared/assignment.service";
 
 
 @NgModule({
@@ -25,7 +30,11 @@ import {ProblemService} from "./problems/shared/problem.service";
 
     ProblemDetailComponent,
     ProblemsComponent,
-    ProblemListComponent
+    ProblemListComponent,
+
+    AssignmentDetailComponent,
+    AssignmentsComponent,
+    AssignmentListComponent
 
   ],
   imports: [
@@ -34,7 +43,7 @@ import {ProblemService} from "./problems/shared/problem.service";
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [StudentService, ProblemService],
+  providers: [StudentService, ProblemService, AssignmentService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,7 +1,7 @@
-import {Component, OnInit} from "@angular/core";
-import {Problem} from "../shared/problem.model";
-import {ProblemService} from "../shared/problem.service";
-import {Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {Problem} from '../shared/problem.model';
+import {ProblemService} from '../shared/problem.service';
+import {Router} from '@angular/router';
 
 
 @Component({
