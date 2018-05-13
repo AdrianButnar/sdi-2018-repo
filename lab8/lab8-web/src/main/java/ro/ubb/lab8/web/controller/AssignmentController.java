@@ -14,10 +14,7 @@ import ro.ubb.lab8.web.dto.AssignmentDto;
 import ro.ubb.lab8.web.dto.AssignmentsDto;
 import ro.ubb.lab8.web.dto.EmptyJsonResponse;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 @RestController
@@ -33,14 +30,14 @@ public class AssignmentController {
 
 
     @RequestMapping(value = "/assignments", method = RequestMethod.GET)
-    public AssignmentsDto getAssignments() {
+    public List<AssignmentDto> getAssignments() {
         log.trace("getAssignments");
 
         List<Assignment> assignments = assignmentService.getAllAssignments();
 
         log.trace("getAssignments: assignments={}", assignments);
 
-        return new AssignmentsDto(assignmentConverter.convertModelsToDtos(assignments));
+        return new ArrayList<>(assignmentConverter.convertModelsToDtos(assignments)); //fmm, iar am uitat aici ca trebuie lista
     }
 
 
