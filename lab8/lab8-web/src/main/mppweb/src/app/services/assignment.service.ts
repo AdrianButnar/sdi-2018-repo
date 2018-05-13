@@ -1,7 +1,8 @@
 import { Assignment } from './../assignment';
 import { ASSIGNMENTS } from './../mock-assignment';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()//this can be one error
 

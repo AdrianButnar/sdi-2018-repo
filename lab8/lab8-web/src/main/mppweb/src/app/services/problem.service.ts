@@ -1,7 +1,9 @@
 import { PROBLEMS } from '../mock-problems';
 import { Problem } from '../problem';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { of } from 'rxjs/observable/of';
+
 @Injectable() //{providedIn: 'root',} this can be one error
 export class ProblemService {
 
