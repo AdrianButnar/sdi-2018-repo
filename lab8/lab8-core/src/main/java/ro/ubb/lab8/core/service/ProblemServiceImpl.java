@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public class ProblemServiceImpl implements ProblemService {
+
     private static final Logger log = LoggerFactory.getLogger(ProblemServiceImpl.class);
 
     @Autowired
@@ -49,7 +50,6 @@ public class ProblemServiceImpl implements ProblemService {
         optionalProblem.ifPresent(pb -> {
             pb.setNumber(number);
             pb.setText(text);
-            //st.setGrade(grade);
         });
 
         log.trace("updateProblem: optionalProblem={}", optionalProblem);

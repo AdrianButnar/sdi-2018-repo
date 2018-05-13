@@ -39,4 +39,20 @@ export class StudentListComponent implements OnInit {
     this.router.navigate(['/student/detail', this.selectedStudent.id]);
   }
 
+  add(name: string, serialNumber: string): void {
+    name = name.trim();
+    serialNumber = serialNumber.trim();
+    if (!name) { return; }
+    if (!serialNumber) { return; }
+    this.studentService.addStudent({ serialNumber, name } as Student)
+      .subscribe(student => {
+        this.students.push(student);
+      });
+  }
+
+  delete(student: Student): void {
+    this.students = this.students.filter(h => h !== student);
+    this.studentService.deleteStudent(student).subscribe();
+  }
+
 }

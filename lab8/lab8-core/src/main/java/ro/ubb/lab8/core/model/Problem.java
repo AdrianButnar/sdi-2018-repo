@@ -8,24 +8,16 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@NoArgsConstructor
 @EqualsAndHashCode
 public class Problem extends BaseEntity<Long> implements Serializable, Comparable<Long> {
     private int number;
     private String text;
-
+    public Problem(){}
     public Problem(Integer number, String text) {
         this.number = number;
         this.text = text;
     }
 
-//    public int getGrade() {
-//        return grade;
-//    }
-//
-//    public void setGrade(int grade) {
-//        this.grade = grade;
-//    }
 
     public int getNumber() {
         return number;

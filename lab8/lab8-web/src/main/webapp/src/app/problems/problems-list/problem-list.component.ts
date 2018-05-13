@@ -34,4 +34,30 @@ export class ProblemListComponent implements OnInit {
     this.router.navigate(['/problem/detail', this.selectedProblem.id]);
 
   }
+
+
+  add(problemNumber: string, problemText: string): void {
+    problemNumber = problemNumber.trim();
+    problemText = problemText.trim();
+    if (!problemNumber) { return; }
+    if (!problemText) { return; }
+    var numProb = parseInt(problemNumber, 10);
+
+    console.log(numProb + " " + problemText);
+    const newProb = <Problem>({
+      number:numProb,
+      text:problemText
+    });
+    console.log(newProb);
+    this.problemService.addProblem(newProb)
+      .subscribe(problem => {
+        this.problems.push(problem);
+      });
+  }
+
+  delete(problem: Problem): void {
+    this.problems = this.problems.filter(h => h !== problem);
+    this.problemService.deleteProblem(problem).subscribe();
+  }
+
 }

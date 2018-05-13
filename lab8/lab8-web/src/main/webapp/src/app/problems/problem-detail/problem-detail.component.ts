@@ -36,4 +36,5 @@ export class ProblemDetailComponent implements OnInit {
     this.problemService.update(this.problem)
       .subscribe(_ => this.goBack());
   }
+  
 }

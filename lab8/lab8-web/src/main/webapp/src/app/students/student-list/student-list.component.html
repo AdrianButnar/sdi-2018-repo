@@ -4,6 +4,22 @@
     </h2>
     <button (click)="gotoDetail()">View Details</button>
 </div>
+<br><br>
+<div>
+    <h3>
+        Add a student:
+    </h3>
+    <label>Student name:
+        <input #studentName />
+      </label><br>
+      <label>Student serialNumber:
+        <input #studentSerialNumber />
+      </label>
+      <!-- (click) passes input value to add() and then clears the input -->
+      <button (click)="add(studentName.value, studentSerialNumber.value); studentName.value=''; studentSerialNumber.value=''">
+        Add
+      </button>
+</div>
 
 <h2>Students</h2>
 <ol class="students">
@@ -11,5 +27,8 @@
         [class.selected]="student === selectedStudent"
         (click)="onSelect(student)">
         {{student.name}}
+        <button class="delete" title="delete student"
+        (click)="delete(student)">x</button>
     </li>
+    
 </ol>

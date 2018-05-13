@@ -51,7 +51,6 @@ public class StudentServiceImpl implements StudentService {
         optionalStudent.ifPresent(st -> {
             st.setSerialNumber(serialNumber);
             st.setName(name);
-            //st.setGrade(grade);
         });
 
         log.trace("updateStudent: optionalStudent={}", optionalStudent);

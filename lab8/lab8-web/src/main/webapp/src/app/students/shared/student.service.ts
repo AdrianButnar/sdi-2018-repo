@@ -32,4 +32,17 @@ export class StudentService {
       .put<Student>(url, student);
   }
 
+  /** DELETE: delete the student from the server */
+  deleteStudent (student: Student | number): Observable<Student> {
+    const id = typeof student === 'number' ? student : student.id;
+    const url = `${this.studentsUrl}/${id}`;
+
+    return this.httpClient.delete<Student>(url); 
+  }
+
+  addStudent (student: Student): Observable<Student> {
+
+    return this.httpClient.post<Student>(this.studentsUrl, student);
+  }
+
 }
