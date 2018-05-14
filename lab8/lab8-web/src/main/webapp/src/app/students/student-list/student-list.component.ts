@@ -54,5 +54,10 @@ export class StudentListComponent implements OnInit {
     this.students = this.students.filter(h => h !== student);
     this.studentService.deleteStudent(student).subscribe();
   }
+  // search(studentName : string)
+  // {
+  //   studentName = studentName.trim();
+  //   this.studentService.searchStudent
+  // }
 
 }
