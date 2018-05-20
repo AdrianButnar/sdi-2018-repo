@@ -7,7 +7,7 @@ import ro.ubb.lab8.core.model.Assignment;
 import ro.ubb.lab8.web.dto.AssignmentDto;
 
 @Component
-public class AssignmentConverter extends BaseConverter<Assignment, AssignmentDto> {
+public class AssignmentConverter extends  AbstractConverter<Assignment, AssignmentDto> {
 
     private static final Logger log = LoggerFactory.getLogger(StudentConverter.class);
 
@@ -18,8 +18,10 @@ public class AssignmentConverter extends BaseConverter<Assignment, AssignmentDto
 
     @Override
     public AssignmentDto convertModelToDto(Assignment assignment) {
-        AssignmentDto assignmentDto = new AssignmentDto(assignment.getStudentId(), assignment.getProblemId());
-        assignmentDto.setId(assignment.getId());
-        return assignmentDto;
+        return AssignmentDto.builder()
+                .studentId(assignment.getStudent().getId())
+                .problemId(assignment.getProblem().getId())
+                .grade(assignment.getGrade())
+                .build();
     }
 }

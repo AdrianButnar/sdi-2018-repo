@@ -7,11 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.ubb.lab8.core.model.Assignment;
-import ro.ubb.lab8.core.model.Student;
 import ro.ubb.lab8.core.service.AssignmentService;
 import ro.ubb.lab8.web.converter.AssignmentConverter;
 import ro.ubb.lab8.web.dto.AssignmentDto;
-import ro.ubb.lab8.web.dto.AssignmentsDto;
 import ro.ubb.lab8.web.dto.EmptyJsonResponse;
 
 import java.util.*;

@@ -1,23 +1,60 @@
 package ro.ubb.lab8.core.model;
 
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode
+@Builder
 public class Student extends BaseEntity<Long> {
+    private static final int SERIAL_NUMBER_LENGTH = 16;
+
+    @Column(name = "serial_number", nullable = false, length = SERIAL_NUMBER_LENGTH)
     private String serialNumber;
+
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Assignment> assignments = new HashSet<>();
 
-    public Student(String serialNumber, String Name) {
-        this.serialNumber = serialNumber;
-        this.name = Name;
+
+    public Set<Problem> getProblems() {
+        return Collections.unmodifiableSet(
+                this.assignments.stream().
+                        map(Assignment::getProblem).
+                        collect(Collectors.toSet()));
     }
+
+    public void addProblem(Problem problem) {
+        Assignment assignment = new Assignment();
+        assignment.setProblem(problem);
+        assignment.setStudent(this);
+        assignments.add(assignment);
+    }
+
+    public void addProblems(Set<Problem> problems) {
+        problems.forEach(this::addProblem);
+    }
+
+
+    public void addGrade(Problem problem, Integer grade) {
+        Assignment assignment = new Assignment();
+        assignment.setProblem(problem);
+        assignment.setGrade(grade);
+        assignment.setStudent(this);
+        assignments.add(assignment);
+    }
+
 
 
     public String getSerialNumber() {
@@ -56,18 +93,3 @@ public class Student extends BaseEntity<Long> {
                 '}';
     }
 }
-/*
-    @Override
-    public boolean equals(Object o) {
-              if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Student student = (Student) o;
-
-        if (name.equals(student.getName())) return false;
-        return serialNumber.equals(student.getSerialNumber());
-
-
-    }
-
- */

@@ -18,8 +18,12 @@ public class ProblemConverter extends BaseConverter<Problem, ProblemDto> {
 
     @Override
     public ProblemDto convertModelToDto(Problem problem) {
-        ProblemDto problemDto = new ProblemDto(problem.getNumber(),problem.getText());
-        problemDto.setId(problem.getId());
-        return problemDto;
+
+        ProblemDto dto = ProblemDto.builder()
+                .number(problem.getNumber())
+                .text(problem.getText())
+                .build();
+        dto.setId(problem.getId());
+        return dto;
     }
 }

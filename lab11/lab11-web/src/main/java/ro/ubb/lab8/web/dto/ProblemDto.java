@@ -1,15 +1,13 @@
 package ro.ubb.lab8.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class ProblemDto  extends BaseDto{
     private int number;
     private String text;

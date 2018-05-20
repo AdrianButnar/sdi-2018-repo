@@ -1,29 +1,21 @@
 package ro.ubb.lab8.web.dto;
 
 import lombok.*;
+import ro.ubb.lab8.core.model.Assignment;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Setter
+@ToString
+@Builder
 public class StudentDto extends BaseDto {
-    public String name;
-    public String serialNumber;
-
-    public String getSerialNumber()
-    {
-        return serialNumber;
-    }
-    public String getName()
-    {
-        return name;
-    }
+    private String serialNumber;
+    private String name;
+    private Set<Long> problems;
 
 
-    @Override
-    public String toString() {
-        return "StudentDto{" +
-                "name='" + name + '\'' +
-                ", serial number=" + serialNumber +
-                "} " + super.toString();
-    }
 }

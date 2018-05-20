@@ -1,21 +1,56 @@
 package ro.ubb.lab8.core.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
+
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
-public class Problem extends BaseEntity<Long> implements Serializable, Comparable<Long> {
+@Builder
+
+public class Problem extends BaseEntity<Long> {
+    @Column(name = "number", nullable = false)
     private int number;
+
+    @Column(name = "text", nullable = false)
     private String text;
-    public Problem(){}
-    public Problem(Integer number, String text) {
-        this.number = number;
-        this.text = text;
+
+    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //nu stiu daca trebuie si aici, la el era
+    private Set<Assignment> assignments = new HashSet<>();
+
+    public Set<Student> getStudents() {
+        return Collections.unmodifiableSet(
+                assignments.stream()
+                        .map(Assignment::getStudent)
+                        .collect(Collectors.toSet())
+        );
+    }
+
+    public void addStudent(Student student) {
+        Assignment assignment = new Assignment();
+        assignment.setStudent(student);
+        assignment.setProblem(this);
+        assignments.add(assignment);
+    }
+
+    public void addGrade(Student student, Integer grade) {
+        Assignment assignment = new Assignment();
+        assignment.setStudent(student);
+        assignment.setGrade(grade);
+        assignment.setProblem(this);
+        assignments.add(assignment);
     }
 
 
@@ -44,10 +79,6 @@ public class Problem extends BaseEntity<Long> implements Serializable, Comparabl
                 '}';
     }
 
-    @Override
-    public int compareTo(Long o) {
-        return 0;
-    }
 }
 /*
 
