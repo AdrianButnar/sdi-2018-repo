@@ -53,7 +53,7 @@ public class ProblemController {
     }
 
     @RequestMapping(value = "/problems/{problemId}", method = RequestMethod.PUT)
-    public ProblemDto updateStudent(
+    public ProblemDto updateProblem(
             @PathVariable final Long problemId,
             @RequestBody final ProblemDto problemDto) {
         log.trace("updateProblem: problemId={}, problemDtoMap={}", problemId, problemDto);

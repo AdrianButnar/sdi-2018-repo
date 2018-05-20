@@ -6,7 +6,7 @@ import ro.ubb.lab11.core.config.JPAConfig;
 
 
 @Configuration
-@ComponentScan({"ro.ubb.lab8.core"})
+@ComponentScan({"ro.ubb.lab11.core"})
 @Import({JPAConfig.class})
 @PropertySources({@PropertySource(value = "classpath:local/db.properties"),
 })

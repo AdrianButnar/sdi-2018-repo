@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"ro.ubb.lab8.web.controller", "ro.ubb.lab8.web.converter"})
+@ComponentScan({"ro.ubb.lab11.web.controller", "ro.ubb.lab11.web.converter"})
 public class WebConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer() {

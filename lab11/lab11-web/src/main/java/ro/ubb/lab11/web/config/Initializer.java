@@ -14,7 +14,7 @@ public class Initializer implements WebApplicationInitializer {
     public void onStartup(ServletContext container)
             throws ServletException {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.scan("ro.ubb.lab8.web.config");
+        context.scan("ro.ubb.lab11.web.config");
 
         ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(context));
         dispatcher.setLoadOnStartup(1);

@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 public class Student extends BaseEntity<Long> {
-    private static final int SERIAL_NUMBER_LENGTH = 16;
+    private static final int SERIAL_NUMBER_LENGTH = 255;
 
-    @Column(name = "serial_number", nullable = false, length = SERIAL_NUMBER_LENGTH)
+    @Column(name = "serialnumber", nullable = false, length = SERIAL_NUMBER_LENGTH)
     private String serialNumber;
 
     @Column(name = "name", nullable = false)
