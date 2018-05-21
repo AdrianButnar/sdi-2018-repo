@@ -15,4 +15,7 @@ public interface StudentService {
     Optional<Student> updateStudent(Long studentId, String serialNumber, String name, Set<Long> problems);
 
     void deleteStudent(Long id);
+
+    Optional<Student> findStudent(Long studentId);
+
 }

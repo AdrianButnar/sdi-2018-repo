@@ -73,6 +73,8 @@ public class StudentServiceImpl implements StudentService {
         return optionalStudent;
     }
 
+
+
     @Override
     public void deleteStudent(Long id) {
         log.trace("deleteStudent: id={}", id);
@@ -80,6 +82,17 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.deleteById(id);
 
         log.trace("deleteStudent --- method finished");
+    }
+
+    @Override
+    public Optional<Student> findStudent(Long studentId) {
+        log.trace("findStudent: studentId={}", studentId);
+
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+
+        log.trace("findStudent: studentOptional={}", studentOptional);
+
+        return studentOptional;
     }
 
 
