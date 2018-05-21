@@ -1,0 +1,14 @@
+<div *ngIf="assignment">
+  <h2>Assignment {{assignment.id}} details</h2>
+  <div>
+    <label>Student Id: </label> {{assignment.studentId}}
+    <input [(ngModel)]="assignment.studentId" placeholder="studentId">
+  </div>
+  <div>
+    <label>Problem Id: </label> {{assignment.problemId}}
+    <input [(ngModel)]="assignment.problemId" placeholder="problemId">
+  </div>
+
+  <button (click)="goBack()">Back</button>
+  <button (click)="save()">Save</button>
+</div>
