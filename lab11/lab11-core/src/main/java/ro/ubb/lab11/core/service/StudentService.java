@@ -4,6 +4,7 @@ package ro.ubb.lab11.core.service;
 import ro.ubb.lab11.core.model.Student;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -18,4 +19,5 @@ public interface StudentService {
 
     Optional<Student> findStudent(Long studentId);
 
+    Optional<Student> updateStudentGrades(Long studentId, Map<Long, Integer> grades);
 }

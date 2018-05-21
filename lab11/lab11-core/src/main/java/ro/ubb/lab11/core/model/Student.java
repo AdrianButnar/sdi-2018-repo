@@ -1,10 +1,7 @@
 package ro.ubb.lab11.core.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collections;
@@ -16,6 +13,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
+@Getter
+@Setter
 @AllArgsConstructor
 public class Student extends BaseEntity<Long> {
     private static final int SERIAL_NUMBER_LENGTH = 255;
@@ -45,6 +44,7 @@ public class Student extends BaseEntity<Long> {
         Assignment assignment = new Assignment();
         assignment.setProblem(problem);
         assignment.setStudent(this);
+        assignment.setGrade(10);
         assignments.add(assignment);
     }
 

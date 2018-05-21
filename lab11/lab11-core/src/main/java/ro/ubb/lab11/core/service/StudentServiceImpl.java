@@ -13,6 +13,7 @@ import ro.ubb.lab11.core.repository.ProblemRepository;
 import ro.ubb.lab11.core.repository.StudentRepository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -95,6 +96,21 @@ public class StudentServiceImpl implements StudentService {
         return studentOptional;
     }
 
+    @Override
+    @Transactional
+    public Optional<Student> updateStudentGrades(Long studentId, Map<Long, Integer> grades ) {
+        log.trace("updateStudentGrades: studentId={}, grades={}", studentId, grades);
 
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+        studentOptional.ifPresent(student ->
+                student.getAssignments()
+                        .forEach(as ->
+                                as.setGrade(grades.get(as.getProblem().getId())))
+        );
+
+        log.trace("updateStudentGrades: studentOptional={}", studentOptional);
+
+        return studentOptional;
+    }
 }
 
