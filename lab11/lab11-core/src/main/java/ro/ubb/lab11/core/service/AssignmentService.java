@@ -8,8 +8,6 @@ import java.util.Optional;
 
 public interface AssignmentService {
 
-
-
     List<Assignment> getAllAssignments();
 
     Assignment createAssignment(Long studentId, Long problemId);
