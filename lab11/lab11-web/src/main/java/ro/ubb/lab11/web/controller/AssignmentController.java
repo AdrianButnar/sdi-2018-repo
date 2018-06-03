@@ -45,12 +45,12 @@ public class AssignmentController {
     @RequestMapping(value = "/assignments/{studentId}", method = RequestMethod.PUT)
     public Set<AssignmentDto> updateStudentGrades(
             @PathVariable final Long studentId,
-            @RequestBody final Set<AssignmentDto> studentDisciplineDtos) {
+            @RequestBody final Set<AssignmentDto> assignmentDtos) {
         log.trace("updateStudentGrades: studentId={}, studentDisciplineDtos={}",
-                studentId, studentDisciplineDtos);
+                studentId, assignmentDtos);
 
         Map<Long, Integer> grades = new HashMap<>();
-        studentDisciplineDtos.forEach(sd ->
+        assignmentDtos.forEach(sd ->
                 grades.put(sd.getProblemId(), sd.getGrade()));
 
         Optional<Student> studentOptional = studentService.updateStudentGrades(studentId, grades);
