@@ -32,7 +32,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         for (Student s: students)
             for(Problem p :s.getProblems()){
                 assignments.add(new Assignment(s,p,10));//ca trebuie si nota..
-        }
+            }
         log.trace("getAllAssignments: assignments={}", assignments);
 
         return assignments;

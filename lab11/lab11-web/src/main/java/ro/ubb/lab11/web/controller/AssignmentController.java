@@ -40,7 +40,6 @@ public class AssignmentController {
         }
 
         log.trace("getAssignments: result={}", result);
-
         return result;
     }
 
