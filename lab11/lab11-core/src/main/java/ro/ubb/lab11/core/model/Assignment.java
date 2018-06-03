@@ -33,7 +33,6 @@ public class Assignment implements Serializable {
     @Column(name = "grade")
     private Integer grade;
 
-
     @Override
     public String toString() {
         return "Assignment{" +

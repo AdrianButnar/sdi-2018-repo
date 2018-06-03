@@ -24,22 +24,20 @@ public class AssignmentController {
     private AssignmentConverter assignmentConverter;
 
 
-    @RequestMapping(value = "/assignments", method = RequestMethod.GET)
-    public Set<AssignmentDto> getAssignments() {
-        log.trace("getAssignments: studentId={}");
+    @RequestMapping(value = "/assignments/{studentId}", method = RequestMethod.GET)
+    public Set<AssignmentDto> getAssignments(
+            @PathVariable final Long studentId) {
+        log.trace("getStudentDisciplines: studentId={}", studentId);
 
-        Optional<Student> studentOptional;
+        Optional<Student> studentOptional = studentService.findStudent(studentId);
         Set<AssignmentDto> result = new HashSet<>();
-        for(Student s:studentService.findAll()) {
-            studentOptional = studentService.findStudent(s.getId());
-            studentOptional.ifPresent(student -> {
-                Set<Assignment> assignments = student.getAssignments();
-                result.addAll(assignmentConverter
-                        .convertModelsToDtos(assignments));
-            });
-        }
+        studentOptional.ifPresent(student -> {
+            Set<Assignment> studentDisciplines = student.getAssignments();
+            result.addAll(assignmentConverter
+                    .convertModelsToDtos(studentDisciplines));
+        });
 
-        log.trace("getAssignments: result={}", result);
+        log.trace("getStudentDisciplines: result={}", result);
         return result;
     }
 
