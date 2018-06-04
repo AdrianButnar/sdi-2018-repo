@@ -10,9 +10,9 @@ public interface ProblemService {
 
     List<Problem> findAll();
 
-//    Problem createProblem(int number, String text);
-//
-//    Optional<Problem> updateProblem(Long problemId, int number, String text);
-//
-//    void deleteProblem(Long id);
+    Problem createProblem(int number, String text);
+
+    Problem  updateProblem(Long problemId, int number, String text);
+
+    void deleteProblem(Long id);
 }

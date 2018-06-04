@@ -6,7 +6,6 @@ import {ProblemsComponent} from "./problems/problems.component";
 import {ProblemDetailComponent} from "./problems/problem-detail/problem-detail.component";
 
 import {AssignmentsComponent} from "./assignments/assignments.component";
-import {AssignmentDetailComponent} from "./assignments/assignment-detail/assignment-detail.component";
 
 
 const routes: Routes = [
@@ -18,7 +17,7 @@ const routes: Routes = [
   {path: 'problem/detail/:id', component: ProblemDetailComponent},
 
   {path: 'assignments', component: AssignmentsComponent},
-  {path: 'assignment/detail/:id', component: AssignmentDetailComponent}
+ 
 
 ];
 

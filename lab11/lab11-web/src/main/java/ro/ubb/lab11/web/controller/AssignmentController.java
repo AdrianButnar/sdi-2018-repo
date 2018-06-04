@@ -27,17 +27,17 @@ public class AssignmentController {
     @RequestMapping(value = "/assignments/{studentId}", method = RequestMethod.GET)
     public Set<AssignmentDto> getAssignments(
             @PathVariable final Long studentId) {
-        log.trace("getStudentDisciplines: studentId={}", studentId);
+        log.trace("getAssignments: studentId={}", studentId);
 
         Optional<Student> studentOptional = studentService.findStudent(studentId);
         Set<AssignmentDto> result = new HashSet<>();
         studentOptional.ifPresent(student -> {
-            Set<Assignment> studentDisciplines = student.getAssignments();
+            Set<Assignment> assignments = student.getAssignments();
             result.addAll(assignmentConverter
-                    .convertModelsToDtos(studentDisciplines));
+                    .convertModelsToDtos(assignments));
         });
 
-        log.trace("getStudentDisciplines: result={}", result);
+        log.trace("getAssignments: result={}", result);
         return result;
     }
 

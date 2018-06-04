@@ -15,9 +15,9 @@ import {ProblemDetailComponent} from "./problems/problem-detail/problem-detail.c
 import {ProblemService} from "./problems/shared/problem.service";
 //aici vine partea de assignments(in caz ca crapa, dar speram ca nu)
 import {AssignmentsComponent} from "./assignments/assignments.component";
-import {AssignmentListComponent} from "./assignments/assignments-list/assignment-list.component";
-import {AssignmentDetailComponent} from "./assignments/assignment-detail/assignment-detail.component";
+
 import {AssignmentService} from "./assignments/shared/assignment.service";
+import { ProblemAssignComponent } from './problem-assign/problem-assign.component';
 
 
 @NgModule({
@@ -32,9 +32,10 @@ import {AssignmentService} from "./assignments/shared/assignment.service";
     ProblemsComponent,
     ProblemListComponent,
 
-    AssignmentDetailComponent,
     AssignmentsComponent,
-    AssignmentListComponent,
+
+    ProblemAssignComponent,
+    
 
   ],
   imports: [
