@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode //@Data (callSuper = false, exclude = "assignments")
+@EqualsAndHashCode
 @Builder
 @Getter
 @Setter

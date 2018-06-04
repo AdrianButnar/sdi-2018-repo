@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode //@Data  (exclude = "student")
+@EqualsAndHashCode
 public class Assignment implements Serializable {
 
     @Id
