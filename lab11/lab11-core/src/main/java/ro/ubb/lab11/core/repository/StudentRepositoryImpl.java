@@ -17,9 +17,9 @@ import javax.persistence.criteria.Fetch;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
-import ro.ubb.lab11.core.model.Student_;
-import ro.ubb.lab11.core.model.Assignment_;
-
+//import ro.ubb.lab11.core.model.Student_;
+//import ro.ubb.lab11.core.model.Assignment_;
+//
 
 /**
  * Created by radu.
@@ -72,17 +72,17 @@ public class StudentRepositoryImpl extends CustomRepositorySupport<Student,Long>
     @Override
     public List<Student> findAllWithAssignmentsAndProblemsCriteriaAPI() {
 
-        EntityManager entityManager = getEntityManager();
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Student> query = criteriaBuilder.createQuery(Student.class);
-        query.distinct(Boolean.TRUE);
-        Root<Student> root = query.from(Student.class);
-        Fetch<Student, Assignment> authorBookFetch = root.fetch(Student_.assignments);//el are si bara jos??
-        authorBookFetch.fetch(Assignment_.problem);
-
-        List<Student> students = entityManager.createQuery(query).getResultList();
-        return students;
-        //return null;
+//        EntityManager entityManager = getEntityManager();
+//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<Student> query = criteriaBuilder.createQuery(Student.class);
+//        query.distinct(Boolean.TRUE);
+//        Root<Student> root = query.from(Student.class);
+//        Fetch<Student, Assignment> authorBookFetch = root.fetch(Student_.assignments);//el are si bara jos??
+//        authorBookFetch.fetch(Assignment_.problem);
+//
+//        List<Student> students = entityManager.createQuery(query).getResultList();
+//        return students;
+        return null;
     }
 
 

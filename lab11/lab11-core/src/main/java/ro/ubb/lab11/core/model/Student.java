@@ -14,6 +14,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.Entity;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+
 @NamedEntityGraphs({
         @NamedEntityGraph(name = "studentWithAssignments",
                 attributeNodes = @NamedAttributeNode(value = "assignments")),
@@ -25,7 +29,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode (callSuper = true)
 @Builder
 @Getter
 @Setter
@@ -33,6 +37,8 @@ import java.util.stream.Collectors;
 public class Student extends BaseEntity<Long> {
     private static final int SERIAL_NUMBER_LENGTH = 16;
 
+    @NotEmpty
+    @Max(9999)
     @Column(name = "serialnumber", nullable = false, length = SERIAL_NUMBER_LENGTH)
     private String serialNumber;
 
@@ -49,6 +55,7 @@ public class Student extends BaseEntity<Long> {
 
     public Set<Problem> getProblems() {
         //Hibernate.initialize(this.getAssignments());
+
         return Collections.unmodifiableSet(
                 this.assignments.stream().
                         map(Assignment::getProblem).

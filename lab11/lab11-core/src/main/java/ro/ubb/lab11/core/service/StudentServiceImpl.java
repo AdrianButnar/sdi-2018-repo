@@ -39,12 +39,12 @@ public class StudentServiceImpl implements StudentService {
 //        log.trace("getAllStudents: students={}", students);
 
 
-        //List<Student> students = studentRepository.findAllWithJpql();
+        List<Student> students = studentRepository.findAllWithJpql();
         //List<Student> students = studentRepository.findAllWithAssignmentsAndProblems();
         //List<Student> students = studentRepository.findAllWithAssignments();
 
         //List<Student> students = studentRepository.findAllWithAssignmentsAndProblemsSQL();
-        List<Student> students = studentRepository.findAllWithAssignmentsAndProblemsCriteriaAPI();
+//        List<Student> students = studentRepository.findAllWithAssignmentsAndProblemsCriteriaAPI();
         return students;
     }
 

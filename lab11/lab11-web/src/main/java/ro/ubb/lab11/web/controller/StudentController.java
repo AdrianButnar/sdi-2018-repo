@@ -12,6 +12,8 @@ import ro.ubb.lab11.web.converter.StudentConverter;
 import ro.ubb.lab11.web.dto.EmptyJsonResponse;
 import ro.ubb.lab11.web.dto.StudentDto;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 import java.util.*;
 
 @RestController
@@ -41,7 +43,7 @@ public class StudentController {
     @RequestMapping(value = "/students/{studentId}", method = RequestMethod.PUT)
     public StudentDto updateStudent(
             @PathVariable final Long studentId,
-            @RequestBody final StudentDto studentDto) {
+            @RequestBody @Valid final StudentDto studentDto) {
         log.info("Hello");
 
         log.trace("updateStudent: studentId={}, studentDtoMap={}", studentId, studentDto);

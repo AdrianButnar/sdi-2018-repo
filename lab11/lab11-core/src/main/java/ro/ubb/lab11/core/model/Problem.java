@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,9 +19,12 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode (callSuper = false, exclude = "assignments")
 @Builder
 public class Problem extends BaseEntity<Long> {
+
+    @Max(99)
     @Column(name = "number", nullable = false)
     private int number;
 
+    @NotEmpty
     @Column(name = "text", nullable = false)
     private String text;
 

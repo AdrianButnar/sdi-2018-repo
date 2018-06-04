@@ -27,7 +27,7 @@ public class Assignment implements Serializable {
     private Student student;
 
     @Id
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "problemId")
     private Problem problem;
 

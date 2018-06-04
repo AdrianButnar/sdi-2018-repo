@@ -10,6 +10,13 @@ dependencies {
 
     compile group: 'org.postgresql', name: 'postgresql', version: "$postgresqlVersion"
 
+    compile group: 'org.springframework', name: 'spring-jdbc', version: "$springVersion"
+//    compile group: 'org.postgresql', name: 'postgresql', version: "$postgresqlVersion"
+    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: "$dbcpVersion"
+
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: "$javaxServeletApiVersion"
+
+
     compile group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: "$caffeineVersion"
     compile group: 'com.zaxxer', name: 'HikariCP', version: "$hikariVersion"
 

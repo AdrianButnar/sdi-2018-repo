@@ -13,6 +13,7 @@ import ro.ubb.lab11.web.dto.EmptyJsonResponse;
 import ro.ubb.lab11.web.dto.ProblemDto;
 import ro.ubb.lab11.web.dto.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @RestController
@@ -56,7 +57,7 @@ public class ProblemController {
     @RequestMapping(value = "/problems/{problemId}", method = RequestMethod.PUT)
     public ProblemDto updateProblem(
             @PathVariable final Long problemId,
-            @RequestBody final ProblemDto problemDto) {
+            @RequestBody @Valid final ProblemDto problemDto) {
         log.trace("updateProblem: problemId={}, problemDtoMap={}", problemId, problemDto);
 
         Problem problemOptional = problemService.updateProblem(problemId, problemDto.getNumber(),

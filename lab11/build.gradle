@@ -54,5 +54,11 @@ allprojects {
         compile group: 'org.projectlombok', name: 'lombok', version: "$lombokVersion"
 
 
+        //validation
+        compile group: 'javax.validation', name: 'validation-api', version: "$javaxValidationVersion"
+        compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: "$hibernateValidatorVersion"
+        compile group: 'javax.el', name: 'javax.el-api', version: "$javaxElApiVersion"
+        compile group: 'org.glassfish', name: 'javax.el', version: "$glassfishJavaxElVersion"
+
     }
 }
