@@ -40,11 +40,11 @@ public class StudentServiceImpl implements StudentService {
 
 
         //List<Student> students = studentRepository.findAllWithJpql();
-        List<Student> students = studentRepository.findAllWithAssignmentsAndProblems();
+        //List<Student> students = studentRepository.findAllWithAssignmentsAndProblems();
         //List<Student> students = studentRepository.findAllWithAssignments();
 
         //List<Student> students = studentRepository.findAllWithAssignmentsAndProblemsSQL();
-
+        List<Student> students = studentRepository.findAllWithAssignmentsAndProblemsCriteriaAPI();
         return students;
     }
 
@@ -68,7 +68,7 @@ public class StudentServiceImpl implements StudentService {
     public Student updateStudent(Long studentId, String serialNumber, String name, Set<Long>problems) {
         log.trace("updateStudent: studentId={}, serialNumber={},  name={},  problems={}", studentId, serialNumber,name,problems);
 
-        Optional<Student> optionalStudent = studentRepository.findById(studentId);
+        Optional<Student> optionalStudent = studentRepository.findOneWithJPQL(studentId);
 
         optionalStudent.ifPresent(st -> {
             st.setSerialNumber(serialNumber);
@@ -105,8 +105,8 @@ public class StudentServiceImpl implements StudentService {
     public Optional<Student> findStudent(Long studentId) {
         log.trace("findStudent: studentId={}", studentId);
 
-        Optional<Student> studentOptional = studentRepository.findById(studentId);
-
+        //Optional<Student> studentOptional = studentRepository.findById(studentId);
+        Optional<Student> studentOptional = studentRepository.findOneWithJPQL(studentId);
         log.trace("findStudent: studentOptional={}", studentOptional);
 
         return studentOptional;
@@ -117,7 +117,7 @@ public class StudentServiceImpl implements StudentService {
     public Optional<Student> updateStudentGrades(Long studentId, Map<Long, Integer> grades ) {
         log.trace("updateStudentGrades: studentId={}, grades={}", studentId, grades);
 
-        Optional<Student> studentOptional = studentRepository.findById(studentId);
+        Optional<Student> studentOptional = studentRepository.findOneWithJPQL(studentId);
         studentOptional.ifPresent(student ->
                 student.getAssignments()
                         .forEach(as ->

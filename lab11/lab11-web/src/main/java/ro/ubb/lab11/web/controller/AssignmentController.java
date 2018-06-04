@@ -27,7 +27,9 @@ public class AssignmentController {
     @RequestMapping(value = "/assignments/{studentId}", method = RequestMethod.GET)
     public Set<AssignmentDto> getAssignments(
             @PathVariable final Long studentId) {
+
         log.trace("getAssignments: studentId={}", studentId);
+
 
         Optional<Student> studentOptional = studentService.findStudent(studentId);
         Set<AssignmentDto> result = new HashSet<>();
