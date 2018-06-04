@@ -9,7 +9,7 @@
 </div>
 
 <form *ngIf="showProblemsAndGrades" #assignmentForm="ngForm">
-    <h3>Disciplines and grades:</h3>
+    <h3>Problems and grades:</h3>
     <div *ngFor="let assignment of assignments ">
         <label>{{assignment.problemText}}</label>
         <input

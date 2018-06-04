@@ -40,6 +40,13 @@ export class StudentService {
     return this.httpClient.delete<Student>(url); 
   }
 
+  create(serialNumber: string, name: string, groupNumber: number): Observable<Student> {
+    let student = {serialNumber, name, groupNumber};
+    return this.httpClient
+      .post<Student>(this.studentsUrl, student);
+  }
+
+
   addStudent (student: Student): Observable<Student> {
 
     return this.httpClient.post<Student>(this.studentsUrl, student);

@@ -1,6 +1,8 @@
+import { Component } from '@angular/core';
+import {Location} from '@angular/common';
+
 import { AssignmentService } from './shared/assignment.service';
 import { Assignment } from './shared/assignment.model';
-import { Component } from '@angular/core';
 import { Student } from '../students/shared/student.model';
 import { StudentService } from '../students/shared/student.service';
 
@@ -10,8 +12,8 @@ import { StudentService } from '../students/shared/student.service';
   templateUrl: './assignments.component.html',
   styleUrls: ['./assignments.component.css'],
 })
-export class AssignmentsComponent {
 
+export class AssignmentsComponent {
   errorMessage: string;
   showProblemsAndGrades: boolean;
   assignments: Assignment[];
@@ -22,6 +24,7 @@ export class AssignmentsComponent {
     private location: Location) {
   }
 
+  
   loadDisciplinesAndGrades(serialNumber: string) {
     this.showProblemsAndGrades = false;
     if (!serialNumber) {
