@@ -13,7 +13,7 @@ public interface StudentService {
 
     Student createStudent(String serialNumber, String name);
 
-    Optional<Student> updateStudent(Long studentId, String serialNumber, String name, Set<Long> problems);
+    Student updateStudent(Long studentId, String serialNumber, String name, Set<Long> problems);
 
     void deleteStudent(Long id);
 

@@ -29,14 +29,12 @@ public class StudentController {
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public List<StudentDto> getStudents() {
         log.trace("getStudents");
-        //log.warn("getStudents");
-        //log.info("Hello");
 
         List<Student> students = studentService.findAll();
 
         log.trace("getStudents: students={}", students);
 
-        return new ArrayList<>(studentConverter.convertModelsToDtos(students)); //AICI ERA PROBLEMA! TU RETURNAI UN SET, EL RETURNA UN ARRAYLIST
+        return new ArrayList<>(studentConverter.convertModelsToDtos(students));
     }
 
 
@@ -47,19 +45,17 @@ public class StudentController {
         log.info("Hello");
 
         log.trace("updateStudent: studentId={}, studentDtoMap={}", studentId, studentDto);
-        Optional<Student> studentOptional = studentService.updateStudent(studentId,
-                studentDto.getName(),
+
+        Student student = studentService.updateStudent(studentId,
                 studentDto.getSerialNumber(),
+                studentDto.getName(),
                 studentDto.getProblems());
 
-        Map<String, StudentDto> result = new HashMap<>();
-        studentOptional.ifPresent(
-                student -> result.put("student", studentConverter.convertModelToDto(student)));
-                //() -> result.put("student", studentConverter.convertModelToDto(new Student())));
+        StudentDto result = studentConverter.convertModelToDto(student);
 
         log.trace("updateStudent: result={}", result);
 
-        return result.get("student");
+        return result;
     }
 
 
@@ -70,7 +66,8 @@ public class StudentController {
         log.trace("create Student: studentDtoMap={}", studentDto);
 
         Student student = studentService.createStudent(
-                studentDto.getSerialNumber(), studentDto.getName());
+                studentDto.getSerialNumber(),
+                studentDto.getName());
 
         StudentDto result = studentConverter.convertModelToDto(student);
 

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Collections;
@@ -16,7 +18,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
-
 public class Problem extends BaseEntity<Long> {
     @Column(name = "number", nullable = false)
     private int number;

@@ -4,6 +4,8 @@ package ro.ubb.lab11.core.model;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.transaction.annotation.Propagation;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
@@ -29,7 +31,7 @@ import java.util.stream.Collectors;
 @Setter
 @AllArgsConstructor
 public class Student extends BaseEntity<Long> {
-    private static final int SERIAL_NUMBER_LENGTH = 255;
+    private static final int SERIAL_NUMBER_LENGTH = 16;
 
     @Column(name = "serialnumber", nullable = false, length = SERIAL_NUMBER_LENGTH)
     private String serialNumber;

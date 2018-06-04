@@ -52,7 +52,11 @@ public class StudentServiceImpl implements StudentService {
     public Student createStudent(String serialNumber,String name) {
         log.trace("saveStudent: serialNumber ={}, name={} ", serialNumber,name);
 
-        Student student = (Student) studentRepository.save(new Student(serialNumber,name)); //TODO This seems bad, just to solve conflict
+        Student student = Student.builder()
+                .serialNumber(serialNumber)
+                .name(name)
+                .build();
+        student = studentRepository.save(student);
 
         log.trace("saveStudent: student={}", student);
 
@@ -61,7 +65,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public Optional<Student> updateStudent(Long studentId, String serialNumber, String name, Set<Long>problems) {
+    public Student updateStudent(Long studentId, String serialNumber, String name, Set<Long>problems) {
         log.trace("updateStudent: studentId={}, serialNumber={},  name={},  problems={}", studentId, serialNumber,name,problems);
 
         Optional<Student> optionalStudent = studentRepository.findById(studentId);
@@ -80,11 +84,9 @@ public class StudentServiceImpl implements StudentService {
             problemList.forEach(st::addProblem);
         });
 
-
-
         log.trace("updateStudent: optionalStudent={}", optionalStudent);
 
-        return optionalStudent;
+        return optionalStudent.orElse(null);
     }
 
 
