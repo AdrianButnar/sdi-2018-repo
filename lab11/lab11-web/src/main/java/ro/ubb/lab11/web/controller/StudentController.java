@@ -48,8 +48,8 @@ public class StudentController {
 
         log.trace("updateStudent: studentId={}, studentDtoMap={}", studentId, studentDto);
         Optional<Student> studentOptional = studentService.updateStudent(studentId,
-                studentDto.getName(),
                 studentDto.getSerialNumber(),
+                studentDto.getName(),
                 studentDto.getProblems());
 
         Map<String, StudentDto> result = new HashMap<>();
