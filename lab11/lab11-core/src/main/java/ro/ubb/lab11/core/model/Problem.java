@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode (callSuper = false, exclude = "assignments")
 @Builder
 public class Problem extends BaseEntity<Long> {
     @Column(name = "number", nullable = false)
