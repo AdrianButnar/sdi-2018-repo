@@ -39,47 +39,49 @@ public class ProblemController {
         return new ArrayList<>(problemConverter.convertModelsToDtos(problems));
     }
 
-//    @RequestMapping(value = "/problems", method = RequestMethod.POST)
-//    public ProblemDto createProblem(
-//            @RequestBody final ProblemDto problemDto) {
-//        log.trace("createProblem: problemDtoMap={}", problemDto);
-//
-//        Problem problem = problemService.createProblem(
-//                problemDto.getNumber(), problemDto.getText());
-//
-//        ProblemDto result = problemConverter.convertModelToDto(problem);
-//
-//        log.trace("createProblem: result={}", result);
-//        return result;
-//    }
-//
-//    @RequestMapping(value = "/problems/{problemId}", method = RequestMethod.PUT)
-//    public ProblemDto updateProblem(
-//            @PathVariable final Long problemId,
-//            @RequestBody final ProblemDto problemDto) {
-//        log.trace("updateProblem: problemId={}, problemDtoMap={}", problemId, problemDto);
-//
-//        Optional<Problem> problemOptional = problemService.updateProblem(problemId, problemDto.getNumber(),
-//                problemDto.getText());
-//
+    @RequestMapping(value = "/problems", method = RequestMethod.POST)
+    public ProblemDto createProblem(
+            @RequestBody final ProblemDto problemDto) {
+        log.trace("createProblem: problemDtoMap={}", problemDto);
+
+        Problem problem = problemService.createProblem(
+                problemDto.getNumber(), problemDto.getText());
+
+        ProblemDto result = problemConverter.convertModelToDto(problem);
+
+        log.trace("createProblem: result={}", result);
+        return result;
+    }
+
+    @RequestMapping(value = "/problems/{problemId}", method = RequestMethod.PUT)
+    public ProblemDto updateProblem(
+            @PathVariable final Long problemId,
+            @RequestBody final ProblemDto problemDto) {
+        log.trace("updateProblem: problemId={}, problemDtoMap={}", problemId, problemDto);
+
+        Problem problemOptional = problemService.updateProblem(problemId, problemDto.getNumber(),
+                problemDto.getText());
+
+        ProblemDto result = problemConverter.convertModelToDto(problemOptional);
+
 //        Map<String, ProblemDto> result = new HashMap<>();
 //        problemOptional.ifPresent(
 //                problem -> result.put("problem", problemConverter.convertModelToDto(problem)));
-//
-//        log.trace("updateProblem: result={}", result);
-//
-//        return result.get("problem");
-//    }
-//
-//    @RequestMapping(value = "problems/{problemId}", method = RequestMethod.DELETE)
-//    public ResponseEntity deleteProblem(@PathVariable final Long problemId) {
-//        log.trace("deleteProblem: problemId={}", problemId);
-//
-//        problemService.deleteProblem(problemId);
-//
-//        log.trace("deleteProblem - method end");
-//
-//        return new ResponseEntity(new EmptyJsonResponse(), HttpStatus.OK);
-//    }
+
+        log.trace("updateProblem: result={}", result);
+
+        return result;//result.get("problem");
+    }
+
+    @RequestMapping(value = "problems/{problemId}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteProblem(@PathVariable final Long problemId) {
+        log.trace("deleteProblem: problemId={}", problemId);
+
+        problemService.deleteProblem(problemId);
+
+        log.trace("deleteProblem - method end");
+
+        return new ResponseEntity(new EmptyJsonResponse(), HttpStatus.OK);
+    }
 
 }
