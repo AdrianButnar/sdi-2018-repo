@@ -1,6 +1,7 @@
 package ro.ubb.lab11.core.service;
 
 
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import ro.ubb.lab11.core.model.Problem;
 import ro.ubb.lab11.core.model.Student;
 import ro.ubb.lab11.core.repository.ProblemRepository;
 import ro.ubb.lab11.core.repository.StudentRepository;
+import ro.ubb.lab11.core.repository.StudentRepositoryCustom;
+import ro.ubb.lab11.core.repository.StudentRepositoryImpl;
+
 
 import java.util.List;
 import java.util.Map;
@@ -28,11 +32,16 @@ public class StudentServiceImpl implements StudentService {
     private ProblemRepository problemRepository;
     @Override
     public List<Student> findAll() {
-        log.trace("getAllStudents --- method entered");
+//        log.trace("getAllStudents --- method entered");
+//        Hibernate.initialize(studentRepository.findAll());
+//        List<Student> students = studentRepository.findAll();
+//
+//        log.trace("getAllStudents: students={}", students);
 
-        List<Student> students = studentRepository.findAll();
 
-        log.trace("getAllStudents: students={}", students);
+        //List<Student> students = studentRepository.findAllWithJpql();
+        //List<Student> students = studentRepository.findAllWithAssignmentsAndProblems();
+        List<Student> students = studentRepository.findAllWithAssignments();
 
         return students;
     }
@@ -60,6 +69,8 @@ public class StudentServiceImpl implements StudentService {
             st.setName(name);
 
             //the problems part needs also to be adjusted
+            //Hibernate.initialize(st.getAssignments());
+            //Hibernate.initialize(st.getProblems());
             st.getProblems().stream()
                     .map(BaseEntity::getId)
                     .forEach(problems::remove);
