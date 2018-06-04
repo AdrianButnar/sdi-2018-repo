@@ -48,7 +48,7 @@ public class Student extends BaseEntity<Long> {
     }
 
     public Set<Problem> getProblems() {
-        //Hibernate.initialize(this.getAssignments()); //aici ar trebui!!!
+        //Hibernate.initialize(this.getAssignments());
         return Collections.unmodifiableSet(
                 this.assignments.stream().
                         map(Assignment::getProblem).
@@ -74,6 +74,11 @@ public class Student extends BaseEntity<Long> {
         assignment.setGrade(grade);
         assignment.setStudent(this);
         assignments.add(assignment);
+    }
+
+    public void removeProblems()
+    {
+        assignments.clear();
     }
 
 

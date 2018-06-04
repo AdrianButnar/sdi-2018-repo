@@ -80,6 +80,7 @@ public class StudentServiceImpl implements StudentService {
             st.getProblems().stream()
                     .map(BaseEntity::getId)
                     .forEach(problems::remove);
+            //st.removeProblems();
             List<Problem> problemList = problemRepository.findAllById(problems);
             problemList.forEach(st::addProblem);
         });
