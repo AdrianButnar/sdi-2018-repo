@@ -2,14 +2,26 @@ package ro.ubb.lab11.core.model;
 
 
 import lombok.*;
+import org.hibernate.Hibernate;
+import org.springframework.transaction.annotation.Propagation;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+@NamedEntityGraphs({
+        @NamedEntityGraph(name = "studentWithAssignments",
+                attributeNodes = @NamedAttributeNode(value = "assignments")),
+        @NamedEntityGraph(name = "studentWithAssignmentsAndProblems",
+                attributeNodes = @NamedAttributeNode(value = "assignments", subgraph = "studentWithProblems"),
+                subgraphs = @NamedSubgraph(name = "studentWithProblems",
+                        attributeNodes = @NamedAttributeNode(value = "problem")))
+})
 
 @Entity
 @NoArgsConstructor
@@ -27,7 +39,7 @@ public class Student extends BaseEntity<Long> {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Assignment> assignments = new HashSet<>();
 
     public Student(String serialNumber, String name) {
@@ -36,6 +48,7 @@ public class Student extends BaseEntity<Long> {
     }
 
     public Set<Problem> getProblems() {
+        //Hibernate.initialize(this.getAssignments()); //aici ar trebui!!!
         return Collections.unmodifiableSet(
                 this.assignments.stream().
                         map(Assignment::getProblem).

@@ -25,7 +25,7 @@ public class Problem extends BaseEntity<Long> {
     @Column(name = "text", nullable = false)
     private String text;
 
-    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //nu stiu daca trebuie si aici, la el era
+    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //nu stiu daca trebuie si aici, la el era
     private Set<Assignment> assignments = new HashSet<>();
 
     public Problem(int number, String text) {

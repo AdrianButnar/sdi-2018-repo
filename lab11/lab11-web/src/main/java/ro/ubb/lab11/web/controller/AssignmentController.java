@@ -38,7 +38,6 @@ public class AssignmentController {
         });
 
         log.trace("getStudentDisciplines: result={}", result);
-
         return result;
     }
 
