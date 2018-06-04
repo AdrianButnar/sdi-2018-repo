@@ -47,19 +47,16 @@ public class StudentController {
         log.info("Hello");
 
         log.trace("updateStudent: studentId={}, studentDtoMap={}", studentId, studentDto);
-        Optional<Student> studentOptional = studentService.updateStudent(studentId,
+        Student studentOptional = studentService.updateStudent(studentId,
                 studentDto.getSerialNumber(),
                 studentDto.getName(),
                 studentDto.getProblems());
 
-        Map<String, StudentDto> result = new HashMap<>();
-        studentOptional.ifPresent(
-                student -> result.put("student", studentConverter.convertModelToDto(student)));
-                //() -> result.put("student", studentConverter.convertModelToDto(new Student())));
+        StudentDto result = studentConverter.convertModelToDto(studentOptional);
 
         log.trace("updateStudent: result={}", result);
 
-        return result.get("student");
+        return result;
     }
 
 

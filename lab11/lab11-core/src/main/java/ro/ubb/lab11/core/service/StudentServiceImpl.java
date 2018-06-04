@@ -50,7 +50,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public Optional<Student> updateStudent(Long studentId, String serialNumber, String name, Set<Long>problems) {
+    public Student updateStudent(Long studentId, String serialNumber, String name, Set<Long>problems) {
         log.trace("updateStudent: studentId={}, serialNumber={},  name={},  problems={}", studentId, serialNumber,name,problems);
 
         Optional<Student> optionalStudent = studentRepository.findById(studentId);
@@ -71,7 +71,7 @@ public class StudentServiceImpl implements StudentService {
 
         log.trace("updateStudent: optionalStudent={}", optionalStudent);
 
-        return optionalStudent;
+        return optionalStudent.orElse(null);
     }
 
 
