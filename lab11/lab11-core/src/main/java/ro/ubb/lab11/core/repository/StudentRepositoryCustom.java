@@ -6,4 +6,9 @@ import java.util.List;
 
 public interface StudentRepositoryCustom {
     List<Student> findAllWithJpql();
+
+    List<Student> findAllWithAssignmentsAndProblemsSQL();
+
+   List<Student> findAllWithAssignmentsAndProblemsCriteriaAPI();
+
 }

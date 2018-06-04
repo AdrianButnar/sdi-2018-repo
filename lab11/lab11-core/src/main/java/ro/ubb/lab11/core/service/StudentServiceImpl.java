@@ -40,8 +40,10 @@ public class StudentServiceImpl implements StudentService {
 
 
         //List<Student> students = studentRepository.findAllWithJpql();
-        //List<Student> students = studentRepository.findAllWithAssignmentsAndProblems();
-        List<Student> students = studentRepository.findAllWithAssignments();
+        List<Student> students = studentRepository.findAllWithAssignmentsAndProblems();
+        //List<Student> students = studentRepository.findAllWithAssignments();
+
+        //List<Student> students = studentRepository.findAllWithAssignmentsAndProblemsSQL();
 
         return students;
     }
