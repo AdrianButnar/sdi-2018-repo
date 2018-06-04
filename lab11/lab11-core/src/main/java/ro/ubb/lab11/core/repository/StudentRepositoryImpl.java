@@ -1,6 +1,7 @@
 package ro.ubb.lab11.core.repository;
 
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.jpa.HibernateEntityManager;
@@ -15,6 +16,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Fetch;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
+import ro.ubb.lab11.core.model.Student_;
+import ro.ubb.lab11.core.model.Assignment_;
+
 
 /**
  * Created by radu.
@@ -30,6 +35,18 @@ public class StudentRepositoryImpl extends CustomRepositorySupport<Student,Long>
 
         return students;
     }
+
+    @Override
+    public Optional<Student> findOneWithJPQL(Long id) {
+        EntityManager entityManager = getEntityManager();
+        Query query = entityManager.createQuery("select distinct s from Student s " +
+                "left join fetch s.assignments ass " +
+                "left join fetch ass.problem "+
+                "where s.id="+id);
+        List<Student> students = query.getResultList();
+        return Optional.ofNullable(students.get(0));
+    }
+
 
     @Override
     @Transactional
@@ -55,17 +72,17 @@ public class StudentRepositoryImpl extends CustomRepositorySupport<Student,Long>
     @Override
     public List<Student> findAllWithAssignmentsAndProblemsCriteriaAPI() {
 
-//        EntityManager entityManager = getEntityManager();
-//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-//        CriteriaQuery<Student> query = criteriaBuilder.createQuery(Student.class);
-//        query.distinct(Boolean.TRUE);
-//        Root<Student> root = query.from(Student.class);
-//        Fetch<Student, Assignment> authorBookFetch = root.fetch(s.assignments);//el are si bara jos??
-//        authorBookFetch.fetch(Assignment_.problem);
-//
-//        List<Student> students = entityManager.createQuery(query).getResultList();
-//        return students;
-        return null;
+        EntityManager entityManager = getEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Student> query = criteriaBuilder.createQuery(Student.class);
+        query.distinct(Boolean.TRUE);
+        Root<Student> root = query.from(Student.class);
+        Fetch<Student, Assignment> authorBookFetch = root.fetch(Student_.assignments);//el are si bara jos??
+        authorBookFetch.fetch(Assignment_.problem);
+
+        List<Student> students = entityManager.createQuery(query).getResultList();
+        return students;
+        //return null;
     }
 
 
