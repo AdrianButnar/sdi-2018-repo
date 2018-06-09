@@ -7,10 +7,13 @@
 Team: Gandaceii  
 Group: 922  
 
+:trollface:
 [Lab requirements](https://docs.google.com/document/d/1xQ2NjbyepsuXOmJ6321jM1VNukzI8qlBMZLfIXxjwV4/edit?usp=drive_web&ouid=101359917012351863431)  
 
+:love_letter:
 [Google Drive](https://drive.google.com/drive/folders/1rS-bL4xl3fQh4LdyHxpLyoCR-Y6JVZxR)  
 
+:couple:
 [Google group](https://groups.google.com/forum/#!forum/sdi_2018)  
 
 
@@ -59,6 +62,17 @@ Group: 922
 * Added the log file (not logging in file apparently)
 * Added all console functionality
 
-### Lab 8
+### Lab 8-10
  
 * Started lab 8 from scratch
+* Didn't work, needed angular 5.2.6 :angry:
+* Implemented all the features
+
+### Lab 11-12
+
+* Criteria API and Native SQL
+* Added validations, but we don't handle them on the front end
+
+### Lab 13-14
+
+* Not Implemented, not enough time :rage:
