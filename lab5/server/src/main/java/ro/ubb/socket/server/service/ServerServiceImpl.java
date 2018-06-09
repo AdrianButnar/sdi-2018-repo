@@ -4,7 +4,6 @@ import ro.ubb.socket.common.ServiceInterface;
 import ro.ubb.socket.common.domain.Assignment;
 import ro.ubb.socket.common.domain.Problem;
 import ro.ubb.socket.common.domain.Student;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -147,7 +146,7 @@ public class ServerServiceImpl implements ServiceInterface {
 
     @Override
     public CompletableFuture<String> showTheMostAssignedProblems(String paramsAndTypes) {
-        throw new NotImplementedException();
+        throw new RuntimeException("Exception");
     }
 
 }

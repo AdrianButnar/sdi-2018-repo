@@ -1,0 +1,36 @@
+<div *ngIf="selectedProblem">
+  <h2>
+    Problem number {{selectedProblem.number}} was selected
+  </h2>
+  <button (click)="gotoDetails()">View details</button>
+</div>
+
+<div>
+    <h3>
+        Add a problem:
+    </h3>
+    <label>Problem number:
+        <input #problemNumber />
+      </label><br>
+      <label>Problem text:
+        <input #problemText />
+      </label>
+      <!-- (click) passes input value to add() and then clears the input -->
+      <button (click)="add(problemNumber.value, problemText.value); problemNumber.value=''; problemText.value=''">
+        Add
+      </button>
+</div>
+
+  <h2>Problems</h2>
+  <ol class="problems">
+    <li *ngFor="let problem of problems"
+        [class.selected]="problem === selectedProblem"
+        (click)="onSelect(problem)">
+      {{problem.number}}
+      <button class="delete" title="delete problme"
+      (click)="delete(problem)">x</button>
+    </li>
+
+
+  </ol>
+

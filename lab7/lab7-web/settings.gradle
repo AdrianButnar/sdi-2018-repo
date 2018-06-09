@@ -1,0 +1,2 @@
+include ':lab7-core'
+project(':lab7-core').projectDir=new File(settingsDir,':../lab7-core')

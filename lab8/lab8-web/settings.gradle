@@ -1,0 +1,2 @@
+include ':lab8-core'
+project(':lab8-core').projectDir = new File(settingsDir, '../lab8-core')

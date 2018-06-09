@@ -1,0 +1,4 @@
+rootProject.name = 'lab8'
+include 'lab8-web'
+include 'lab8-core'
+
