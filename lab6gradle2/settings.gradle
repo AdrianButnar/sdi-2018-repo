@@ -1,4 +1,0 @@
-rootProject.name = 'lab6gradle2'
-include 'client'
-include 'server'
-

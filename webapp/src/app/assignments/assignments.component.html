@@ -1,0 +1,25 @@
+<h2>Grades</h2>
+<div>
+    <label>Serial number:</label>
+    <input #serialNumber>
+</div>
+<div>
+    <button (click)="goBack()">Back</button>
+    <button (click)="loadDisciplinesAndGrades(serialNumber.value)">Next</button>
+</div>
+
+<form *ngIf="showProblemsAndGrades" #assignmentForm="ngForm">
+    <h3>Problems and grades:</h3>
+    <div *ngFor="let assignment of assignments ">
+        <label>{{assignment.problemText}}</label>
+        <input
+                [name]="assignment.problemId"
+                [ngModel]="assignment.grade"
+                [placeholder]="0">
+    </div>
+    <button (click)="save(assignmentForm)">Save</button>
+</form>
+
+
+
+<!-- <ubb-assignment-list></ubb-assignment-list> -->

@@ -1,0 +1,37 @@
+<h2>Assign problem</h2>
+<div>
+  <label>Serial number:</label>
+  <input #serialNumber>
+</div>
+<div>
+  <button (click)="goBack()">Back</button>
+  <button (click)="loadProblems(serialNumber.value)">Next</button>
+</div>
+
+<div *ngIf="showProblems">
+  <div>
+    <h3>Selected problems (click to remove):</h3>
+    <ol>
+      <li *ngFor="let problem of selectedProblems"
+          (click)="removeSelectedProblem(problem)">
+        {{problem.text}}
+      </li>
+    </ol>
+  </div>
+</div>
+
+<div *ngIf="showProblems">
+  <div>
+    <h3>Available problems (click to select):</h3>
+    <ol>
+      <li *ngFor="let problem of availableProblems"
+          (click)="selectProblem(problem)">
+        {{problem.text}}
+      </li>
+    </ol>
+  </div>
+</div>
+
+<div *ngIf="showProblems">
+  <button (click)="save()">Save</button>
+</div>
